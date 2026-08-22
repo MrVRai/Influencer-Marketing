@@ -32,9 +32,12 @@ SUPPORTED_LANGUAGES: Dict[str, str] = {
     'vi': 'Vietnamese'
 }
 
+import re
+
 def detect_language(text: str) -> str:
     """
     Detect the primary language of the given text.
+    Includes Devanagari script and Hinglish token detection.
 
     Args:
         text: The string to detect language for.
@@ -42,8 +45,36 @@ def detect_language(text: str) -> str:
     Returns:
         ISO 639-1 language code. Returns 'unknown' on failure or if text is too short.
     """
-    if not text or len(text.strip()) < 10:
+    if not text or len(text.strip()) < 5:
         return 'unknown'
+
+    # Check for Devanagari script (Hindi, Marathi, Sanskrit)
+    if re.search(r'[\u0900-\u097F]', text):
+        return 'hi'
+    # Tamil script
+    if re.search(r'[\u0B80-\u0BFF]', text):
+        return 'ta'
+    # Telugu script
+    if re.search(r'[\u0C00-\u0C7F]', text):
+        return 'te'
+    # Bengali script
+    if re.search(r'[\u0980-\u09FF]', text):
+        return 'bn'
+    # Arabic / Urdu script
+    if re.search(r'[\u0600-\u06FF]', text):
+        return 'ur'
+
+    # Check for Hinglish / Romanized Hindi indicators
+    hinglish_words = {
+        'hai', 'hain', 'karein', 'kare', 'kaise', 'mera', 'meri', 'mere', 'aap', 'aapka',
+        'aapki', 'yeh', 'woh', 'aur', 'ke', 'ki', 'ko', 'se', 'me', 'mein', 'desi',
+        'bharat', 'hindi', 'batao', 'dekho', 'hoga', 'hogi', 'tarika', 'nuskhe', 'gharelu',
+        'upay', 'sundar', 'khubsurat', 'swagat', 'namaste', 'shukriya', 'dosto', 'mitro'
+    }
+    words = set(re.findall(r'\b[a-zA-Z]{2,15}\b', text.lower()))
+    if len(words.intersection(hinglish_words)) >= 2 or 'hindi' in words:
+        return 'hi'
+
     try:
         return detect(text)
     except Exception:

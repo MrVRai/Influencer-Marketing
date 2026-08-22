@@ -116,12 +116,12 @@ with tab1:
         if search_mode == "🔑 Keyword":
             search_query = st.text_input(
                 "Search by keyword or niche",
-                placeholder="e.g. 'SaaS productivity', 'Gaming PC builds', 'Beauty skincare'",
+                placeholder="e.g. 'beauty hindi', 'fitness coach', 'indian skincare', 'tech reviewer'",
             )
         else:
             search_query = st.text_input(
                 "Search by hashtag",
-                placeholder="e.g. 'skincare', 'techreview', 'fitness' (with or without #)",
+                placeholder="e.g. 'indianbeautyblogger', 'makeuphindi', 'desibeauty', 'fitnessindia' (without #)",
             )
     with search_col2:
         platform = st.selectbox("Platform", ["YouTube", "Instagram"])
