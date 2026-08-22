@@ -211,17 +211,18 @@ with tab1:
 
     # ── Search Button ──
     if st.button("🚀 Search Creators", type="primary", use_container_width=True):
-        if not search_query:
+        clean_query = search_query.strip().strip("'\"").strip()
+        if not clean_query:
             st.warning("Please enter a search query.")
         else:
-            with st.spinner(f"Searching {platform} for '{search_query}'..."):
+            with st.spinner(f"Searching {platform} for '{clean_query}'..."):
                 results = []
 
                 if platform == "YouTube":
                     if search_mode == "#️⃣ Hashtag":
-                        channels = yt.search_by_hashtag(search_query, max_results=max_results)
+                        channels = yt.search_by_hashtag(clean_query, max_results=max_results)
                     else:
-                        channels = yt.search_channels(search_query, max_results=max_results)
+                        channels = yt.search_channels(clean_query, max_results=max_results)
 
                     if not channels:
                         st.warning("No creators found. Try a different search term.")
@@ -299,9 +300,9 @@ with tab1:
                         st.error("Instagram requires Apify API token. Add APIFY_API_TOKEN to your .env file.")
                     else:
                         if search_mode == "#️⃣ Hashtag":
-                            profiles = ig.search_by_hashtag(search_query, max_results=max_results)
+                            profiles = ig.search_by_hashtag(clean_query, max_results=max_results)
                         else:
-                            profiles = ig.search_profiles(search_query, max_results=max_results)
+                            profiles = ig.search_profiles(clean_query, max_results=max_results)
 
                         if not profiles:
                             st.warning(f"No Instagram creators returned by Apify for '{search_query}'. Try a broader topic (e.g. 'fitness', 'beauty', 'tech') or a specific handle (e.g. '@mkbhd').")
