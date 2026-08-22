@@ -128,25 +128,86 @@ with tab1:
     with search_col3:
         max_results = st.slider("Max results", 5, 50, 20)
 
-    # ── Filters ──
+    # ── Platform-Specific Advanced Filters ──
     with st.expander("🔧 Advanced Filters", expanded=False):
-        filter_col1, filter_col2, filter_col3, filter_col4 = st.columns(4)
-        with filter_col1:
-            min_subs = st.number_input("Min Subscribers", min_value=0, value=0, step=1000)
-        with filter_col2:
-            max_subs = st.number_input(
-                "Max Subscribers", min_value=0, value=0, step=1000,
-                help="Set to 0 for no limit",
-            )
-        with filter_col3:
-            min_engagement = st.number_input(
-                "Min Engagement Rate (%)", min_value=0.0, value=0.0, step=0.5,
-            )
-        with filter_col4:
-            language_options = ["All Languages"] + [
-                f"{name} ({code})" for code, name in SUPPORTED_LANGUAGES.items()
-            ]
-            language_filter = st.selectbox("Content Language", language_options)
+        tier_options = [
+            "All Tiers",
+            "Nano (1K – 10K)",
+            "Micro (10K – 100K)",
+            "Mid-Tier (100K – 500K)",
+            "Macro (500K – 1M)",
+            "Mega / Celebrity (1M+)",
+        ]
+
+        if platform == "Instagram":
+            f_col1, f_col2, f_col3, f_col4 = st.columns(4)
+            with f_col1:
+                ig_tier = st.selectbox("Follower Tier", tier_options)
+            with f_col2:
+                # Set defaults based on tier
+                tier_min_map = {"Nano (1K – 10K)": 1000, "Micro (10K – 100K)": 10000, "Mid-Tier (100K – 500K)": 100000, "Macro (500K – 1M)": 500000, "Mega / Celebrity (1M+)": 1000000}
+                tier_max_map = {"Nano (1K – 10K)": 10000, "Micro (10K – 100K)": 100000, "Mid-Tier (100K – 500K)": 500000, "Macro (500K – 1M)": 1000000, "Mega / Celebrity (1M+)": 0}
+                default_min = tier_min_map.get(ig_tier, 0)
+                default_max = tier_max_map.get(ig_tier, 0)
+                min_subs = st.number_input("Min Followers", min_value=0, value=default_min, step=1000)
+            with f_col3:
+                max_subs = st.number_input("Max Followers", min_value=0, value=default_max, step=1000, help="0 for no upper limit")
+            with f_col4:
+                min_engagement = st.number_input("Min Engagement Rate (%)", min_value=0.0, value=0.0, step=0.5)
+
+            f2_col1, f2_col2, f2_col3, f2_col4 = st.columns(4)
+            with f2_col1:
+                language_options = ["All Languages"] + [
+                    f"{name} ({code})" for code, name in SUPPORTED_LANGUAGES.items()
+                ]
+                language_filter = st.selectbox("Content Language", language_options)
+            with f2_col2:
+                min_posts = st.number_input("Min Total Posts", min_value=0, value=0, step=5)
+            with f2_col3:
+                st.write("")
+                st.write("")
+                must_have_email = st.checkbox("📧 Has Email in Bio", value=False)
+            with f2_col4:
+                st.write("")
+                st.write("")
+                verified_only = st.checkbox("☑️ Verified Only", value=False)
+
+            collab_only = st.checkbox("🤝 Has Collab / Sponsored History (#ad, #collab, etc.)", value=False)
+            min_views_filter = 0
+            has_sponsor_yt = False
+
+        else:  # YouTube
+            f_col1, f_col2, f_col3, f_col4 = st.columns(4)
+            with f_col1:
+                yt_tier = st.selectbox("Subscriber Tier", tier_options)
+            with f_col2:
+                tier_min_map = {"Nano (1K – 10K)": 1000, "Micro (10K – 100K)": 10000, "Mid-Tier (100K – 500K)": 100000, "Macro (500K – 1M)": 500000, "Mega / Celebrity (1M+)": 1000000}
+                tier_max_map = {"Nano (1K – 10K)": 10000, "Micro (10K – 100K)": 100000, "Mid-Tier (100K – 500K)": 500000, "Macro (500K – 1M)": 1000000, "Mega / Celebrity (1M+)": 0}
+                default_min = tier_min_map.get(yt_tier, 0)
+                default_max = tier_max_map.get(yt_tier, 0)
+                min_subs = st.number_input("Min Subscribers", min_value=0, value=default_min, step=1000)
+            with f_col3:
+                max_subs = st.number_input("Max Subscribers", min_value=0, value=default_max, step=1000, help="0 for no upper limit")
+            with f_col4:
+                min_engagement = st.number_input("Min Engagement Rate (%)", min_value=0.0, value=0.0, step=0.5)
+
+            f2_col1, f2_col2, f2_col3 = st.columns(3)
+            with f2_col1:
+                language_options = ["All Languages"] + [
+                    f"{name} ({code})" for code, name in SUPPORTED_LANGUAGES.items()
+                ]
+                language_filter = st.selectbox("Content Language", language_options)
+            with f2_col2:
+                min_views_filter = st.number_input("Min Median Views", min_value=0, value=0, step=1000)
+            with f2_col3:
+                st.write("")
+                st.write("")
+                has_sponsor_yt = st.checkbox("🤝 Has Past Sponsors", value=False)
+
+            must_have_email = False
+            verified_only = False
+            collab_only = False
+            min_posts = 0
 
     # ── Search Button ──
     if st.button("🚀 Search Creators", type="primary", use_container_width=True):
@@ -198,9 +259,15 @@ with tab1:
                                 continue
                             if min_engagement > 0 and engagement_rate < min_engagement:
                                 continue
+                            if min_views_filter > 0 and median_views < min_views_filter:
+                                continue
                             if language_filter != "All Languages":
                                 lang_code = language_filter.split("(")[-1].rstrip(")")
                                 if content_lang != lang_code:
+                                    continue
+                            if has_sponsor_yt:
+                                has_sp = any(detector.detect_from_description(v.get('description', ''))['is_sponsored'] for v in videos)
+                                if not has_sp:
                                     continue
 
                             creator_data = {
@@ -282,17 +349,37 @@ with tab1:
                                 )
                                 cpm = estimate_cpm_rate(median_views, "instagram", "reel")
 
-                                # Apply filters
+                                # Apply Instagram Advanced Filters
                                 if min_subs > 0 and follower_count < min_subs:
                                     continue
                                 if max_subs > 0 and follower_count > max_subs:
                                     continue
                                 if min_engagement > 0 and engagement_rate < min_engagement:
                                     continue
+                                if min_posts > 0 and profile.get("post_count", len(posts)) < min_posts:
+                                    continue
                                 if language_filter != "All Languages":
                                     lang_code = language_filter.split("(")[-1].rstrip(")")
                                     if content_lang != lang_code:
                                         continue
+                                if verified_only and not profile.get("is_verified", False):
+                                    continue
+                                if must_have_email and not profile.get("bio_email"):
+                                    continue
+
+                                ig_sponsor_check = detector.detect_instagram_sponsors(posts)
+                                if collab_only and ig_sponsor_check["total_sponsored_posts"] == 0:
+                                    continue
+
+                                extra_meta = {
+                                    "bio_email": profile.get("bio_email"),
+                                    "is_verified": profile.get("is_verified", False),
+                                    "external_url": profile.get("external_url"),
+                                    "post_count": profile.get("post_count", len(posts)),
+                                    "following_count": profile.get("following_count", 0),
+                                    "sponsored_posts_count": ig_sponsor_check["total_sponsored_posts"],
+                                    "detected_brands": list(ig_sponsor_check["brand_frequency"].keys()),
+                                }
 
                                 creator_data = {
                                     "platform": "instagram",
@@ -309,6 +396,12 @@ with tab1:
                                     "country": "",
                                     "estimated_cpm_low": cpm["estimated_rate_low"],
                                     "estimated_cpm_high": cpm["estimated_rate_high"],
+                                    "extra_data": extra_meta,
+                                    "bio_email": profile.get("bio_email"),
+                                    "is_verified": profile.get("is_verified", False),
+                                    "external_url": profile.get("external_url"),
+                                    "sponsored_posts_count": ig_sponsor_check["total_sponsored_posts"],
+                                    "detected_brands": list(ig_sponsor_check["brand_frequency"].keys()),
                                 }
 
                                 db.upsert_creator(creator_data)
@@ -352,13 +445,34 @@ with tab1:
 
                 with col2:
                     platform_icon = "📺" if creator["platform"] == "youtube" else "📸"
-                    st.markdown(f"**{platform_icon} {creator['name']}**")
+                    verified_badge = " ☑️" if creator.get("is_verified") else ""
+                    st.markdown(f"**{platform_icon} {creator['name']}{verified_badge}**")
+
+                    if creator["platform"] == "instagram":
+                        st.caption(f"@{creator.get('platform_id', '')}")
+
                     lang_name = get_language_name(creator.get("content_language", "unknown"))
+                    metric_label = "subscribers" if creator["platform"] == "youtube" else "followers"
                     st.caption(
                         f"🌐 {lang_name} • "
-                        f"👥 {creator['subscriber_count']:,} subscribers • "
+                        f"👥 {creator['subscriber_count']:,} {metric_label} • "
                         f"📊 Score: {creator['creator_score']}/100"
                     )
+
+                    # Dynamic Badges
+                    badges = []
+                    if creator.get("bio_email"):
+                        badges.append(f"📧 `{creator['bio_email']}`")
+                    if creator.get("external_url"):
+                        badges.append(f"🔗 [Link in Bio]({creator['external_url']})")
+                    if creator.get("sponsored_posts_count", 0) > 0:
+                        badges.append(f"🤝 `{creator['sponsored_posts_count']} Collab(s)`")
+                    if badges:
+                        st.markdown(" • ".join(badges))
+
+                    if creator.get("description"):
+                        desc_text = creator["description"].strip()
+                        st.caption(desc_text[:90] + ("..." if len(desc_text) > 90 else ""))
 
                 with col3:
                     st.metric("Median Views", f"{creator['median_views']:,}")
@@ -800,20 +914,31 @@ with tab3:
     saved = db.search_creators(**query_params)
 
     if saved:
-        saved_df = pd.DataFrame([
-            {
+        saved_rows = []
+        for c in saved:
+            extra = c.get("extra_data", {})
+            if isinstance(extra, str):
+                import json
+                try:
+                    extra = json.loads(extra)
+                except Exception:
+                    extra = {}
+
+            saved_rows.append({
                 "Name": c["name"],
                 "Platform": c["platform"].title(),
-                "Subscribers": c.get("subscriber_count", 0),
+                "Handle / ID": c["platform_id"],
+                "Followers / Subs": c.get("subscriber_count", 0),
                 "Median Views": c.get("median_views", 0),
-                "ER (%)": c.get("engagement_rate", 0),
+                "ER (%)": f"{c.get('engagement_rate', 0):.2f}%",
                 "Language": get_language_name(c.get("content_language", "unknown")),
                 "Score": c.get("creator_score", 0),
-                "Est. Rate Low": f"${c.get('estimated_cpm_low', 0):,.0f}",
-                "Est. Rate High": f"${c.get('estimated_cpm_high', 0):,.0f}",
-            }
-            for c in saved
-        ])
+                "Verified": "☑️ Yes" if extra.get("is_verified") else "No",
+                "Contact Email": extra.get("bio_email") or "—",
+                "Est. Rate": f"${c.get('estimated_cpm_low', 0):,.0f} – ${c.get('estimated_cpm_high', 0):,.0f}",
+            })
+
+        saved_df = pd.DataFrame(saved_rows)
         st.dataframe(saved_df, use_container_width=True, hide_index=True)
     else:
         st.info("No creators saved yet. Use the Discovery tab to search and save creators.")

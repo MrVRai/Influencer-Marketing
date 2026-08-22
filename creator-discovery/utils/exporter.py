@@ -100,16 +100,28 @@ class DataExporter:
             elif cpm_low is not None:
                 est_rate = f"~${cpm_low}"
 
+            extra = c.get('extra_data', {})
+            if isinstance(extra, str):
+                import json
+                try:
+                    extra = json.loads(extra)
+                except Exception:
+                    extra = {}
+
             roster_data.append({
                 'Name': c.get('name', 'N/A'),
                 'Platform': c.get('platform', 'N/A'),
+                'Handle/ID': c.get('platform_id', 'N/A'),
                 'Subscribers/Followers': c.get('subscriber_count', 0),
                 'Median Views': c.get('median_views', 0),
-                'Engagement Rate': c.get('engagement_rate', 0.0),
+                'Engagement Rate (%)': c.get('engagement_rate', 0.0),
                 'Content Language': c.get('content_language', 'N/A'),
                 'Est. Rate (Low-High)': est_rate,
                 'Creator Score': c.get('creator_score', 0.0),
-                'Past Sponsors': c.get('past_sponsors', ''), # Ensure you augment creator dict with this upstream
+                'Contact Email': extra.get('bio_email') or c.get('bio_email', 'N/A'),
+                'Verified': 'Yes' if (extra.get('is_verified') or c.get('is_verified')) else 'No',
+                'Bio Link': extra.get('external_url') or c.get('external_url', 'N/A'),
+                'Past Sponsors': c.get('past_sponsors', ''),
                 'Status': c.get('status', 'N/A'),
                 'Notes': c.get('notes', '')
             })
