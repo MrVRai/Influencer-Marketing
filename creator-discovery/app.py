@@ -236,75 +236,87 @@ with tab1:
                         else:
                             profiles = ig.search_profiles(search_query, max_results=max_results)
 
-                        progress = st.progress(0, text="Analyzing profiles...")
-                        for idx, profile in enumerate(profiles):
-                            progress.progress(
-                                (idx + 1) / len(profiles),
-                                text=f"Analyzing: @{profile.get('username', 'unknown')} ({idx+1}/{len(profiles)})",
-                            )
+                        if not profiles:
+                            st.warning("No Instagram creators found. Try another search query, username (e.g. 'mkbhd'), or hashtag (e.g. 'fitness').")
+                        else:
+                            progress = st.progress(0, text="Analyzing profiles...")
+                            for idx, profile in enumerate(profiles):
+                                progress.progress(
+                                    (idx + 1) / len(profiles),
+                                    text=f"Analyzing: @{profile.get('username', 'unknown')} ({idx+1}/{len(profiles)})",
+                                )
 
-                            username = profile.get("username", "")
-                            if not username:
-                                continue
-
-                            posts = ig.get_recent_posts(username, max_results=12)
-                            follower_count = profile.get("follower_count", 0)
-
-                            # Build pseudo-video dicts for metrics
-                            post_metrics = [
-                                {
-                                    "view_count": p.get("like_count", 0) * 10,
-                                    "like_count": p.get("like_count", 0),
-                                    "comment_count": p.get("comment_count", 0),
-                                    "title": p.get("caption", ""),
-                                    "description": "",
-                                }
-                                for p in posts
-                            ]
-
-                            median_views = calculate_median_views(post_metrics)
-                            engagement_rate = calculate_engagement_rate(post_metrics)
-                            consistency = calculate_consistency_score(post_metrics)
-                            content_lang = detect_content_language(post_metrics)
-                            creator_score = calculate_creator_score(
-                                median_views, engagement_rate, consistency, follower_count,
-                            )
-                            cpm = estimate_cpm_rate(median_views, "instagram", "reel")
-
-                            # Apply filters
-                            if min_subs > 0 and follower_count < min_subs:
-                                continue
-                            if max_subs > 0 and follower_count > max_subs:
-                                continue
-                            if min_engagement > 0 and engagement_rate < min_engagement:
-                                continue
-                            if language_filter != "All Languages":
-                                lang_code = language_filter.split("(")[-1].rstrip(")")
-                                if content_lang != lang_code:
+                                username = profile.get("username", "")
+                                if not username:
                                     continue
 
-                            creator_data = {
-                                "platform": "instagram",
-                                "platform_id": username,
-                                "name": profile.get("full_name", username),
-                                "description": profile.get("biography", ""),
-                                "subscriber_count": follower_count,
-                                "median_views": median_views,
-                                "engagement_rate": engagement_rate,
-                                "consistency_score": consistency,
-                                "creator_score": creator_score,
-                                "content_language": content_lang,
-                                "thumbnail_url": profile.get("profile_pic_url", ""),
-                                "country": "",
-                                "estimated_cpm_low": cpm["estimated_rate_low"],
-                                "estimated_cpm_high": cpm["estimated_rate_high"],
-                            }
+                                posts = profile.get("posts", [])
+                                follower_count = profile.get("follower_count", 0)
 
-                            db.upsert_creator(creator_data)
-                            creator_data["posts"] = posts
-                            results.append(creator_data)
+                                # Build post metrics
+                                post_metrics = [
+                                    {
+                                        "view_count": p.get("view_count", p.get("like_count", 0) * 10),
+                                        "like_count": p.get("like_count", 0),
+                                        "comment_count": p.get("comment_count", 0),
+                                        "title": p.get("caption", "")[:50],
+                                        "description": "",
+                                    }
+                                    for p in posts
+                                ] if posts else [
+                                    {
+                                        "view_count": max(int(follower_count * 0.1), 100),
+                                        "like_count": max(int(follower_count * 0.03), 10),
+                                        "comment_count": max(int(follower_count * 0.002), 1),
+                                        "title": profile.get("biography", "")[:50],
+                                        "description": "",
+                                    }
+                                ]
 
-                        progress.empty()
+                                median_views = calculate_median_views(post_metrics)
+                                engagement_rate = calculate_engagement_rate(post_metrics)
+                                consistency = calculate_consistency_score(post_metrics)
+                                content_lang = detect_content_language(post_metrics)
+                                creator_score = calculate_creator_score(
+                                    median_views, engagement_rate, consistency, follower_count,
+                                )
+                                cpm = estimate_cpm_rate(median_views, "instagram", "reel")
+
+                                # Apply filters
+                                if min_subs > 0 and follower_count < min_subs:
+                                    continue
+                                if max_subs > 0 and follower_count > max_subs:
+                                    continue
+                                if min_engagement > 0 and engagement_rate < min_engagement:
+                                    continue
+                                if language_filter != "All Languages":
+                                    lang_code = language_filter.split("(")[-1].rstrip(")")
+                                    if content_lang != lang_code:
+                                        continue
+
+                                creator_data = {
+                                    "platform": "instagram",
+                                    "platform_id": username,
+                                    "name": profile.get("full_name", username) or username,
+                                    "description": profile.get("biography", ""),
+                                    "subscriber_count": follower_count,
+                                    "median_views": median_views,
+                                    "engagement_rate": engagement_rate,
+                                    "consistency_score": consistency,
+                                    "creator_score": creator_score,
+                                    "content_language": content_lang,
+                                    "thumbnail_url": profile.get("profile_pic_url", ""),
+                                    "country": "",
+                                    "estimated_cpm_low": cpm["estimated_rate_low"],
+                                    "estimated_cpm_high": cpm["estimated_rate_high"],
+                                }
+
+                                db.upsert_creator(creator_data)
+                                creator_data["posts"] = posts
+                                creator_data["videos"] = post_metrics
+                                results.append(creator_data)
+
+                            progress.empty()
 
                 st.session_state.search_results = results
 
@@ -419,7 +431,60 @@ with tab2:
                 }
                 st.session_state.selected_creator = creator
             else:
-                st.info("Direct Instagram lookup requires Apify token.")
+                if not ig.api_available:
+                    st.error("Instagram lookup requires Apify API token.")
+                else:
+                    profile = ig.get_profile_by_username(lookup_id)
+                    if profile:
+                        posts = profile.get("posts", [])
+                        follower_count = profile.get("follower_count", 0)
+                        post_metrics = [
+                            {
+                                "view_count": p.get("view_count", p.get("like_count", 0) * 10),
+                                "like_count": p.get("like_count", 0),
+                                "comment_count": p.get("comment_count", 0),
+                                "title": p.get("caption", "")[:40] or "Instagram Post",
+                                "description": "",
+                            }
+                            for p in posts
+                        ] if posts else [
+                            {
+                                "view_count": max(int(follower_count * 0.1), 100),
+                                "like_count": max(int(follower_count * 0.03), 10),
+                                "comment_count": max(int(follower_count * 0.002), 1),
+                                "title": profile.get("biography", "")[:40] or "Profile",
+                                "description": "",
+                            }
+                        ]
+                        median_views = calculate_median_views(post_metrics)
+                        engagement_rate = calculate_engagement_rate(post_metrics)
+                        consistency = calculate_consistency_score(post_metrics)
+                        content_lang = detect_content_language(post_metrics)
+                        creator_score_val = calculate_creator_score(
+                            median_views, engagement_rate, consistency, follower_count,
+                        )
+                        cpm = estimate_cpm_rate(median_views, "instagram", "reel")
+                        creator = {
+                            "platform": "instagram",
+                            "platform_id": profile.get("username", lookup_id),
+                            "name": profile.get("full_name", lookup_id) or lookup_id,
+                            "description": profile.get("biography", ""),
+                            "subscriber_count": follower_count,
+                            "median_views": median_views,
+                            "engagement_rate": engagement_rate,
+                            "consistency_score": consistency,
+                            "creator_score": creator_score_val,
+                            "content_language": content_lang,
+                            "thumbnail_url": profile.get("profile_pic_url", ""),
+                            "country": "",
+                            "estimated_cpm_low": cpm["estimated_rate_low"],
+                            "estimated_cpm_high": cpm["estimated_rate_high"],
+                            "posts": posts,
+                            "videos": post_metrics,
+                        }
+                        st.session_state.selected_creator = creator
+                    else:
+                        st.error(f"Could not find Instagram profile for '{lookup_id}'.")
 
     if creator:
         st.divider()
@@ -452,7 +517,7 @@ with tab2:
         # ── View Distribution Chart ──
         videos = creator.get("videos", [])
         if videos:
-            st.subheader("📈 View Distribution (Recent Videos)")
+            st.subheader("📈 View Distribution (Recent Content)")
             view_data = pd.DataFrame([
                 {"Video": v.get("title", "")[:40], "Views": v.get("view_count", 0)}
                 for v in videos
@@ -470,7 +535,7 @@ with tab2:
             fig.update_layout(xaxis_tickangle=-45, height=400)
             st.plotly_chart(fig, use_container_width=True)
 
-        # ── Sponsorship Analysis ──
+        # ── Sponsorship Analysis (YouTube) ──
         if videos and creator["platform"] == "youtube":
             st.subheader("🔍 Sponsorship & Ad Detection")
 
@@ -530,6 +595,38 @@ with tab2:
                 st.markdown("**Affiliate Links:**")
                 for link in sponsor_analysis["all_affiliate_links"]:
                     st.markdown(f"- `{link}`")
+
+        # ── Sponsorship Analysis (Instagram) ──
+        elif creator.get("platform") == "instagram" and creator.get("posts"):
+            st.subheader("🔍 Sponsorship & Ad Detection")
+            ig_sponsor_analysis = detector.detect_instagram_sponsors(creator["posts"])
+
+            sp1, sp2, sp3 = st.columns(3)
+            sp1.metric(
+                "Sponsored Posts",
+                f"{ig_sponsor_analysis['total_sponsored_posts']}/{len(creator['posts'])}",
+            )
+            sp2.metric("Sponsor Rate", f"{ig_sponsor_analysis['sponsor_rate']:.1f}%")
+            sp3.metric("Unique Brands", f"{len(ig_sponsor_analysis['brand_frequency'])}")
+
+            if ig_sponsor_analysis["sponsored_hashtags_found"]:
+                st.markdown("**Sponsored Tags Found:** " + ", ".join(
+                    f"`{tag}`" for tag in ig_sponsor_analysis["sponsored_hashtags_found"]
+                ))
+
+            if ig_sponsor_analysis["brand_frequency"]:
+                st.markdown("**Detected Brands & Collabs:**")
+                brand_df = pd.DataFrame(
+                    [
+                        {"Brand": brand, "Mentions": count}
+                        for brand, count in sorted(
+                            ig_sponsor_analysis["brand_frequency"].items(),
+                            key=lambda x: x[1],
+                            reverse=True,
+                        )
+                    ]
+                )
+                st.dataframe(brand_df, use_container_width=True, hide_index=True)
 
         # ── CPM Calculator ──
         st.divider()
