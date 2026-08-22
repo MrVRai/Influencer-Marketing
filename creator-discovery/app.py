@@ -220,19 +220,23 @@ with tab1:
                 results = []
 
                 if platform == "YouTube":
+                    fetch_pool = min(max_results * 3, 50)
                     if search_mode == "#️⃣ Hashtag":
-                        channels = yt.search_by_hashtag(clean_query, max_results=max_results)
+                        channels = yt.search_by_hashtag(clean_query, max_results=fetch_pool)
                     else:
-                        channels = yt.search_channels(clean_query, max_results=max_results)
+                        channels = yt.search_channels(clean_query, max_results=fetch_pool)
 
                     if not channels:
                         st.warning("No creators found. Try a different search term.")
                     else:
                         progress = st.progress(0, text="Analyzing channels...")
                         for idx, channel in enumerate(channels):
+                            if len(results) >= max_results:
+                                break
+
                             progress.progress(
                                 (idx + 1) / len(channels),
-                                text=f"Analyzing: {channel.get('title', 'Unknown')} ({idx+1}/{len(channels)})",
+                                text=f"Analyzing: {channel.get('title', 'Unknown')} ({idx+1}/{len(channels)}) — Matched: {len(results)}/{max_results}",
                             )
 
                             channel_id = channel.get("channel_id", "")
@@ -300,10 +304,11 @@ with tab1:
                     if not ig.api_available:
                         st.error("Instagram requires Apify API token. Add APIFY_API_TOKEN to your .env file.")
                     else:
+                        fetch_pool = max(max_results * 5, 50)
                         if search_mode == "#️⃣ Hashtag":
-                            profiles = ig.search_by_hashtag(clean_query, max_results=max_results)
+                            profiles = ig.search_by_hashtag(clean_query, max_results=max_results, fetch_limit=fetch_pool)
                         else:
-                            profiles = ig.search_profiles(clean_query, max_results=max_results)
+                            profiles = ig.search_profiles(clean_query, max_results=max_results, fetch_limit=fetch_pool)
 
                         if not profiles:
                             st.warning(f"No Instagram creators returned by Apify for '{clean_query}'. Try a broader topic (e.g. 'fitness', 'beauty', 'tech') or a specific handle (e.g. '@mkbhd').")
@@ -313,9 +318,12 @@ with tab1:
                             tier_counts = {"Mega (1M+)": 0, "Macro (500K-1M)": 0, "Mid-Tier (100K-500K)": 0, "Micro (10K-100K)": 0, "Nano (1K-10K)": 0}
 
                             for idx, profile in enumerate(profiles):
+                                if len(results) >= max_results:
+                                    break
+
                                 progress.progress(
                                     (idx + 1) / len(profiles),
-                                    text=f"Analyzing: @{profile.get('username', 'unknown')} ({idx+1}/{len(profiles)})",
+                                    text=f"Analyzing: @{profile.get('username', 'unknown')} ({idx+1}/{len(profiles)}) — Matched: {len(results)}/{max_results}",
                                 )
 
                                 username = profile.get("username", "")

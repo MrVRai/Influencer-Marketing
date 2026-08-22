@@ -89,10 +89,11 @@ class InstagramClient:
             'posts': parsed_posts
         }
 
-    def search_profiles(self, query: str, max_results: int = 20) -> List[Dict[str, Any]]:
+    def search_profiles(self, query: str, max_results: int = 20, fetch_limit: int = None) -> List[Dict[str, Any]]:
         """
         Search for Instagram creators by keyword or username.
         Uses Apify's official instagram-scraper.
+        Scrapes a wider pool (fetch_limit) to ensure enough matching profiles after filtering.
         """
         if not self.api_available or not self.client:
             return []
@@ -101,6 +102,9 @@ class InstagramClient:
         is_direct_handle = query_raw.startswith('@')
         query_clean = query_raw.lstrip('@').strip()
         results: List[Dict[str, Any]] = []
+
+        # Scrape a wider candidate pool so filters (tier, language, email) find target matches
+        pool_size = fetch_limit if fetch_limit else max(max_results * 5, 50)
 
         try:
             # If user explicitly searched with @handle, do direct profile lookup
@@ -118,13 +122,13 @@ class InstagramClient:
                             results.append(self._parse_profile_item(item))
                 return results
 
-            # For all general niche / keyword searches, run full user discovery
+            # For general niche / keyword searches, run deep user discovery
             input_data = {
                 'search': query_clean,
                 'searchType': 'user',
-                'searchLimit': max_results,
+                'searchLimit': pool_size,
                 'resultsType': 'details',
-                'resultsLimit': max_results
+                'resultsLimit': pool_size
             }
             run = self.client.actor('apify/instagram-scraper').call(run_input=input_data)
             dataset_id = self._get_dataset_id(run)
@@ -138,23 +142,25 @@ class InstagramClient:
             print(f"Error searching Instagram profiles: {e}")
             return results
 
-    def search_by_hashtag(self, hashtag: str, max_results: int = 20) -> List[Dict[str, Any]]:
+    def search_by_hashtag(self, hashtag: str, max_results: int = 20, fetch_limit: int = None) -> List[Dict[str, Any]]:
         """
         Search for Instagram creators by hashtag.
         Fetches top/recent posts for the hashtag and looks up creator profiles.
+        Scrapes a wider pool (fetch_limit) to ensure enough matching profiles after filtering.
         """
         if not self.api_available or not self.client:
             return []
 
         hashtag = hashtag.strip().lstrip('#')
         results: List[Dict[str, Any]] = []
+        pool_size = fetch_limit if fetch_limit else max(max_results * 5, 50)
 
         try:
             # Scrape posts with the hashtag
             input_data = {
                 'directUrls': [f'https://www.instagram.com/explore/tags/{hashtag}/'],
                 'resultsType': 'posts',
-                'resultsLimit': max_results
+                'resultsLimit': pool_size
             }
             run = self.client.actor('apify/instagram-scraper').call(run_input=input_data)
             dataset_id = self._get_dataset_id(run)
