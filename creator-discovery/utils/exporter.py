@@ -100,13 +100,15 @@ class DataExporter:
             elif cpm_low is not None:
                 est_rate = f"~${cpm_low}"
 
-            extra = c.get('extra_data', {})
+            extra = c.get('extra_data') or {}
             if isinstance(extra, str):
                 import json
                 try:
                     extra = json.loads(extra)
                 except Exception:
                     extra = {}
+            if not isinstance(extra, dict):
+                extra = {}
 
             roster_data.append({
                 'Name': c.get('name', 'N/A'),

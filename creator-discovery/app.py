@@ -916,13 +916,15 @@ with tab3:
     if saved:
         saved_rows = []
         for c in saved:
-            extra = c.get("extra_data", {})
+            extra = c.get("extra_data") or {}
             if isinstance(extra, str):
                 import json
                 try:
                     extra = json.loads(extra)
                 except Exception:
                     extra = {}
+            if not isinstance(extra, dict):
+                extra = {}
 
             saved_rows.append({
                 "Name": c["name"],
