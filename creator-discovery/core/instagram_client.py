@@ -97,15 +97,16 @@ class InstagramClient:
         if not self.api_available or not self.client:
             return []
 
-        query = query.strip().lstrip('@')
+        query_raw = query.strip()
+        is_direct_handle = query_raw.startswith('@')
+        query_clean = query_raw.lstrip('@').strip()
         results: List[Dict[str, Any]] = []
 
         try:
-            # Check if query is a direct username format
-            if ' ' not in query and len(query) > 2:
-                # Try direct URL lookup first for exact match
+            # If user explicitly searched with @handle, do direct profile lookup
+            if is_direct_handle:
                 input_data = {
-                    'directUrls': [f'https://www.instagram.com/{query}/'],
+                    'directUrls': [f'https://www.instagram.com/{query_clean}/'],
                     'resultsType': 'details',
                     'resultsLimit': 1
                 }
@@ -115,22 +116,22 @@ class InstagramClient:
                     for item in self.client.dataset(dataset_id).iterate_items():
                         if item.get('username'):
                             results.append(self._parse_profile_item(item))
+                return results
 
-            # If no results or general search, run searchType: 'user'
-            if not results:
-                input_data = {
-                    'search': query,
-                    'searchType': 'user',
-                    'searchLimit': max_results,
-                    'resultsType': 'details',
-                    'resultsLimit': max_results
-                }
-                run = self.client.actor('apify/instagram-scraper').call(run_input=input_data)
-                dataset_id = self._get_dataset_id(run)
-                if dataset_id:
-                    for item in self.client.dataset(dataset_id).iterate_items():
-                        if item.get('username'):
-                            results.append(self._parse_profile_item(item))
+            # For all general niche / keyword searches, run full user discovery
+            input_data = {
+                'search': query_clean,
+                'searchType': 'user',
+                'searchLimit': max_results,
+                'resultsType': 'details',
+                'resultsLimit': max_results
+            }
+            run = self.client.actor('apify/instagram-scraper').call(run_input=input_data)
+            dataset_id = self._get_dataset_id(run)
+            if dataset_id:
+                for item in self.client.dataset(dataset_id).iterate_items():
+                    if item.get('username'):
+                        results.append(self._parse_profile_item(item))
 
             return results
         except Exception as e:

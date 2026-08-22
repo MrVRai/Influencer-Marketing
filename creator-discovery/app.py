@@ -304,9 +304,10 @@ with tab1:
                             profiles = ig.search_profiles(search_query, max_results=max_results)
 
                         if not profiles:
-                            st.warning("No Instagram creators found. Try another search query, username (e.g. 'mkbhd'), or hashtag (e.g. 'fitness').")
+                            st.warning(f"No Instagram creators returned by Apify for '{search_query}'. Try a broader topic (e.g. 'fitness', 'beauty', 'tech') or a specific handle (e.g. '@mkbhd').")
                         else:
                             progress = st.progress(0, text="Analyzing profiles...")
+                            filtered_out_count = 0
                             for idx, profile in enumerate(profiles):
                                 progress.progress(
                                     (idx + 1) / len(profiles),
@@ -351,24 +352,32 @@ with tab1:
 
                                 # Apply Instagram Advanced Filters
                                 if min_subs > 0 and follower_count < min_subs:
+                                    filtered_out_count += 1
                                     continue
                                 if max_subs > 0 and follower_count > max_subs:
+                                    filtered_out_count += 1
                                     continue
                                 if min_engagement > 0 and engagement_rate < min_engagement:
+                                    filtered_out_count += 1
                                     continue
                                 if min_posts > 0 and profile.get("post_count", len(posts)) < min_posts:
+                                    filtered_out_count += 1
                                     continue
                                 if language_filter != "All Languages":
                                     lang_code = language_filter.split("(")[-1].rstrip(")")
-                                    if content_lang != lang_code:
+                                    if content_lang != "unknown" and content_lang != lang_code:
+                                        filtered_out_count += 1
                                         continue
                                 if verified_only and not profile.get("is_verified", False):
+                                    filtered_out_count += 1
                                     continue
                                 if must_have_email and not profile.get("bio_email"):
+                                    filtered_out_count += 1
                                     continue
 
                                 ig_sponsor_check = detector.detect_instagram_sponsors(posts)
                                 if collab_only and ig_sponsor_check["total_sponsored_posts"] == 0:
+                                    filtered_out_count += 1
                                     continue
 
                                 extra_meta = {
@@ -410,6 +419,13 @@ with tab1:
                                 results.append(creator_data)
 
                             progress.empty()
+
+                            if len(profiles) > 0 and len(results) == 0:
+                                st.warning(
+                                    f"⚠️ Fetched **{len(profiles)}** Instagram creators, but all {len(profiles)} were excluded by your active filters "
+                                    f"(e.g. Follower Tier / Min Followers / Verified / Email / Language). "
+                                    f"Try setting Follower Tier to 'All Tiers' or unchecking 'Verified Only' / 'Has Email'."
+                                )
 
                 st.session_state.search_results = results
 
