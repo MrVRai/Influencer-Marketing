@@ -143,6 +143,7 @@ with tab1:
             f_col1, f_col2, f_col3, f_col4 = st.columns(4)
             with f_col1:
                 ig_tier = st.selectbox("Follower Tier", tier_options)
+                st.caption("💡 1-word searches ('fitness') yield Mega/Macro accounts. Use niche terms ('fitness coach') for Micro/Nano.")
             with f_col2:
                 # Set defaults based on tier
                 tier_min_map = {"Nano (1K – 10K)": 1000, "Micro (10K – 100K)": 10000, "Mid-Tier (100K – 500K)": 100000, "Macro (500K – 1M)": 500000, "Mega / Celebrity (1M+)": 1000000}
@@ -305,10 +306,12 @@ with tab1:
                             profiles = ig.search_profiles(clean_query, max_results=max_results)
 
                         if not profiles:
-                            st.warning(f"No Instagram creators returned by Apify for '{search_query}'. Try a broader topic (e.g. 'fitness', 'beauty', 'tech') or a specific handle (e.g. '@mkbhd').")
+                            st.warning(f"No Instagram creators returned by Apify for '{clean_query}'. Try a broader topic (e.g. 'fitness', 'beauty', 'tech') or a specific handle (e.g. '@mkbhd').")
                         else:
                             progress = st.progress(0, text="Analyzing profiles...")
-                            filtered_out_count = 0
+                            all_unfiltered_creators = []
+                            tier_counts = {"Mega (1M+)": 0, "Macro (500K-1M)": 0, "Mid-Tier (100K-500K)": 0, "Micro (10K-100K)": 0, "Nano (1K-10K)": 0}
+
                             for idx, profile in enumerate(profiles):
                                 progress.progress(
                                     (idx + 1) / len(profiles),
@@ -321,6 +324,17 @@ with tab1:
 
                                 posts = profile.get("posts", [])
                                 follower_count = profile.get("follower_count", 0)
+
+                                if follower_count >= 1000000:
+                                    tier_counts["Mega (1M+)"] += 1
+                                elif follower_count >= 500000:
+                                    tier_counts["Macro (500K-1M)"] += 1
+                                elif follower_count >= 100000:
+                                    tier_counts["Mid-Tier (100K-500K)"] += 1
+                                elif follower_count >= 10000:
+                                    tier_counts["Micro (10K-100K)"] += 1
+                                else:
+                                    tier_counts["Nano (1K-10K)"] += 1
 
                                 # Build post metrics
                                 post_metrics = [
@@ -351,35 +365,7 @@ with tab1:
                                 )
                                 cpm = estimate_cpm_rate(median_views, "instagram", "reel")
 
-                                # Apply Instagram Advanced Filters
-                                if min_subs > 0 and follower_count < min_subs:
-                                    filtered_out_count += 1
-                                    continue
-                                if max_subs > 0 and follower_count > max_subs:
-                                    filtered_out_count += 1
-                                    continue
-                                if min_engagement > 0 and engagement_rate < min_engagement:
-                                    filtered_out_count += 1
-                                    continue
-                                if min_posts > 0 and profile.get("post_count", len(posts)) < min_posts:
-                                    filtered_out_count += 1
-                                    continue
-                                if language_filter != "All Languages":
-                                    lang_code = language_filter.split("(")[-1].rstrip(")")
-                                    if content_lang != "unknown" and content_lang != lang_code:
-                                        filtered_out_count += 1
-                                        continue
-                                if verified_only and not profile.get("is_verified", False):
-                                    filtered_out_count += 1
-                                    continue
-                                if must_have_email and not profile.get("bio_email"):
-                                    filtered_out_count += 1
-                                    continue
-
                                 ig_sponsor_check = detector.detect_instagram_sponsors(posts)
-                                if collab_only and ig_sponsor_check["total_sponsored_posts"] == 0:
-                                    filtered_out_count += 1
-                                    continue
 
                                 extra_meta = {
                                     "bio_email": profile.get("bio_email"),
@@ -417,21 +403,50 @@ with tab1:
                                 db.upsert_creator(creator_data)
                                 creator_data["posts"] = posts
                                 creator_data["videos"] = post_metrics
+                                all_unfiltered_creators.append(creator_data)
+
+                                # Apply Instagram Advanced Filters
+                                if min_subs > 0 and follower_count < min_subs:
+                                    continue
+                                if max_subs > 0 and follower_count > max_subs:
+                                    continue
+                                if min_engagement > 0 and engagement_rate < min_engagement:
+                                    continue
+                                if min_posts > 0 and profile.get("post_count", len(posts)) < min_posts:
+                                    continue
+                                if language_filter != "All Languages":
+                                    lang_code = language_filter.split("(")[-1].rstrip(")")
+                                    if content_lang != "unknown" and content_lang != lang_code:
+                                        continue
+                                if verified_only and not profile.get("is_verified", False):
+                                    continue
+                                if must_have_email and not profile.get("bio_email"):
+                                    continue
+                                if collab_only and ig_sponsor_check["total_sponsored_posts"] == 0:
+                                    continue
+
                                 results.append(creator_data)
 
                             progress.empty()
 
+                            st.session_state.all_scraped_creators = all_unfiltered_creators
+
                             if len(profiles) > 0 and len(results) == 0:
+                                breakdown_str = ", ".join(f"{k}: {v}" for k, v in tier_counts.items() if v > 0)
                                 st.warning(
-                                    f"⚠️ Fetched **{len(profiles)}** Instagram creators, but all {len(profiles)} were excluded by your active filters "
-                                    f"(e.g. Follower Tier / Min Followers / Verified / Email / Language). "
-                                    f"Try setting Follower Tier to 'All Tiers' or unchecking 'Verified Only' / 'Has Email'."
+                                    f"⚠️ Scraped **{len(profiles)}** Instagram creators, but none matched your active filters.\n\n"
+                                    f"📊 **Follower Breakdown of Scraped Creators:** {breakdown_str}\n\n"
+                                    f"💡 *Tip: Broad terms ('fitness') rank major celebrity/macro accounts on Instagram. For Micro/Nano creators, try specific queries like 'calisthenics coach', 'pilates trainer', or 'mobility drills'.*"
                                 )
 
                 st.session_state.search_results = results
 
     # ── Display Results ──
     results = st.session_state.search_results
+    if not results and st.session_state.get("all_scraped_creators"):
+        if st.button("🔓 Show All Scraped Creators Anyway (Bypass Filter)", type="secondary"):
+            st.session_state.search_results = st.session_state.all_scraped_creators
+            st.rerun()
     if results:
         st.success(f"Found **{len(results)}** creators matching your criteria")
 
