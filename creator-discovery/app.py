@@ -27,6 +27,7 @@ from core.metrics import (
 )
 from core.language_detector import (
     detect_content_language,
+    detect_ig_creator_language,
     get_language_name,
     SUPPORTED_LANGUAGES,
 )
@@ -392,7 +393,8 @@ with tab1:
                                 median_views = calculate_median_views(post_metrics)
                                 engagement_rate = calculate_engagement_rate(post_metrics)
                                 consistency = calculate_consistency_score(post_metrics)
-                                content_lang = detect_content_language(post_metrics)
+                                # Use full bio + all captions (not truncated snippets) for accurate language detection
+                                content_lang = detect_ig_creator_language(profile)
                                 creator_score = calculate_creator_score(
                                     median_views, engagement_rate, consistency, follower_count,
                                 )
@@ -449,7 +451,8 @@ with tab1:
                                     continue
                                 if language_filter != "All Languages":
                                     lang_code = language_filter.split("(")[-1].rstrip(")")
-                                    if content_lang != "unknown" and content_lang != lang_code:
+                                    # Reject if language doesn't match OR if detection returned 'unknown'
+                                    if content_lang == "unknown" or content_lang != lang_code:
                                         continue
                                 if verified_only and not profile.get("is_verified", False):
                                     continue

@@ -109,6 +109,42 @@ def detect_content_language(videos: List[Dict[str, Union[str, int, float]]]) -> 
     most_common = counter.most_common(1)
     return most_common[0][0]
 
+
+def detect_ig_creator_language(profile: Dict[str, Union[str, int, list]]) -> str:
+    """
+    Detect the primary content language of an Instagram creator.
+    Aggregates biography + all post captions into a single rich text corpus
+    before running language detection, for much higher accuracy than
+    snippet-level detection.
+
+    Args:
+        profile: Instagram profile dict with keys 'biography' and 'posts'
+                 (posts is a list of dicts with a 'caption' key).
+
+    Returns:
+        ISO 639-1 language code, or 'unknown'.
+    """
+    text_parts = []
+
+    # Add biography (often contains language indicators)
+    bio = profile.get('biography', '') or ''
+    if bio:
+        text_parts.append(bio)
+
+    # Add ALL post captions in full (not truncated)
+    posts = profile.get('posts', []) or []
+    for post in posts:
+        caption = post.get('caption', '') or ''
+        if caption:
+            text_parts.append(caption)
+
+    if not text_parts:
+        return 'unknown'
+
+    # Combine everything — more text = better detection accuracy
+    combined = ' '.join(text_parts)
+    return detect_language(combined)
+
 def get_language_name(code: str) -> str:
     """
     Map common ISO language codes to human-readable names.
