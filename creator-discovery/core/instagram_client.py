@@ -89,11 +89,61 @@ class InstagramClient:
             'posts': parsed_posts
         }
 
-    def search_profiles(self, query: str, max_results: int = 20, fetch_limit: int = None) -> List[Dict[str, Any]]:
+    def _build_query_variations(self, query: str) -> List[str]:
+        """
+        Build multiple search query variations from a base query to maximise candidate pool.
+        Instagram's internal search is limited per query (~18-30 results), so we run
+        multiple targeted variations to collect a larger diverse set of creators.
+        """
+        base = query.strip().lower()
+        words = base.split()
+        variations = [base]
+
+        # Modifier sets that help find regional & niche micro-creators
+        location_prefixes = ['indian', 'india', 'hindi', 'desi', 'mumbai', 'delhi']
+        niche_suffixes = ['creator', 'influencer', 'blogger', 'coach', 'tips', 'vlog']
+        content_words = ['reels', 'lifestyle', 'content', 'page', 'official']
+
+        for prefix in location_prefixes:
+            if prefix not in base:
+                variations.append(f"{prefix} {base}")
+                variations.append(f"{base} {prefix}")
+
+        for suffix in niche_suffixes:
+            if suffix not in base:
+                variations.append(f"{base} {suffix}")
+
+        for cw in content_words:
+            if cw not in base:
+                variations.append(f"{base} {cw}")
+
+        # If multi-word, also try individual important words
+        if len(words) > 1:
+            for w in words:
+                if len(w) > 3:
+                    variations.append(w)
+
+        # Deduplicate while preserving order
+        seen = set()
+        unique = []
+        for v in variations:
+            if v not in seen:
+                seen.add(v)
+                unique.append(v)
+        return unique
+
+    def search_profiles(self, query: str, max_results: int = 20, fetch_limit: int = None,
+                        progress_callback=None) -> List[Dict[str, Any]]:
         """
         Search for Instagram creators by keyword or username.
-        Uses Apify's official instagram-scraper.
-        Scrapes a wider pool (fetch_limit) to ensure enough matching profiles after filtering.
+        Runs multiple query variations in rounds to build a large candidate pool
+        so that filters (follower tier, language, email) can find the desired count.
+
+        Args:
+            query: Search term or @handle
+            max_results: Desired number of *matching* profiles (after filters)
+            fetch_limit: Total raw candidates to collect across all rounds
+            progress_callback: Optional callable(round_num, total_rounds, query_used, found_so_far)
         """
         if not self.api_available or not self.client:
             return []
@@ -101,14 +151,12 @@ class InstagramClient:
         query_raw = query.strip()
         is_direct_handle = query_raw.startswith('@')
         query_clean = query_raw.lstrip('@').strip()
-        results: List[Dict[str, Any]] = []
+        all_results: List[Dict[str, Any]] = []
+        seen_usernames: set = set()
 
-        # Scrape a wider candidate pool so filters (tier, language, email) find target matches
-        pool_size = fetch_limit if fetch_limit else max(max_results * 5, 50)
-
-        try:
-            # If user explicitly searched with @handle, do direct profile lookup
-            if is_direct_handle:
+        # For direct handle lookups, just fetch that one profile
+        if is_direct_handle:
+            try:
                 input_data = {
                     'directUrls': [f'https://www.instagram.com/{query_clean}/'],
                     'resultsType': 'details',
@@ -119,28 +167,48 @@ class InstagramClient:
                 if dataset_id:
                     for item in self.client.dataset(dataset_id).iterate_items():
                         if item.get('username'):
-                            results.append(self._parse_profile_item(item))
-                return results
+                            all_results.append(self._parse_profile_item(item))
+            except Exception as e:
+                print(f"Error fetching Instagram handle {query_clean}: {e}")
+            return all_results
 
-            # For general niche / keyword searches, run deep user discovery
-            input_data = {
-                'search': query_clean,
-                'searchType': 'user',
-                'searchLimit': pool_size,
-                'resultsType': 'details',
-                'resultsLimit': pool_size
-            }
-            run = self.client.actor('apify/instagram-scraper').call(run_input=input_data)
-            dataset_id = self._get_dataset_id(run)
-            if dataset_id:
-                for item in self.client.dataset(dataset_id).iterate_items():
-                    if item.get('username'):
-                        results.append(self._parse_profile_item(item))
+        # Target: collect at least (max_results * 5) raw candidates, minimum 80
+        target_pool = fetch_limit if fetch_limit else max(max_results * 5, 80)
+        per_round_limit = 30  # Apify user search reliably returns ~18-30 per query
 
-            return results
-        except Exception as e:
-            print(f"Error searching Instagram profiles: {e}")
-            return results
+        # Build a diverse set of query variations
+        query_variations = self._build_query_variations(query_clean)
+        total_rounds = len(query_variations)
+
+        for round_num, variant in enumerate(query_variations, start=1):
+            # Stop if we have enough candidates
+            if len(all_results) >= target_pool:
+                break
+
+            if progress_callback:
+                progress_callback(round_num, total_rounds, variant, len(all_results))
+
+            try:
+                input_data = {
+                    'search': variant,
+                    'searchType': 'user',
+                    'searchLimit': per_round_limit,
+                    'resultsType': 'details',
+                    'resultsLimit': per_round_limit
+                }
+                run = self.client.actor('apify/instagram-scraper').call(run_input=input_data)
+                dataset_id = self._get_dataset_id(run)
+                if dataset_id:
+                    for item in self.client.dataset(dataset_id).iterate_items():
+                        uname = item.get('username', '')
+                        if uname and uname not in seen_usernames:
+                            seen_usernames.add(uname)
+                            all_results.append(self._parse_profile_item(item))
+            except Exception as e:
+                print(f"Error in search round {round_num} (query='{variant}'): {e}")
+                continue
+
+        return all_results
 
     def search_by_hashtag(self, hashtag: str, max_results: int = 20, fetch_limit: int = None) -> List[Dict[str, Any]]:
         """

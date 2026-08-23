@@ -304,15 +304,40 @@ with tab1:
                     if not ig.api_available:
                         st.error("Instagram requires Apify API token. Add APIFY_API_TOKEN to your .env file.")
                     else:
-                        fetch_pool = max(max_results * 5, 50)
+                        fetch_pool = max(max_results * 5, 80)
+
                         if search_mode == "#️⃣ Hashtag":
+                            # Hashtag search: single wide scrape
+                            scrape_status = st.empty()
+                            scrape_status.info("🔍 Round 1 — Scraping hashtag posts...")
                             profiles = ig.search_by_hashtag(clean_query, max_results=max_results, fetch_limit=fetch_pool)
+                            scrape_status.empty()
                         else:
-                            profiles = ig.search_profiles(clean_query, max_results=max_results, fetch_limit=fetch_pool)
+                            # Keyword search: multi-round query variation scraping
+                            round_progress = st.progress(0, text="🔍 Starting multi-round Instagram scrape...")
+                            round_status = st.empty()
+
+                            def ig_round_callback(round_num, total_rounds, variant, found_so_far):
+                                pct = round_num / total_rounds
+                                round_progress.progress(
+                                    pct,
+                                    text=f"🔄 Round {round_num}/{total_rounds} — Searching '{variant}' | Candidates collected: {found_so_far}"
+                                )
+                                round_status.info(f"📡 Scraping variation **'{variant}'** (Round {round_num} of {total_rounds}) — {found_so_far} unique creators found so far")
+
+                            profiles = ig.search_profiles(
+                                clean_query,
+                                max_results=max_results,
+                                fetch_limit=fetch_pool,
+                                progress_callback=ig_round_callback
+                            )
+                            round_progress.empty()
+                            round_status.empty()
 
                         if not profiles:
                             st.warning(f"No Instagram creators returned by Apify for '{clean_query}'. Try a broader topic (e.g. 'fitness', 'beauty', 'tech') or a specific handle (e.g. '@mkbhd').")
                         else:
+                            st.info(f"✅ Collected **{len(profiles)} unique candidate profiles** — now applying your filters...")
                             progress = st.progress(0, text="Analyzing profiles...")
                             all_unfiltered_creators = []
                             tier_counts = {"Mega (1M+)": 0, "Macro (500K-1M)": 0, "Mid-Tier (100K-500K)": 0, "Micro (10K-100K)": 0, "Nano (1K-10K)": 0}
