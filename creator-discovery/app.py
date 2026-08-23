@@ -218,7 +218,7 @@ with tab1:
             st.warning("Please enter a search query.")
         else:
             with st.spinner(f"Searching {platform} for '{clean_query}'..."):
-                results = []
+                all_creators = []
 
                 if platform == "YouTube":
                     fetch_pool = min(max_results * 3, 50)
@@ -232,51 +232,22 @@ with tab1:
                     else:
                         progress = st.progress(0, text="Analyzing channels...")
                         for idx, channel in enumerate(channels):
-                            if len(results) >= max_results:
-                                break
-
                             progress.progress(
                                 (idx + 1) / len(channels),
-                                text=f"Analyzing: {channel.get('title', 'Unknown')} ({idx+1}/{len(channels)}) — Matched: {len(results)}/{max_results}",
+                                text=f"Analyzing: {channel.get('title', 'Unknown')} ({idx+1}/{len(channels)})",
                             )
-
                             channel_id = channel.get("channel_id", "")
                             if not channel_id:
                                 continue
-
-                            # Get details & recent videos
                             details = yt.get_channel_details(channel_id)
                             videos = yt.get_recent_videos(channel_id, max_results=15)
-
-                            # Calculate metrics
                             median_views = calculate_median_views(videos)
                             engagement_rate = calculate_engagement_rate(videos)
                             consistency = calculate_consistency_score(videos)
                             content_lang = detect_content_language(videos)
                             sub_count = details.get("subscriber_count", 0)
-                            creator_score = calculate_creator_score(
-                                median_views, engagement_rate, consistency, sub_count,
-                            )
+                            creator_score = calculate_creator_score(median_views, engagement_rate, consistency, sub_count)
                             cpm = estimate_cpm_rate(median_views, "youtube", "60s_midroll")
-
-                            # Apply filters
-                            if min_subs > 0 and sub_count < min_subs:
-                                continue
-                            if max_subs > 0 and sub_count > max_subs:
-                                continue
-                            if min_engagement > 0 and engagement_rate < min_engagement:
-                                continue
-                            if min_views_filter > 0 and median_views < min_views_filter:
-                                continue
-                            if language_filter != "All Languages":
-                                lang_code = language_filter.split("(")[-1].rstrip(")")
-                                if content_lang != lang_code:
-                                    continue
-                            if has_sponsor_yt:
-                                has_sp = any(detector.detect_from_description(v.get('description', ''))['is_sponsored'] for v in videos)
-                                if not has_sp:
-                                    continue
-
                             creator_data = {
                                 "platform": "youtube",
                                 "platform_id": channel_id,
@@ -292,13 +263,10 @@ with tab1:
                                 "country": details.get("country", ""),
                                 "estimated_cpm_low": cpm["estimated_rate_low"],
                                 "estimated_cpm_high": cpm["estimated_rate_high"],
+                                "videos": videos,
                             }
-
-                            # Save to DB
                             db.upsert_creator(creator_data)
-                            creator_data["videos"] = videos
-                            results.append(creator_data)
-
+                            all_creators.append(creator_data)
                         progress.empty()
 
                 elif platform == "Instagram":
@@ -306,77 +274,50 @@ with tab1:
                         st.error("Instagram requires Apify API token. Add APIFY_API_TOKEN to your .env file.")
                     else:
                         fetch_pool = max(max_results * 5, 80)
-
                         if search_mode == "#️⃣ Hashtag":
-                            # Hashtag search: single wide scrape
                             scrape_status = st.empty()
-                            scrape_status.info("🔍 Round 1 — Scraping hashtag posts...")
+                            scrape_status.info("🔍 Scraping hashtag posts...")
                             profiles = ig.search_by_hashtag(clean_query, max_results=max_results, fetch_limit=fetch_pool)
                             scrape_status.empty()
                         else:
-                            # Keyword search: multi-round query variation scraping
                             round_progress = st.progress(0, text="🔍 Starting multi-round Instagram scrape...")
                             round_status = st.empty()
 
                             def ig_round_callback(round_num, total_rounds, variant, found_so_far):
-                                pct = round_num / total_rounds
                                 round_progress.progress(
-                                    pct,
-                                    text=f"🔄 Round {round_num}/{total_rounds} — Searching '{variant}' | Candidates collected: {found_so_far}"
+                                    round_num / total_rounds,
+                                    text=f"🔄 Round {round_num}/{total_rounds} — Searching '{variant}' | Found: {found_so_far} candidates"
                                 )
-                                round_status.info(f"📡 Scraping variation **'{variant}'** (Round {round_num} of {total_rounds}) — {found_so_far} unique creators found so far")
+                                round_status.info(f"📡 Scraping variation **'{variant}'** ({round_num}/{total_rounds}) — {found_so_far} unique profiles so far")
 
                             profiles = ig.search_profiles(
-                                clean_query,
-                                max_results=max_results,
-                                fetch_limit=fetch_pool,
-                                progress_callback=ig_round_callback
+                                clean_query, max_results=max_results,
+                                fetch_limit=fetch_pool, progress_callback=ig_round_callback
                             )
                             round_progress.empty()
                             round_status.empty()
 
                         if not profiles:
-                            st.warning(f"No Instagram creators returned by Apify for '{clean_query}'. Try a broader topic (e.g. 'fitness', 'beauty', 'tech') or a specific handle (e.g. '@mkbhd').")
+                            st.warning(f"No Instagram creators returned by Apify for '{clean_query}'. Try a different search term.")
                         else:
-                            st.info(f"✅ Collected **{len(profiles)} unique candidate profiles** — now applying your filters...")
+                            st.info(f"✅ Collected **{len(profiles)} candidate profiles** — building creator cards...")
                             progress = st.progress(0, text="Analyzing profiles...")
-                            all_unfiltered_creators = []
-                            tier_counts = {"Mega (1M+)": 0, "Macro (500K-1M)": 0, "Mid-Tier (100K-500K)": 0, "Micro (10K-100K)": 0, "Nano (1K-10K)": 0}
-
                             for idx, profile in enumerate(profiles):
-                                if len(results) >= max_results:
-                                    break
-
                                 progress.progress(
                                     (idx + 1) / len(profiles),
-                                    text=f"Analyzing: @{profile.get('username', 'unknown')} ({idx+1}/{len(profiles)}) — Matched: {len(results)}/{max_results}",
+                                    text=f"Analyzing: @{profile.get('username', 'unknown')} ({idx+1}/{len(profiles)})",
                                 )
-
                                 username = profile.get("username", "")
                                 if not username:
                                     continue
-
                                 posts = profile.get("posts", [])
                                 follower_count = profile.get("follower_count", 0)
-
-                                if follower_count >= 1000000:
-                                    tier_counts["Mega (1M+)"] += 1
-                                elif follower_count >= 500000:
-                                    tier_counts["Macro (500K-1M)"] += 1
-                                elif follower_count >= 100000:
-                                    tier_counts["Mid-Tier (100K-500K)"] += 1
-                                elif follower_count >= 10000:
-                                    tier_counts["Micro (10K-100K)"] += 1
-                                else:
-                                    tier_counts["Nano (1K-10K)"] += 1
-
-                                # Build post metrics
                                 post_metrics = [
                                     {
                                         "view_count": p.get("view_count", p.get("like_count", 0) * 10),
                                         "like_count": p.get("like_count", 0),
                                         "comment_count": p.get("comment_count", 0),
-                                        "title": p.get("caption", "")[:50],
+                                        "title": p.get("caption", ""),
                                         "description": "",
                                     }
                                     for p in posts
@@ -385,23 +326,17 @@ with tab1:
                                         "view_count": max(int(follower_count * 0.1), 100),
                                         "like_count": max(int(follower_count * 0.03), 10),
                                         "comment_count": max(int(follower_count * 0.002), 1),
-                                        "title": profile.get("biography", "")[:50],
+                                        "title": profile.get("biography", ""),
                                         "description": "",
                                     }
                                 ]
-
                                 median_views = calculate_median_views(post_metrics)
                                 engagement_rate = calculate_engagement_rate(post_metrics)
                                 consistency = calculate_consistency_score(post_metrics)
-                                # Use full bio + all captions (not truncated snippets) for accurate language detection
                                 content_lang = detect_ig_creator_language(profile)
-                                creator_score = calculate_creator_score(
-                                    median_views, engagement_rate, consistency, follower_count,
-                                )
+                                creator_score = calculate_creator_score(median_views, engagement_rate, consistency, follower_count)
                                 cpm = estimate_cpm_rate(median_views, "instagram", "reel")
-
                                 ig_sponsor_check = detector.detect_instagram_sponsors(posts)
-
                                 extra_meta = {
                                     "bio_email": profile.get("bio_email"),
                                     "is_verified": profile.get("is_verified", False),
@@ -411,7 +346,6 @@ with tab1:
                                     "sponsored_posts_count": ig_sponsor_check["total_sponsored_posts"],
                                     "detected_brands": list(ig_sponsor_check["brand_frequency"].keys()),
                                 }
-
                                 creator_data = {
                                     "platform": "instagram",
                                     "platform_id": username,
@@ -433,69 +367,103 @@ with tab1:
                                     "external_url": profile.get("external_url"),
                                     "sponsored_posts_count": ig_sponsor_check["total_sponsored_posts"],
                                     "detected_brands": list(ig_sponsor_check["brand_frequency"].keys()),
+                                    "posts": posts,
+                                    "videos": post_metrics,
                                 }
-
                                 db.upsert_creator(creator_data)
-                                creator_data["posts"] = posts
-                                creator_data["videos"] = post_metrics
-                                all_unfiltered_creators.append(creator_data)
-
-                                # Apply Instagram Advanced Filters
-                                if min_subs > 0 and follower_count < min_subs:
-                                    continue
-                                if max_subs > 0 and follower_count > max_subs:
-                                    continue
-                                if min_engagement > 0 and engagement_rate < min_engagement:
-                                    continue
-                                if min_posts > 0 and profile.get("post_count", len(posts)) < min_posts:
-                                    continue
-                                if language_filter != "All Languages":
-                                    lang_code = language_filter.split("(")[-1].rstrip(")")
-                                    # Reject if language doesn't match OR if detection returned 'unknown'
-                                    if content_lang == "unknown" or content_lang != lang_code:
-                                        continue
-                                if verified_only and not profile.get("is_verified", False):
-                                    continue
-                                if must_have_email and not profile.get("bio_email"):
-                                    continue
-                                if collab_only and ig_sponsor_check["total_sponsored_posts"] == 0:
-                                    continue
-
-                                results.append(creator_data)
-
+                                all_creators.append(creator_data)
                             progress.empty()
 
-                            st.session_state.all_scraped_creators = all_unfiltered_creators
-
-                            if len(profiles) > 0 and len(results) == 0:
-                                breakdown_str = ", ".join(f"{k}: {v}" for k, v in tier_counts.items() if v > 0)
-                                st.warning(
-                                    f"⚠️ Scraped **{len(profiles)}** Instagram creators, but none matched your active filters.\n\n"
-                                    f"📊 **Follower Breakdown of Scraped Creators:** {breakdown_str}\n\n"
-                                    f"💡 *Tip: Broad terms ('fitness') rank major celebrity/macro accounts on Instagram. For Micro/Nano creators, try specific queries like 'calisthenics coach', 'pilates trainer', or 'mobility drills'.*"
-                                )
-
-                st.session_state.search_results = results
+                # Store ALL scraped creators — filters applied at display time
+                st.session_state.all_scraped_creators = all_creators
+                st.session_state.search_results = all_creators
 
     # ── Display Results ──
-    results = st.session_state.search_results
-    if not results and st.session_state.get("all_scraped_creators"):
-        if st.button("🔓 Show All Scraped Creators Anyway (Bypass Filter)", type="secondary"):
-            st.session_state.search_results = st.session_state.all_scraped_creators
-            st.rerun()
-    if results:
-        st.success(f"Found **{len(results)}** creators matching your criteria")
+    all_creators = st.session_state.get("all_scraped_creators", [])
+    if all_creators:
+        st.divider()
+        total_scraped = len(all_creators)
+
+        # ── Interactive filter bar (applied on top of already-fetched creators) ──
+        st.markdown("### 🎛️ Filter Results")
+        fc1, fc2, fc3, fc4, fc5 = st.columns([2, 2, 2, 2, 2])
+
+        with fc1:
+            display_tier_options = ["All Tiers", "Nano (1K–10K)", "Micro (10K–100K)", "Mid-Tier (100K–500K)", "Macro (500K–1M)", "Mega (1M+)"]
+            disp_tier = st.selectbox("Follower Tier", display_tier_options, key="disp_tier")
+        with fc2:
+            lang_opts = ["All Languages"] + [f"{name} ({code})" for code, name in SUPPORTED_LANGUAGES.items()]
+            disp_lang = st.selectbox("Content Language", lang_opts, key="disp_lang")
+        with fc3:
+            disp_min_er = st.number_input("Min Engagement %", min_value=0.0, value=0.0, step=0.5, key="disp_er")
+        with fc4:
+            disp_email = st.checkbox("📧 Has Email", key="disp_email")
+            disp_verified = st.checkbox("☑️ Verified Only", key="disp_verified")
+        with fc5:
+            disp_collab = st.checkbox("🤝 Has Collabs", key="disp_collab")
+            disp_sort = st.selectbox("Sort By", ["Creator Score", "Followers", "Engagement %", "Median Views"], key="disp_sort")
+
+        # Apply filters to the fetched set
+        tier_ranges = {
+            "Nano (1K–10K)": (1000, 10000),
+            "Micro (10K–100K)": (10000, 100000),
+            "Mid-Tier (100K–500K)": (100000, 500000),
+            "Macro (500K–1M)": (500000, 1000000),
+            "Mega (1M+)": (1000000, float("inf")),
+        }
+        results = []
+        for c in all_creators:
+            subs = c.get("subscriber_count", 0)
+            er = c.get("engagement_rate", 0.0)
+            clang = c.get("content_language", "unknown")
+
+            if disp_tier != "All Tiers":
+                lo, hi = tier_ranges[disp_tier]
+                if not (lo <= subs < hi):
+                    continue
+            if disp_lang != "All Languages":
+                lcode = disp_lang.split("(")[-1].rstrip(")")
+                if clang != lcode:
+                    continue
+            if disp_min_er > 0 and er < disp_min_er:
+                continue
+            if disp_email and not c.get("bio_email"):
+                continue
+            if disp_verified and not c.get("is_verified", False):
+                continue
+            if disp_collab and c.get("sponsored_posts_count", 0) == 0:
+                continue
+            results.append(c)
+
+        # Sort
+        sort_key = {
+            "Creator Score": lambda x: x.get("creator_score", 0),
+            "Followers": lambda x: x.get("subscriber_count", 0),
+            "Engagement %": lambda x: x.get("engagement_rate", 0.0),
+            "Median Views": lambda x: x.get("median_views", 0),
+        }[disp_sort]
+        results = sorted(results, key=sort_key, reverse=True)
+
+        matched = len(results)
+        if matched == 0:
+            st.warning(
+                f"⚠️ **{total_scraped} creators scraped, but 0 matched your current filters.**\n\n"
+                f"Try relaxing: set **Follower Tier → All Tiers**, **Content Language → All Languages**, or uncheck optional filters."
+            )
+        else:
+            st.success(f"Showing **{matched}** of {total_scraped} scraped creators — sorted by {disp_sort}")
 
         # Summary metrics row
-        m1, m2, m3, m4 = st.columns(4)
-        avg_score = sum(r["creator_score"] for r in results) / len(results)
-        avg_er = sum(r["engagement_rate"] for r in results) / len(results)
-        avg_views = sum(r["median_views"] for r in results) / len(results)
-        total_reach = sum(r["median_views"] for r in results)
-        m1.metric("Avg Creator Score", f"{avg_score:.1f}/100")
-        m2.metric("Avg Engagement Rate", f"{avg_er:.2f}%")
-        m3.metric("Avg Median Views", f"{avg_views:,.0f}")
-        m4.metric("Total Potential Reach", f"{total_reach:,.0f}")
+        if results:
+            m1, m2, m3, m4 = st.columns(4)
+            avg_score = sum(r["creator_score"] for r in results) / len(results)
+            avg_er = sum(r["engagement_rate"] for r in results) / len(results)
+            avg_views = sum(r["median_views"] for r in results) / len(results)
+            total_reach = sum(r["median_views"] for r in results)
+            m1.metric("Avg Creator Score", f"{avg_score:.1f}/100")
+            m2.metric("Avg Engagement Rate", f"{avg_er:.2f}%")
+            m3.metric("Avg Median Views", f"{avg_views:,.0f}")
+            m4.metric("Total Potential Reach", f"{total_reach:,.0f}")
 
         st.divider()
 
