@@ -869,7 +869,7 @@ with tab3:
     with s_col4:
         crm_sort = st.selectbox(
             "Sort By",
-            ["Followers (High to Low)", "Median Views", "Creator Score", "Engagement Rate"],
+            ["Most Complete Profile", "Followers (High to Low)", "Median Views", "Creator Score", "Engagement Rate"],
             key="crm_sort_sel",
         )
 
@@ -938,7 +938,20 @@ with tab3:
         filtered_creators.append((c, extra))
 
     # Sort
+    def completeness_score(item):
+        c, extra = item
+        score = 0
+        if extra.get("city"): score += 3
+        if extra.get("state"): score += 2
+        if extra.get("bio_email"): score += 3
+        if extra.get("phone"): score += 3
+        if extra.get("categories"): score += 2
+        if extra.get("address"): score += 1
+        if extra.get("commercial_notes"): score += 1
+        return score
+
     sort_functions = {
+        "Most Complete Profile": completeness_score,
         "Followers (High to Low)": lambda x: x[0].get("subscriber_count", 0),
         "Median Views": lambda x: x[0].get("median_views", 0),
         "Creator Score": lambda x: x[0].get("creator_score", 0),

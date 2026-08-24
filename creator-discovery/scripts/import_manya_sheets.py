@@ -15,6 +15,61 @@ import sqlite3
 import pandas as pd
 from typing import Dict, Any, Optional
 
+# Map generic sheet names to meaningful niche/category labels.
+# Sheets without named niches are inferred from context (barter = free collab,
+# paid fitness = fitness paid collab, etc.)
+SHEET_NICHE_MAP = {
+    "Sheet1":       "Barter / Skincare",
+    "Sheet2":       "Barter",
+    "Sheet3":       "Active Campaign",
+    "Paid fitness": "Fitness (Paid)",
+    "Sheet5":       "Beauty",
+    "Sheet6":       "Beauty",
+    "Sheet7":       "Beauty",
+    "Sheet8":       "Beauty",
+    "Sheet9":       "Fitness / Wellness",
+    "Sheet10":      "Beauty",
+    "Sheet11":      "Lifestyle",
+    "Sheet12":      "Lifestyle",
+    "Sheet13":      "Lifestyle",
+    "Sheet14":      "Lifestyle",
+    "Sheet15":      "Lifestyle",
+    "Sheet16":      "Lifestyle",
+    "Sheet17":      "Lifestyle",
+    "Sheet18":      "Lifestyle",
+    "Sheet19":      "Lifestyle",
+    "Sheet20":      "Lifestyle",
+    "Sheet21":      "Lifestyle",
+    "Sheet22":      "Fashion",
+    "Sheet23":      "Fashion",
+    "Sheet24":      "Fashion",
+    "Sheet25":      "Fashion",
+    "Sheet26":      "Fashion",
+    "Sheet27":      "Fashion",
+    "Sheet28":      "Fashion",
+    "Sheet29":      "Fashion",
+    "Yt":           "YouTube",
+    "Sheet31":      "Fitness (Paid)",
+    "Sheet32":      "Active Campaign",
+    "Sheet34":      "Lifestyle",
+    "Sheet35":      "Lifestyle",
+    "Sheet36":      "Skincare / Beauty",
+    "Sheet37":      "Lifestyle",
+    "Sheet38":      "Beauty / Skincare",
+    "Sheet39":      "Lifestyle",
+    "Skincare ":    "Skincare",
+    "Skincare":     "Skincare",
+    "Sheet41":      "Beauty",
+    "Sheet42":      "Beauty",
+    "Sheet43":      "Beauty",
+    "Sheet44":      "Fashion",
+    "Sheet45":      "YouTube",
+}
+
+def get_niche(sheet_name: str) -> str:
+    """Get human-readable niche label for a sheet name."""
+    return SHEET_NICHE_MAP.get(sheet_name, sheet_name.strip())
+
 
 def clean_handle(link_or_handle: Any) -> Optional[str]:
     """Extract clean Instagram/YouTube handle from link, text, or @handle."""
@@ -327,8 +382,8 @@ def run_master_import():
                 views = parse_num(row.get(views_col, 0)) if views_col else 0
                 cost = str(row.get(cost_col, '')).strip() if cost_col else ''
 
-                # Determine Category / Niche
-                category = sheet.strip()
+                # Determine Category / Niche (map sheet name → readable label)
+                category = get_niche(sheet)
 
                 # Determine key for creator
                 if handle:
