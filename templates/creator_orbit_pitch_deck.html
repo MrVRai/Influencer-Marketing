@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creator Orbit — Agency Credentials & Pitch Deck</title>
+  <style>
+    :root {
+      --primary: #4F46E5;
+      --primary-dark: #3730A3;
+      --accent: #EC4899;
+      --bg: #0F172A;
+      --card-bg: #1E293B;
+      --text: #F8FAFC;
+      --text-muted: #94A3B8;
+      --border: #334155;
+      --success: #10B981;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.2) 0%, rgba(236, 72, 153, 0.2) 100%);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      margin-bottom: 30px;
+    }
+
+    .logo-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba(79, 70, 229, 0.3);
+      border: 1px solid var(--primary);
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #A5B4FC;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 10px;
+      background: linear-gradient(to right, #FFFFFF, #CBD5E1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .tagline {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 650px;
+      margin: 0 auto 20px auto;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 32px;
+      font-weight: 800;
+      color: #818CF8;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin: 35px 0 16px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .packages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .pkg-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .pkg-card.featured {
+      border-color: var(--primary);
+      box-shadow: 0 0 25px rgba(79, 70, 229, 0.25);
+    }
+
+    .pkg-badge {
+      position: absolute;
+      top: -12px;
+      right: 20px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+    }
+
+    .pkg-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .pkg-price {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--success);
+      margin-bottom: 16px;
+    }
+
+    .pkg-features {
+      list-style: none;
+      margin-bottom: 20px;
+    }
+
+    .pkg-features li {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .pkg-features li::before {
+      content: "✓";
+      color: var(--success);
+      font-weight: bold;
+    }
+
+    .table-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 30px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: rgba(15, 23, 42, 0.6);
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    td { color: var(--text-muted); }
+    td strong { color: var(--text); }
+
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .wf-step {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .wf-num {
+      width: 28px;
+      height: 28px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .wf-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .wf-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .footer-box {
+      text-align: center;
+      padding: 30px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      margin-top: 15px;
+      transition: background 0.2s;
+    }
+
+    .cta-btn:hover {
+      background: var(--primary-dark);
+    }
+
+    @media print {
+      body { background: #fff; color: #000; padding: 0; }
+      .header, .stat-card, .pkg-card, .table-box, .wf-step, .footer-box {
+        border-color: #ddd;
+        background: #fafafa !important;
+        box-shadow: none !important;
+      }
+      h1, .stat-num, td strong { color: #000 !important; -webkit-text-fill-color: initial !important; }
+      .pkg-price { color: #059669 !important; }
+      .cta-btn { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="logo-badge">🌌 Creator Orbit Media</div>
+    <h1>Performance Creator Marketing for D2C Brands</h1>
+    <p class="tagline">Turning high-converting Indian creators into your brand’s most profitable customer acquisition channel.</p>
+  </div>
+
+  <!-- Key Metrics -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-num">4,300+</div>
+      <div class="stat-label">Direct Creator Network</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">0%</div>
+      <div class="stat-label">Middlemen Markup</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">7-10 Days</div>
+      <div class="stat-label">Campaign Turnaround</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">8.4%</div>
+      <div class="stat-label">Avg Engagement Rate</div>
+    </div>
+  </div>
+
+  <!-- Process -->
+  <h2 class="section-title">⚙️ How We Execute Your Campaign</h2>
+  <div class="workflow-grid">
+    <div class="wf-step">
+      <div class="wf-num">1</div>
+      <div class="wf-title">Custom Shortlist</div>
+      <div class="wf-desc">Audience demographic & engagement match</div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-num">2</div>
+      <div class="wf-title">Conversion Briefs</div>
+      <div class="wf-desc">High-hook scripts & clear call-to-actions</div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-num">3</div>
+      <div class="wf-title">Hamper Logistics</div>
+      <div class="wf-desc">100% address verification & dispatch</div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-num">4</div>
+      <div class="wf-title">Draft QC</div>
+      <div class="wf-desc">Pre-approved drafts before publishing</div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-num">5</div>
+      <div class="wf-title">Ad Codes & ROI</div>
+      <div class="wf-desc">Partnership ad codes for Meta scaling</div>
+    </div>
+  </div>
+
+  <!-- Pricing Packages -->
+  <h2 class="section-title">📦 Battle-Tested Campaign Packages</h2>
+  <div class="packages-grid">
+    <!-- Starter Pilot -->
+    <div class="pkg-card">
+      <div>
+        <div class="pkg-title">Starter Pilot</div>
+        <div class="pkg-price">₹35,000 – ₹50,000</div>
+        <ul class="pkg-features">
+          <li><strong>5–7 Micro Creators</strong></li>
+          <li>150K–250K Est. Organic Views</li>
+          <li>Dedicated Reels + Story Links</li>
+          <li>Script Briefing & Hamper Tracking</li>
+          <li>Meta Partnership Ad Codes</li>
+        </ul>
+      </div>
+      <div style="font-size:12px; color:var(--text-muted);">Ideal for: New product testing</div>
+    </div>
+
+    <!-- Growth Scaler -->
+    <div class="pkg-card featured">
+      <div class="pkg-badge">Most Popular</div>
+      <div>
+        <div class="pkg-title">Growth Scaler</div>
+        <div class="pkg-price">₹85,000 – ₹1,25,000</div>
+        <ul class="pkg-features">
+          <li><strong>12–15 Curated Creators</strong> (Micro + Mid mix)</li>
+          <li>450K–750K Est. Organic Views</li>
+          <li>15 Dedicated Reels + 30 Stories</li>
+          <li>Full Whitelisting & Ad Code Rights</li>
+          <li>Detailed Performance Analytics Report</li>
+        </ul>
+      </div>
+      <div style="font-size:12px; color:var(--text-muted);">Ideal for: Monthly customer acquisition</div>
+    </div>
+
+    <!-- Viral Blitz -->
+    <div class="pkg-card">
+      <div>
+        <div class="pkg-title">Viral Blitz</div>
+        <div class="pkg-price">₹2,20,000 – ₹3,50,000</div>
+        <ul class="pkg-features">
+          <li><strong>25–30 Creators across India</strong></li>
+          <li>1.2M – 2M+ Guaranteed Reach</li>
+          <li>Multi-platform (Instagram + YouTube)</li>
+          <li>Multi-angle hooks & A/B testing</li>
+          <li>Dedicated Account Manager</li>
+        </ul>
+      </div>
+      <div style="font-size:12px; color:var(--text-muted);">Ideal for: Category dominance & sales blitz</div>
+    </div>
+  </div>
+
+  <!-- Economics Comparison -->
+  <h2 class="section-title">📊 Why Direct Creator Pricing Wins</h2>
+  <div class="table-box">
+    <table>
+      <thead>
+        <tr>
+          <th>Campaign Factor</th>
+          <th>Traditional Agency</th>
+          <th>Creator Orbit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Creator Commercials</strong></td>
+          <td>40% – 100% hidden markup</td>
+          <td><strong style="color:var(--success);">0% Direct creator pricing</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Agency Retainer</strong></td>
+          <td>₹50,000+/month lock-in</td>
+          <td><strong style="color:var(--success);">Pay-per-campaign (No retainers)</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Ad Whitelisting Rights</strong></td>
+          <td>Extra fee (₹10K/creator)</td>
+          <td><strong style="color:var(--success);">Included upfront</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Effective Cost Per View (CPV)</strong></td>
+          <td>₹0.60 – ₹1.20</td>
+          <td><strong style="color:var(--success);">₹0.15 – ₹0.30</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Footer / Contact -->
+  <div class="footer-box">
+    <h3 style="font-size: 20px; margin-bottom: 8px;">Ready to Launch Your Next High-ROI Campaign?</h3>
+    <p style="color: var(--text-muted); font-size: 14px;">Let our team build a custom 1-page creator roster tailored specifically for your brand.</p>
+    <div style="margin-top: 15px; font-size: 14px;">
+      <strong>Vedant Rai & Manya Jain</strong> | Co-Founders, Creator Orbit<br>
+      <span style="color: #818CF8;">hello@creatororbit.in</span> | New Delhi / Mumbai
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
