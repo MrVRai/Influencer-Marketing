@@ -117,6 +117,36 @@ Creator Orbit
 
 ---
 
+### Angle D: The "Massive Volume Barter / Product Seeding" Pitch (200 to 1,000+ Creators)
+*Best for: Physical D2C brands (Skincare, Beauty, Snacks, Beverages, Fashion) looking to flood Instagram & YouTube with hundreds of organic reviews and unboxing reels.*
+
+```text
+Subject: Seeding [Brand Name] with 200–500 creators across India (800K+ organic views)
+
+Hi [First Name],
+
+Loved how [Brand Name] is scaling [Product Name]. If you're looking to generate massive user-generated content (UGC) and dominate social feeds this quarter, we have a ready program for you.
+
+At Creator Orbit, we manage end-to-end **High-Volume Barter & Product Seeding Campaigns**:
+
+• **Scale Options**: 200, 500, or 1,000+ verified creators across India
+• **Deliverables per Creator**: 1 Dedicated Reel + 1 Story + 1 YouTube Shorts/Post
+• **Expected Reach**: 800K to 2.5M+ organic views (avg. 4K–5K views/creator)
+• **End-to-End Management**: We handle 100% of creator shortlisting, shipping address verification, tracking follow-ups, draft monitoring, and post analytics.
+
+All you do is ship the product hampers — our operations team handles the rest.
+
+Would you be open to seeing our 1-page Barter Campaign Overview and package economics?
+
+Best regards,
+
+Vedant Rai & Manya Jain
+Co-Founders | Creator Orbit
+WhatsApp: +91 [Your Phone] | hello@creatororbit.in
+```
+
+---
+
 ## 3. LinkedIn Outreach
 
 ### Connection Request Note (Max 300 Characters):

@@ -53,6 +53,8 @@ graph LR
 
 ## 💰 4. Campaign Packages for Brands
 
+### A. High-Impact Paid & Whitelisted Packages (Curated Creators)
+
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║  PACKAGE 1: STARTER PILOT (Test & Validate)                                  ║
@@ -81,6 +83,53 @@ graph LR
 ║  • Budget: ₹2,20,000 – ₹3,50,000 (All-inclusive)                             ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
+
+---
+
+### B. High-Volume Barter & Product Seeding Packages (Scale UGC & Awareness)
+
+We offer scalable influencer marketing campaigns tailored to different brand requirements and campaign volumes. All barter packages include **end-to-end creator sourcing, coordination, address verification, campaign management, and deliverable tracking**.
+
+#### 1. 200+ Creator Campaign
+* **Campaign Size**: 200+ Creators
+* **Deliverables per Creator**:
+  * 1 Instagram Reel
+  * 1 YouTube Post/Shorts (where applicable)
+  * 1 Static Instagram Story
+* **Average Expected Views**: 4K–5K per creator (**800K – 1,000,000+ Total Views**)
+* **Estimated Campaign Budget**: **₹2,75,000 – ₹3,00,000**
+* **Best for**: Product launches, targeted awareness campaigns, and brands looking to test influencer marketing at scale.
+
+#### 2. 500+ Creator Campaign
+* **Campaign Size**: 500+ Creators
+* **Deliverables per Creator**:
+  * 1 Instagram Reel
+  * 1 YouTube Post/Shorts (where applicable)
+  * 1 Static Instagram Story
+* **Average Expected Views**: 4K–5K per creator (**2,000,000 – 2,500,000+ Total Views**)
+* **Estimated Campaign Budget**: **₹3,50,000 – ₹4,00,000**
+* **Best for**: Brands aiming for stronger reach, massive UGC content volume, and wider audience penetration.
+
+#### 3. 1,000+ Creator Campaign
+* **Campaign Size**: 1,000+ Creators
+* **Deliverables per Creator**:
+  * 1 Instagram Reel
+  * 1 YouTube Post/Shorts (where applicable)
+  * 1 Static Instagram Story
+* **Average Expected Views**: 4K–5K per creator (**4,000,000 – 5,000,000+ Total Views**)
+* **Estimated Campaign Budget**: **₹9,00,000 – ₹10,00,000**
+* **Best for**: Large-scale brand awareness, nationwide product seeding, viral category dominance, and maximum creator-led visibility.
+
+> **What We Provide with Every Barter Campaign**:
+> * Full creator sourcing, vetting, and shortlisting
+> * Campaign strategy, angles, and content guidelines
+> * End-to-end shipping address verification & dispatch coordination
+> * Creator follow-ups, timeline tracking, and reminder workflows
+> * Content quality check and link monitoring
+> * Final campaign performance report and view analytics
+> * Dedicated campaign management lead
+
+*(Campaign budgets may vary depending on creator category, product value, campaign requirements, timelines, and additional deliverables).*
 
 ---
 
