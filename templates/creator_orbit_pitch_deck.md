@@ -7,15 +7,15 @@
 ---
 
 ## 🎯 1. Who We Are
-**Creator Orbit** is a performance-first influencer marketing and creator intelligence agency based in India. We help D2C, e-commerce, and high-growth brands turn creators into their highest-ROI customer acquisition channel.
+**Creator Orbit** is a performance-first influencer marketing and creator intelligence agency based in India. We help D2C, e-commerce, and high-growth consumer brands flood social feeds with high-converting creator content at scale.
 
 ### Why Brands Work With Us:
 ```
 ┌─────────────────────────┬─────────────────────────┬─────────────────────────┐
-│   4,300+ DIRECT ROSTER   │   ZERO MIDDLEMEN MARKUP  │   END-TO-END EXECUTION  │
-│  Verified Indian creators│  Direct WhatsApp access │  From brief & hampers   │
-│   in Beauty, Fitness,   │  means 35-50% lower     │  to drafts, ad codes,   │
-│   Fashion & Lifestyle   │  campaign costs for you │  and performance metrics│
+│   4,300+ DIRECT ROSTER   │   SEAMLESS LOGISTICS    │   END-TO-END EXECUTION  │
+│  Verified Indian creators│  Clean dispatch sheets  │  We handle shortlisting,│
+│   in Beauty, Fitness,   │  sent to your warehouse │  drafts, follow-ups,    │
+│   Fashion & Lifestyle   │  for direct product ship│  and live link tracking │
 └─────────────────────────┴─────────────────────────┴─────────────────────────┘
 ```
 
@@ -26,140 +26,117 @@
 | Metric | Details |
 |---|---|
 | **Active Creators Managed** | **4,300+** Curated creators across India |
-| **Top Niches** | Skincare & Beauty (45%), Fitness & Wellness (25%), Fashion (20%), Lifestyle/Tech (10%) |
+| **Top Niches** | Skincare & Beauty (45%), Fitness & Wellness (25%), Fashion (20%), Food/Lifestyle (10%) |
 | **Geographic Coverage** | Delhi NCR, Mumbai, Bengaluru, Pune, Hyderabad, Kolkata, Jaipur, Chandigarh + Tier 2 hubs |
-| **Average Engagement Rate** | **6.8% – 14.2%** (Industry benchmark is 2.5%–4%) |
-| **Turnaround Time** | **7–10 Days** from contract signing to content going live |
+| **Average Organic Views** | **4,000 – 15,000+ views** per creator reel |
+| **Turnaround Time** | **7–10 Days** from product dispatch to content going live |
 
 ---
 
-## 🛠️ 3. What We Do (Full-Service Campaign Delivery)
+## ⚙️ 3. How We Execute Your Campaign (Frictionless Logistics)
 
 ```mermaid
 graph LR
-    A[1. Strategic Shortlist] --> B[2. Script & Briefing]
-    B --> C[3. Hamper Logistics]
+    A[1. Creator Sourcing & Address Verification] --> B[2. Brand Ships Hampers Directly]
+    B --> C[3. Creator Orbit Coordinates & Tracks]
     C --> D[4. Draft QC & Approval]
-    D --> E[5. Go-Live & Ad Codes]
+    D --> E[5. Go-Live & View Analytics Report]
 ```
 
-1. **Precision Matching**: We filter creators based on past view consistency, genuine engagement (no bot followers), and audience demographic fit.
-2. **High-Converting Angle Briefs**: We write creator briefs tailored for conversions (hook variations, 3-second retention, before/after formats, clear CTA).
-3. **Logistics & Gifting**: We manage 100% of address verification, sample hamper dispatch, and delivery tracking.
-4. **Draft QC & Approval**: Every draft is reviewed for brand safety, audio copyright, and brief compliance before you see it.
-5. **Whitelisting & Ad Codes**: We deliver Meta Partnership Ad codes so you can scale winning creator reels as paid ads.
+1. **Creator Recruitment & Address Verification**: We shortlist matching creators and compile 100% verified shipping addresses, phone numbers, and product variant preferences.
+2. **Direct Brand Dispatch**: We deliver a standardized dispatch sheet to your logistics/warehouse team. Your brand ships the product hampers directly to the creators (meaning zero warehousing middlemen markups).
+3. **Turnkey Coordination**: Our operations team handles all tracking reminders, delivery confirmations, and creator WhatsApp follow-ups.
+4. **Draft QC & Compliance**: Every reel draft is verified against brand guidelines, audio copyrights, and key messaging before going live.
+5. **Live Monitoring & Analytics**: We deliver a comprehensive live campaign tracker with post URLs, view counts, engagement rates, and raw UGC asset access.
 
 ---
 
 ## 💰 4. Campaign Packages for Brands
 
-### A. High-Impact Paid & Whitelisted Packages (Curated Creators)
+### 🎁 A. Scalable Barter & Product Seeding Programs (OUR HERO OFFERING)
+
+We offer scalable influencer marketing campaigns tailored to different brand requirements and campaign volumes. All barter packages include **end-to-end creator sourcing, address verification, campaign management, and deliverable tracking**.
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║  PACKAGE 1: STARTER PILOT (Test & Validate)                                  ║
-║  • 5–7 Curated Nano/Micro Creators                                           ║
-║  • Estimated Reach: 150,000 – 250,000 Organic Views                          ║
-║  • Deliverables: 5–7 Dedicated Reels + Story Links + Meta Ad Codes           ║
-║  • Ideal For: Testing a new product launch or creator marketing channel      ║
-║  • Budget: ₹35,000 – ₹50,000 (All-inclusive)                                 ║
+║  1. 200+ CREATOR CAMPAIGN (Starter Barter)                                   ║
+║  • Campaign Size: 200+ Creators                                              ║
+║  • Deliverables per Creator: 1 IG Reel + 1 Story + 1 YT Shorts (where app.)  ║
+║  • Average Expected Views: 4K–5K per creator (800K – 1,000,000+ Total Views) ║
+║  • Deliverable Management: Full address sheet + tracking + draft QC          ║
+║  • Estimated Campaign Budget: ₹2,75,000 – ₹3,00,000 (All-inclusive)          ║
+║  • Best for: Product launches & testing creator marketing at scale           ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║  PACKAGE 2: GROWTH SCALER (Most Popular)                                     ║
-║  • 12–15 Curated Creators (Micro + Mid-Tier Mix)                              ║
-║  • Estimated Reach: 450,000 – 750,000 Organic Views                          ║
-║  • Deliverables: 15 Reels + 30 Stories + Whitelisting Rights + Performance Rep║
-║  • Ideal For: Scaling monthly customer acquisition & brand search volume     ║
-║  • Budget: ₹85,000 – ₹1,25,000 (All-inclusive)                               ║
+║  2. 500+ CREATOR CAMPAIGN (Growth Seeding — Most Popular)                    ║
+║  • Campaign Size: 500+ Creators                                              ║
+║  • Deliverables per Creator: 1 IG Reel + 1 Story + 1 YT Shorts (where app.)  ║
+║  • Average Expected Views: 4K–5K per creator (2,000,000 – 2,500,000+ Views)  ║
+║  • Deliverable Management: Dedicated operations lead + live dashboard        ║
+║  • Estimated Campaign Budget: ₹3,50,000 – ₹4,00,000 (All-inclusive)          ║
+║  • Best for: Strong reach, massive UGC content volume & market penetration   ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║  PACKAGE 3: VIRAL BLITZ & SCALING                                            ║
-║  • 25–30 Creators across Tier 1 & Tier 2 Cities                              ║
-║  • Estimated Reach: 1,200,000 – 2,000,000+ Views                             ║
-║  • Deliverables: Multi-format (Instagram Reels + YouTube Shorts)             ║
-║  • Ideal For: Major sale events, festive campaigns, or category dominance    ║
-║  • Budget: ₹2,20,000 – ₹3,50,000 (All-inclusive)                             ║
+║  3. 1,000+ CREATOR CAMPAIGN (Viral Category Blitz)                           ║
+║  • Campaign Size: 1,000+ Creators                                            ║
+║  • Deliverables per Creator: 1 IG Reel + 1 Story + 1 YT Shorts (where app.)  ║
+║  • Average Expected Views: 4K–5K per creator (4,000,000 – 5,000,000+ Views)  ║
+║  • Deliverable Management: Nationwide dispatch sheet + comprehensive report  ║
+║  • Estimated Campaign Budget: ₹9,00,000 – ₹10,00,000 (All-inclusive)         ║
+║  • Best for: Large-scale brand awareness, category dominance & viral blitz   ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
-
----
-
-### B. High-Volume Barter & Product Seeding Packages (Scale UGC & Awareness)
-
-We offer scalable influencer marketing campaigns tailored to different brand requirements and campaign volumes. All barter packages include **end-to-end creator sourcing, coordination, address verification, campaign management, and deliverable tracking**.
-
-#### 1. 200+ Creator Campaign
-* **Campaign Size**: 200+ Creators
-* **Deliverables per Creator**:
-  * 1 Instagram Reel
-  * 1 YouTube Post/Shorts (where applicable)
-  * 1 Static Instagram Story
-* **Average Expected Views**: 4K–5K per creator (**800K – 1,000,000+ Total Views**)
-* **Estimated Campaign Budget**: **₹2,75,000 – ₹3,00,000**
-* **Best for**: Product launches, targeted awareness campaigns, and brands looking to test influencer marketing at scale.
-
-#### 2. 500+ Creator Campaign
-* **Campaign Size**: 500+ Creators
-* **Deliverables per Creator**:
-  * 1 Instagram Reel
-  * 1 YouTube Post/Shorts (where applicable)
-  * 1 Static Instagram Story
-* **Average Expected Views**: 4K–5K per creator (**2,000,000 – 2,500,000+ Total Views**)
-* **Estimated Campaign Budget**: **₹3,50,000 – ₹4,00,000**
-* **Best for**: Brands aiming for stronger reach, massive UGC content volume, and wider audience penetration.
-
-#### 3. 1,000+ Creator Campaign
-* **Campaign Size**: 1,000+ Creators
-* **Deliverables per Creator**:
-  * 1 Instagram Reel
-  * 1 YouTube Post/Shorts (where applicable)
-  * 1 Static Instagram Story
-* **Average Expected Views**: 4K–5K per creator (**4,000,000 – 5,000,000+ Total Views**)
-* **Estimated Campaign Budget**: **₹9,00,000 – ₹10,00,000**
-* **Best for**: Large-scale brand awareness, nationwide product seeding, viral category dominance, and maximum creator-led visibility.
 
 > **What We Provide with Every Barter Campaign**:
-> * Full creator sourcing, vetting, and shortlisting
-> * Campaign strategy, angles, and content guidelines
-> * End-to-end shipping address verification & dispatch coordination
-> * Creator follow-ups, timeline tracking, and reminder workflows
-> * Content quality check and link monitoring
-> * Final campaign performance report and view analytics
-> * Dedicated campaign management lead
+> * Creator sourcing and shortlisting
+> * Campaign strategy and planning
+> * End-to-end creator coordination
+> * Deliverable management and follow-ups
+> * Content tracking and campaign monitoring
+> * Performance reporting and campaign insights
+> * Dedicated campaign management team
 
 *(Campaign budgets may vary depending on creator category, product value, campaign requirements, timelines, and additional deliverables).*
 
 ---
 
-## 📈 5. Sample Campaign Economics (Why Direct Pricing Wins)
+### 💎 B. Curated Paid & Whitelisted Creator Packages (For Targeted Scale)
+
+For brands looking for curated mid-tier creators with guaranteed ad boosting & whitelisting rights:
+
+* **Starter Pilot (Paid)**: 5–7 Curated Creators | 150K–250K Views | **₹35,000 – ₹50,000**
+* **Growth Scaler (Paid)**: 12–15 Curated Creators | 450K–750K Views | **₹85,000 – ₹1,25,000**
+* **Viral Blitz (Paid)**: 25–30 Curated Creators | 1.2M–2M+ Views | **₹2,20,000 – ₹3,50,000**
+
+---
+
+## 📈 5. Why Direct Seeding Wins
 
 | Factor | Traditional Agency | Creator Orbit |
 |---|---|---|
-| **Creator Markups** | 40% – 100% hidden markup | **0% Direct creator pricing** |
-| **Management Retainer** | ₹50,000+/month flat fee | **Deliverables-based pilot** |
-| **Whitelisting Rights** | Charged extra (₹10K/creator) | **Included in package** |
-| **Campaign Turnaround** | 3–4 weeks | **7–10 business days** |
-| **Real Cost Per View (CPV)** | ₹0.60 – ₹1.20 | **₹0.15 – ₹0.30** |
+| **Coordination Burden** | Brand has to manage 100+ DMs | **100% turnkey managed by Creator Orbit** |
+| **Address Verification** | Messy & prone to return-to-origin | **Clean, phone-verified dispatch sheets** |
+| **Creator Follow-ups** | Low deliverable fulfillment | **Strict 7-day draft SLA & follow-up pipeline** |
+| **Effective Cost Per View** | ₹0.60 – ₹1.20 | **₹0.15 – ₹0.30** |
 
 ---
 
 ## 🤝 6. Simple Terms of Engagement
 
-* **Payment Milestone**: 50% Advance upon campaign sign-off; 50% upon final post verification.
-* **Turnaround Guarantee**: Drafts ready within 5–7 days of hamper delivery.
-* **Content Exclusivity**: 30-day category exclusivity included per creator.
-* **Usage Rights**: 90 days organic & paid digital advertising rights included.
+* **Milestone**: 50% Advance upon campaign sign-off; 50% upon deliverable completion & final report.
+* **Turnaround Guarantee**: Drafts submitted within 7 days of product delivery to creator.
+* **Content Usage**: 90 days organic digital re-use & reposting rights included.
 
 ---
 
 ## 📞 7. Ready to Launch Your Campaign?
 
-Let’s build your brand’s custom creator roster today.
+Let’s launch your 200–500 creator product seeding campaign today.
 
 * **Vedant Rai** | Co-Founder, Business & Operations
 * **Manya Jain** | Co-Founder, Creator Relations & Strategy
 * **Email**: hello@creatororbit.in / vedant@creatororbit.in
 * **WhatsApp**: +91-XXXXXXXXXX
-* **Office**: New Delhi / Remote India
+* **Location**: New Delhi / Mumbai (Pan-India Service)
