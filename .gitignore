@@ -33,3 +33,10 @@ exports/
 Thumbs.db
 .vscode/
 .idea/
+
+# Large data/media files (exceed GitHub 100MB limit)
+*.pdf
+*.PDF
+manya_info.pdf
+data/*.xlsx
+data/*.xls
