@@ -29,7 +29,8 @@
 | **Top Niches** | Skincare & Beauty (45%), Fitness & Wellness (25%), Fashion (20%), Food/Lifestyle (10%) |
 | **Geographic Coverage** | Delhi NCR, Mumbai, Bengaluru, Pune, Hyderabad, Kolkata, Jaipur, Chandigarh + Tier 2 hubs |
 | **Average Organic Views** | **4,000 – 15,000+ views** per creator reel |
-| **Turnaround Time** | **7–10 Days** from product dispatch to content going live |
+| **Average Engagement Rate** | **1.5% – 2.0%** (Real, verified organic engagement) |
+| **Turnaround Time** | **Around 15 Days** from product dispatch to content going live |
 
 ---
 
@@ -104,11 +105,11 @@ We offer scalable influencer marketing campaigns tailored to different brand req
 
 ### 💎 B. Curated Paid & Whitelisted Creator Packages (For Targeted Scale)
 
-For brands looking for curated mid-tier creators with guaranteed ad boosting & whitelisting rights:
+For brands looking for curated creators with guaranteed ad boosting & whitelisting rights:
 
-* **Starter Pilot (Paid)**: 5–7 Curated Creators | 150K–250K Views | **₹35,000 – ₹50,000**
-* **Growth Scaler (Paid)**: 12–15 Curated Creators | 450K–750K Views | **₹85,000 – ₹1,25,000**
-* **Viral Blitz (Paid)**: 25–30 Curated Creators | 1.2M–2M+ Views | **₹2,20,000 – ₹3,50,000**
+* **Starter Pilot (Paid)**: 5–7 Curated Creators | **50K – 200K Views** | **₹35,000 – ₹50,000**
+* **Growth Scaler (Paid)**: 12–15 Curated Creators (**Micro + Macro Mix**) | **200K+ Views** | **₹90,000 – ₹1,50,000**
+* **Viral Blitz (Paid)**: 25–30+ Creators across India | **1M+ Guaranteed Views** | **₹10,00,000+**
 
 ---
 
