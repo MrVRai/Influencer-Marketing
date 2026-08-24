@@ -141,14 +141,14 @@ For brands looking for curated creators with guaranteed ad boosting & whitelisti
 
 ---
 
-## 📈 5. Why Direct Seeding Wins
+## 📈 5. Model Comparison: Traditional Agency vs. Creator Orbit
 
-| Factor | Traditional Agency | Creator Orbit |
+| Campaign Factor | Traditional Agency Model | Creator Orbit Model |
 |---|---|---|
-| **Coordination Burden** | Brand has to manage 100+ DMs | **100% turnkey managed by Creator Orbit** |
-| **Address Verification** | Messy & prone to return-to-origin | **Clean, phone-verified dispatch sheets** |
-| **Creator Follow-ups** | Low deliverable fulfillment | **Strict 7-day draft SLA & follow-up pipeline** |
-| **Effective Cost Per View** | ₹0.60 – ₹1.20 | **₹0.15 – ₹0.30** |
+| **Creator Commercials** | Agency markups may apply | Transparent creator pricing |
+| **Agency Fees** | Monthly retainers may be required | Flexible pay-per-campaign model |
+| **Ad Whitelisting Rights** | May involve additional fees | Rights and costs defined upfront |
+| **Campaign Cost Efficiency** | Varies by campaign | Optimized for efficient creator spending |
 
 ---
 
