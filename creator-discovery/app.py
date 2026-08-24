@@ -1,9 +1,8 @@
 """
-Creator Discovery & Sponsorship Scraper — Streamlit Dashboard
-=============================================================
-A comprehensive tool for influencer marketing agencies to discover
-YouTube & Instagram creators, analyze performance metrics, detect
-past sponsorships, and manage campaign rosters.
+Creator Orbit — Influencer Intelligence & CRM Platform
+======================================================
+Performance-driven creator partnerships for high-growth brands.
+Co-Founders: Vedant Rai & Manya Jain
 """
 
 import streamlit as st
@@ -12,6 +11,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import sys
 import os
+import io
 
 # Add project root to path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -37,8 +37,8 @@ from utils.exporter import DataExporter
 
 # ─────────────────────────── Page Config ────────────────────────────
 st.set_page_config(
-    page_title="Creator Discovery Engine",
-    page_icon="🔍",
+    page_title="Creator Orbit — Influencer Intelligence & CRM",
+    page_icon="🚀",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -67,17 +67,18 @@ exporter = st.session_state.exporter
 
 # ─────────────────────────── Sidebar ────────────────────────────────
 with st.sidebar:
-    st.title("🔍 Creator Discovery")
-    st.caption("Influencer Marketing Agency Tool")
+    st.markdown("## 🚀 **Creator Orbit**")
+    st.caption("Performance Influencer Marketing Agency")
+    st.caption("Co-Founders: **Vedant Rai** & **Manya Jain**")
 
     st.divider()
 
     # API status indicators
-    st.subheader("🔌 API Status")
+    st.subheader("🔌 Data Connectors")
     if yt.api_available:
         st.success("✅ YouTube Data API — Connected")
     else:
-        st.warning("⚠️ YouTube API — Using scraper fallback")
+        st.warning("⚠️ YouTube — Scraper Mode Active")
 
     if ig.api_available:
         st.success("✅ Instagram (Apify) — Connected")
@@ -87,19 +88,22 @@ with st.sidebar:
     st.divider()
 
     # Database stats
-    st.subheader("📊 Database")
-    all_creators = db.search_creators(limit=9999)
+    st.subheader("🗄️ Master CRM Intelligence")
+    all_creators_count = len(db.search_creators(limit=99999))
     all_campaigns = db.get_all_campaigns()
     col1, col2 = st.columns(2)
-    col1.metric("Creators Saved", len(all_creators))
+    col1.metric("Vetted Creators", f"{all_creators_count:,}")
     col2.metric("Campaigns", len(all_campaigns))
+
+    st.divider()
+    st.caption("💼 *Creator Orbit Media © 2026*")
 
 
 # ─────────────────────────── Main Tabs ──────────────────────────────
 tab1, tab2, tab3 = st.tabs([
-    "🔎 Creator Discovery",
-    "📊 Channel Deep-Dive",
-    "📋 Campaign Roster & Export",
+    "🔎 Live Discovery & Scraper",
+    "📊 Channel Deep-Dive & Audit",
+    "🗄️ Creator Orbit Master CRM & Rosters",
 ])
 
 
@@ -806,177 +810,282 @@ with tab2:
 
 
 # ═══════════════════════════════════════════════════════════════════
-# TAB 3: Campaign Roster & Export
+# TAB 3: Creator Orbit Master CRM & Campaign Rosters
 # ═══════════════════════════════════════════════════════════════════
 with tab3:
-    st.header("Campaign Roster & Export")
+    st.header("🗄️ Creator Orbit Master CRM")
+    st.caption("Browse, search, and manage 3,000+ curated creators across India. Build customized client campaign rosters.")
 
-    # ── Campaign Management ──
-    mgmt_col1, mgmt_col2 = st.columns([2, 1])
+    # ── Master Database Intelligence Stats ──
+    all_raw_creators = db.search_creators(limit=99999)
+    total_crm = len(all_raw_creators)
 
-    with mgmt_col1:
-        new_campaign_name = st.text_input("Create New Campaign", placeholder="e.g. Q3 SaaS Launch")
-    with mgmt_col2:
-        st.write("")  # spacer
+    email_count = 0
+    phone_count = 0
+    city_count = 0
+    all_categories = set()
+
+    for c in all_raw_creators:
+        extra = c.get("extra_data") or {}
+        if isinstance(extra, str):
+            try:
+                extra = json.loads(extra)
+            except Exception:
+                extra = {}
+        if isinstance(extra, dict):
+            if extra.get("bio_email"):
+                email_count += 1
+            if extra.get("phone"):
+                phone_count += 1
+            if extra.get("city"):
+                city_count += 1
+            for cat in extra.get("categories", []):
+                if cat and str(cat).strip():
+                    all_categories.add(str(cat).strip())
+
+    stat_col1, stat_col2, stat_col3, stat_col4 = st.columns(4)
+    stat_col1.metric("Total Creators in CRM", f"{total_crm:,}")
+    stat_col2.metric("📧 Verified Emails", f"{email_count:,}")
+    stat_col3.metric("📱 Direct Phone / WhatsApp", f"{phone_count:,}")
+    stat_col4.metric("📍 Cities Covered", f"{city_count:,}")
+
+    st.divider()
+
+    # ── Search & Filter Controls ──
+    st.subheader("🔍 Search & Filter Database")
+    s_col1, s_col2, s_col3, s_col4 = st.columns([3, 2, 2, 2])
+
+    with s_col1:
+        crm_keyword = st.text_input(
+            "Search Creators",
+            placeholder="Search by name, handle, city (e.g. Mumbai, Delhi), email, niche...",
+            key="crm_search_kw",
+        )
+    with s_col2:
+        tier_opts = ["All Tiers", "Nano (1K–10K)", "Micro (10K–100K)", "Mid-Tier (100K–500K)", "Macro (500K–1M)", "Mega (1M+)"]
+        crm_tier = st.selectbox("Follower Tier", tier_opts, key="crm_tier_sel")
+    with s_col3:
+        crm_platform = st.selectbox("Platform", ["All Platforms", "Instagram", "YouTube"], key="crm_plat_sel")
+    with s_col4:
+        crm_sort = st.selectbox(
+            "Sort By",
+            ["Followers (High to Low)", "Median Views", "Creator Score", "Engagement Rate"],
+            key="crm_sort_sel",
+        )
+
+    f_chk1, f_chk2, f_chk3 = st.columns([2, 2, 6])
+    with f_chk1:
+        req_email = st.checkbox("📧 Has Email Only", value=False, key="crm_req_email")
+    with f_chk2:
+        req_phone = st.checkbox("📱 Has Phone / WhatsApp", value=False, key="crm_req_phone")
+
+    # Fetch and filter
+    tier_ranges = {
+        "Nano (1K–10K)": (1000, 10000),
+        "Micro (10K–100K)": (10000, 100000),
+        "Mid-Tier (100K–500K)": (100000, 500000),
+        "Macro (500K–1M)": (500000, 1000000),
+        "Mega (1M+)": (1000000, float("inf")),
+    }
+
+    filtered_creators = []
+    for c in all_raw_creators:
+        extra = c.get("extra_data") or {}
+        if isinstance(extra, str):
+            try:
+                extra = json.loads(extra)
+            except Exception:
+                extra = {}
+        if not isinstance(extra, dict):
+            extra = {}
+
+        # Keyword match
+        if crm_keyword:
+            kw = crm_keyword.lower().strip()
+            name_str = str(c.get("name", "")).lower()
+            handle_str = str(c.get("platform_id", "")).lower()
+            city_str = str(extra.get("city", "")).lower()
+            state_str = str(extra.get("state", "")).lower()
+            email_str = str(extra.get("bio_email", "")).lower()
+            phone_str = str(extra.get("phone", "")).lower()
+            cat_str = " ".join(str(cat).lower() for cat in extra.get("categories", []))
+
+            if not (kw in name_str or kw in handle_str or kw in city_str or kw in state_str or kw in email_str or kw in phone_str or kw in cat_str):
+                continue
+
+        # Platform match
+        if crm_platform != "All Platforms" and c.get("platform", "").lower() != crm_platform.lower():
+            continue
+
+        # Follower tier match
+        subs = c.get("subscriber_count", 0)
+        if crm_tier != "All Tiers":
+            lo, hi = tier_ranges[crm_tier]
+            if not (lo <= subs < hi):
+                continue
+
+        # Email & Phone checkboxes
+        if req_email and not extra.get("bio_email"):
+            continue
+        if req_phone and not extra.get("phone"):
+            continue
+
+        filtered_creators.append((c, extra))
+
+    # Sort
+    sort_functions = {
+        "Followers (High to Low)": lambda x: x[0].get("subscriber_count", 0),
+        "Median Views": lambda x: x[0].get("median_views", 0),
+        "Creator Score": lambda x: x[0].get("creator_score", 0),
+        "Engagement Rate": lambda x: x[0].get("engagement_rate", 0),
+    }
+    filtered_creators = sorted(filtered_creators, key=sort_functions[crm_sort], reverse=True)
+
+    st.markdown(f"Found **{len(filtered_creators):,}** matching creators")
+
+    # ── Display Table ──
+    table_rows = []
+    for c, extra in filtered_creators[:200]:  # Limit preview to top 200 for fast UI rendering
+        cats = ", ".join(extra.get("categories", []))
+        table_rows.append({
+            "Name": c.get("name") or c.get("platform_id"),
+            "Handle": f"@{c.get('platform_id')}",
+            "Platform": c.get("platform", "instagram").title(),
+            "Followers": f"{c.get('subscriber_count', 0):,}",
+            "Avg Views": f"{c.get('median_views', 0):,}",
+            "Email": extra.get("bio_email") or "—",
+            "Phone / WA": extra.get("phone") or "—",
+            "City / State": f"{extra.get('city', '')} {extra.get('state', '')}".strip() or "—",
+            "Commercials": extra.get("commercial_notes") or "—",
+            "Niche / Tags": cats[:35] + ("..." if len(cats) > 35 else "") if cats else "—",
+        })
+
+    if table_rows:
+        st.dataframe(pd.DataFrame(table_rows), use_container_width=True, hide_index=True)
+    else:
+        st.warning("No creators matched your current search filters. Try clearing the keyword or relaxing filters.")
+
+    # ── Bulk Export Action ──
+    st.divider()
+    exp_col_a, exp_col_b = st.columns([3, 1])
+    with exp_col_a:
+        st.markdown(f"📥 **Export {len(filtered_creators):,} Filtered Creators to Excel**")
+        st.caption("Exports all matching records with verified emails, phones, locations, and commercials.")
+    with exp_col_b:
+        if filtered_creators:
+            # Build full export dataframe
+            export_data = []
+            for c, extra in filtered_creators:
+                export_data.append({
+                    "Creator Name": c.get("name"),
+                    "Instagram Handle": f"@{c.get('platform_id')}",
+                    "Followers": c.get("subscriber_count", 0),
+                    "Estimated Avg Views": c.get("median_views", 0),
+                    "Engagement Rate (%)": c.get("engagement_rate", 0),
+                    "Contact Email": extra.get("bio_email", ""),
+                    "Phone / WhatsApp": extra.get("phone", ""),
+                    "City": extra.get("city", ""),
+                    "State": extra.get("state", ""),
+                    "Niche Categories": ", ".join(extra.get("categories", [])),
+                    "Commercial Notes": extra.get("commercial_notes", ""),
+                    "Source Sheet": ", ".join(extra.get("source_sheets", [])),
+                })
+            df_exp = pd.DataFrame(export_data)
+
+            # Excel bytes in memory
+            buffer = io.BytesIO()
+            with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
+                df_exp.to_excel(writer, index=False, sheet_name='Creator Orbit CRM')
+            buffer.seek(0)
+
+            st.download_button(
+                label="📥 Download Excel (.xlsx)",
+                data=buffer,
+                file_name="Creator_Orbit_CRM_Export.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                use_container_width=True,
+                type="primary"
+            )
+
+    # ── Campaign Rosters & Client Pitch Builder ──
+    st.divider()
+    st.subheader("📋 Campaign Rosters & Client Pitch Builder")
+
+    c_mgmt1, c_mgmt2 = st.columns([3, 1])
+    with c_mgmt1:
+        new_campaign_name = st.text_input("Create a New Client Campaign", placeholder="e.g. Nykaa Skincare Q3, Minimalist Sunscreen Launch...")
+    with c_mgmt2:
         st.write("")
-        if st.button("➕ Create Campaign") and new_campaign_name:
+        st.write("")
+        if st.button("➕ Create Campaign", use_container_width=True) and new_campaign_name:
             db.create_campaign(new_campaign_name)
             st.success(f"Campaign '{new_campaign_name}' created!")
             st.rerun()
 
-    st.divider()
+    existing_campaigns = db.get_all_campaigns()
+    if existing_campaigns:
+        camp_names = {c["campaign_name"]: c["id"] for c in existing_campaigns}
+        active_camp = st.selectbox("Select Active Campaign", list(camp_names.keys()))
 
-    # ── Existing Campaigns ──
-    campaigns = db.get_all_campaigns()
-    if campaigns:
-        campaign_names = {c["campaign_name"]: c["id"] for c in campaigns}
-        selected_campaign = st.selectbox(
-            "Select Campaign",
-            list(campaign_names.keys()),
-        )
+        if active_camp:
+            camp_id = camp_names[active_camp]
 
-        if selected_campaign:
-            campaign_id = campaign_names[selected_campaign]
+            # Add creator multi-select
+            st.markdown(f"**Add Creators to '{active_camp}'**")
+            all_options = {f"{c.get('name')} (@{c.get('platform_id')}) - {c.get('subscriber_count',0):,} followers": c["id"] for c in all_raw_creators[:500]}
+            
+            sel_add1, sel_add2 = st.columns([4, 1])
+            with sel_add1:
+                chosen_creators = st.multiselect("Pick creators to add to this campaign", list(all_options.keys()))
+            with sel_add2:
+                st.write("")
+                st.write("")
+                if st.button("➕ Add Selected", use_container_width=True) and chosen_creators:
+                    for item in chosen_creators:
+                        c_id = all_options[item]
+                        db.add_to_campaign(camp_id, c_id)
+                    st.success(f"Added {len(chosen_creators)} creators to '{active_camp}'!")
+                    st.rerun()
 
-            # Add creator to campaign
-            st.subheader("Add Creators to Campaign")
-            saved_creators = db.search_creators(limit=200)
-            if saved_creators:
-                creator_options = {
-                    f"{c['name']} ({c['platform']})": c["id"] for c in saved_creators
-                }
-                add_col1, add_col2 = st.columns([3, 1])
-                with add_col1:
-                    selected_to_add = st.multiselect(
-                        "Select creators to add",
-                        list(creator_options.keys()),
-                    )
-                with add_col2:
-                    st.write("")
-                    st.write("")
-                    if st.button("➕ Add to Campaign") and selected_to_add:
-                        for name in selected_to_add:
-                            creator_id = creator_options[name]
-                            db.add_to_campaign(campaign_id, creator_id)
-                        st.success(f"Added {len(selected_to_add)} creators to '{selected_campaign}'")
-                        st.rerun()
-
-            # Show campaign roster
-            st.divider()
-            st.subheader(f"📋 Roster: {selected_campaign}")
-            roster = db.get_campaign_creators(campaign_id)
-
+            # Display Campaign Roster
+            roster = db.get_campaign_creators(camp_id)
             if roster:
-                roster_df = pd.DataFrame([
-                    {
-                        "Name": c["name"],
-                        "Platform": c["platform"].title(),
-                        "Subscribers": f"{c.get('subscriber_count', 0):,}",
+                st.markdown(f"### 📋 Roster for **{active_camp}** ({len(roster)} creators)")
+                
+                r_rows = []
+                for c in roster:
+                    ex = c.get("extra_data") or {}
+                    if isinstance(ex, str):
+                        try:
+                            ex = json.loads(ex)
+                        except Exception:
+                            ex = {}
+                    if not isinstance(ex, dict):
+                        ex = {}
+
+                    r_rows.append({
+                        "Name": c.get("name"),
+                        "Handle": f"@{c.get('platform_id')}",
+                        "Followers": f"{c.get('subscriber_count', 0):,}",
                         "Median Views": f"{c.get('median_views', 0):,}",
-                        "Engagement Rate": f"{c.get('engagement_rate', 0):.2f}%",
-                        "Language": get_language_name(c.get("content_language", "unknown")),
+                        "Contact Email": ex.get("bio_email") or "—",
+                        "Phone / WhatsApp": ex.get("phone") or "—",
+                        "Location": f"{ex.get('city', '')} {ex.get('state', '')}".strip() or "—",
                         "Est. Rate": f"${c.get('estimated_cpm_low', 0):,.0f} – ${c.get('estimated_cpm_high', 0):,.0f}",
-                        "Score": c.get("creator_score", 0),
-                        "Status": c.get("status", "shortlisted"),
-                    }
-                    for c in roster
-                ])
-                st.dataframe(roster_df, use_container_width=True, hide_index=True)
+                        "Status": c.get("status", "shortlisted").title(),
+                    })
 
-                # Export buttons
-                st.divider()
-                exp_col1, exp_col2, exp_col3 = st.columns(3)
+                st.dataframe(pd.DataFrame(r_rows), use_container_width=True, hide_index=True)
 
-                with exp_col1:
-                    if st.button("📥 Export as CSV"):
-                        filepath = exporter.export_campaign_roster(
-                            selected_campaign, roster, format="csv",
-                        )
-                        st.success(f"Exported to: `{filepath}`")
+                r_m1, r_m2 = st.columns(2)
+                tot_views = sum(c.get("median_views", 0) for c in roster)
+                r_m1.metric("Total Expected Campaign Reach", f"{tot_views:,} views")
+                r_m2.metric("Total Creators in Roster", len(roster))
 
-                with exp_col2:
-                    if st.button("📥 Export as Excel"):
-                        filepath = exporter.export_campaign_roster(
-                            selected_campaign, roster, format="excel",
-                        )
-                        st.success(f"Exported to: `{filepath}`")
-
-                with exp_col3:
-                    # Quick stats
-                    total_reach = sum(c.get("median_views", 0) for c in roster)
-                    avg_er = sum(c.get("engagement_rate", 0) for c in roster) / len(roster) if roster else 0
-                    st.metric("Total Campaign Reach", f"{total_reach:,}")
-                    st.metric("Avg Engagement Rate", f"{avg_er:.2f}%")
+                # Export Roster
+                if st.button("📤 Export Branded Client Media Plan (.xlsx)", type="primary"):
+                    fpath = exporter.export_campaign_roster(active_camp, roster, format="excel")
+                    st.success(f"Branded Campaign Roster saved to: `{fpath}`")
             else:
-                st.info("No creators in this campaign yet. Add creators from the list above.")
-    else:
-        st.info("No campaigns created yet. Create your first campaign above!")
+                st.info(f"No creators in '{active_camp}' yet. Select creators above and click 'Add Selected'.")
 
-    # ── Saved Creators Database ──
-    st.divider()
-    st.subheader("🗄️ All Saved Creators")
-
-    # Filters for saved data
-    db_col1, db_col2, db_col3 = st.columns(3)
-    with db_col1:
-        db_platform = st.selectbox("Filter Platform", ["All", "YouTube", "Instagram"], key="db_plat")
-    with db_col2:
-        db_language = st.selectbox(
-            "Filter Language",
-            ["All"] + [f"{name} ({code})" for code, name in SUPPORTED_LANGUAGES.items()],
-            key="db_lang",
-        )
-    with db_col3:
-        db_sort = st.selectbox(
-            "Sort By",
-            ["Creator Score", "Subscribers", "Median Views", "Engagement Rate"],
-            key="db_sort",
-        )
-
-    sort_map = {
-        "Creator Score": "creator_score",
-        "Subscribers": "subscriber_count",
-        "Median Views": "median_views",
-        "Engagement Rate": "engagement_rate",
-    }
-
-    query_params = {"sort_by": sort_map.get(db_sort, "creator_score"), "limit": 100}
-    if db_platform != "All":
-        query_params["platform"] = db_platform.lower()
-    if db_language != "All":
-        lang_code = db_language.split("(")[-1].rstrip(")")
-        query_params["language"] = lang_code
-
-    saved = db.search_creators(**query_params)
-
-    if saved:
-        saved_rows = []
-        for c in saved:
-            extra = c.get("extra_data") or {}
-            if isinstance(extra, str):
-                import json
-                try:
-                    extra = json.loads(extra)
-                except Exception:
-                    extra = {}
-            if not isinstance(extra, dict):
-                extra = {}
-
-            saved_rows.append({
-                "Name": c["name"],
-                "Platform": c["platform"].title(),
-                "Handle / ID": c["platform_id"],
-                "Followers / Subs": c.get("subscriber_count", 0),
-                "Median Views": c.get("median_views", 0),
-                "ER (%)": f"{c.get('engagement_rate', 0):.2f}%",
-                "Language": get_language_name(c.get("content_language", "unknown")),
-                "Score": c.get("creator_score", 0),
-                "Verified": "☑️ Yes" if extra.get("is_verified") else "No",
-                "Contact Email": extra.get("bio_email") or "—",
-                "Est. Rate": f"${c.get('estimated_cpm_low', 0):,.0f} – ${c.get('estimated_cpm_high', 0):,.0f}",
-            })
-
-        saved_df = pd.DataFrame(saved_rows)
-        st.dataframe(saved_df, use_container_width=True, hide_index=True)
-    else:
-        st.info("No creators saved yet. Use the Discovery tab to search and save creators.")

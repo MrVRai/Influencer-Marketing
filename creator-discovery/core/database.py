@@ -158,11 +158,16 @@ class CreatorDatabase:
     def search_creators(self, platform: Optional[str] = None, language: Optional[str] = None,
                         min_subscribers: Optional[int] = None, max_subscribers: Optional[int] = None,
                         min_engagement: Optional[float] = None, min_views: Optional[int] = None,
+                        keyword: Optional[str] = None,
                         sort_by: str = 'creator_score', limit: int = 50) -> List[Dict[str, Any]]:
         """Query creators with optional filters. Returns list of dicts."""
         query = "SELECT * FROM creators WHERE 1=1"
         params = []
 
+        if keyword:
+            kw = f"%{keyword.strip()}%"
+            query += " AND (name LIKE ? OR platform_id LIKE ? OR description LIKE ? OR extra_data LIKE ?)"
+            params.extend([kw, kw, kw, kw])
         if platform:
             query += " AND platform = ?"
             params.append(platform)
