@@ -858,7 +858,7 @@ with tab3:
     with s_col1:
         crm_keyword = st.text_input(
             "Search Creators",
-            placeholder="Search by name, handle, city (e.g. Mumbai, Delhi), email, niche...",
+            placeholder="Search by name, handle, city (e.g. Mumbai, Delhi), email, phone, niche...",
             key="crm_search_kw",
         )
     with s_col2:
@@ -873,11 +873,13 @@ with tab3:
             key="crm_sort_sel",
         )
 
-    f_chk1, f_chk2, f_chk3 = st.columns([2, 2, 6])
+    f_chk1, f_chk2, f_chk3, f_chk4 = st.columns([2, 2, 3, 3])
     with f_chk1:
         req_email = st.checkbox("📧 Has Email Only", value=False, key="crm_req_email")
     with f_chk2:
         req_phone = st.checkbox("📱 Has Phone / WhatsApp", value=False, key="crm_req_phone")
+    with f_chk3:
+        req_city_only = st.checkbox("📍 Has City / Location", value=False, key="crm_req_city")
 
     # Fetch and filter
     tier_ranges = {
@@ -906,11 +908,12 @@ with tab3:
             handle_str = str(c.get("platform_id", "")).lower()
             city_str = str(extra.get("city", "")).lower()
             state_str = str(extra.get("state", "")).lower()
+            addr_str = str(extra.get("address", "")).lower()
             email_str = str(extra.get("bio_email", "")).lower()
             phone_str = str(extra.get("phone", "")).lower()
             cat_str = " ".join(str(cat).lower() for cat in extra.get("categories", []))
 
-            if not (kw in name_str or kw in handle_str or kw in city_str or kw in state_str or kw in email_str or kw in phone_str or kw in cat_str):
+            if not (kw in name_str or kw in handle_str or kw in city_str or kw in state_str or kw in addr_str or kw in email_str or kw in phone_str or kw in cat_str):
                 continue
 
         # Platform match
@@ -924,10 +927,12 @@ with tab3:
             if not (lo <= subs < hi):
                 continue
 
-        # Email & Phone checkboxes
+        # Email, Phone, City checkboxes
         if req_email and not extra.get("bio_email"):
             continue
         if req_phone and not extra.get("phone"):
+            continue
+        if req_city_only and not (extra.get("city") or extra.get("state")):
             continue
 
         filtered_creators.append((c, extra))
@@ -945,7 +950,7 @@ with tab3:
 
     # ── Display Table ──
     table_rows = []
-    for c, extra in filtered_creators[:200]:  # Limit preview to top 200 for fast UI rendering
+    for c, extra in filtered_creators[:250]:  # Limit preview to top 250 for fast UI rendering
         cats = ", ".join(extra.get("categories", []))
         table_rows.append({
             "Name": c.get("name") or c.get("platform_id"),
@@ -953,11 +958,12 @@ with tab3:
             "Platform": c.get("platform", "instagram").title(),
             "Followers": f"{c.get('subscriber_count', 0):,}",
             "Avg Views": f"{c.get('median_views', 0):,}",
+            "City": extra.get("city") or "—",
+            "State": extra.get("state") or "—",
             "Email": extra.get("bio_email") or "—",
             "Phone / WA": extra.get("phone") or "—",
-            "City / State": f"{extra.get('city', '')} {extra.get('state', '')}".strip() or "—",
             "Commercials": extra.get("commercial_notes") or "—",
-            "Niche / Tags": cats[:35] + ("..." if len(cats) > 35 else "") if cats else "—",
+            "Niche / Category": cats[:35] + ("..." if len(cats) > 35 else "") if cats else "—",
         })
 
     if table_rows:
@@ -970,7 +976,7 @@ with tab3:
     exp_col_a, exp_col_b = st.columns([3, 1])
     with exp_col_a:
         st.markdown(f"📥 **Export {len(filtered_creators):,} Filtered Creators to Excel**")
-        st.caption("Exports all matching records with verified emails, phones, locations, and commercials.")
+        st.caption("Exports all matching records with separate City, State, verified emails, phones, and commercials.")
     with exp_col_b:
         if filtered_creators:
             # Build full export dataframe
@@ -981,11 +987,12 @@ with tab3:
                     "Instagram Handle": f"@{c.get('platform_id')}",
                     "Followers": c.get("subscriber_count", 0),
                     "Estimated Avg Views": c.get("median_views", 0),
-                    "Engagement Rate (%)": c.get("engagement_rate", 0),
-                    "Contact Email": extra.get("bio_email", ""),
-                    "Phone / WhatsApp": extra.get("phone", ""),
                     "City": extra.get("city", ""),
                     "State": extra.get("state", ""),
+                    "Shipping Address": extra.get("address", ""),
+                    "Pincode": extra.get("pincode", ""),
+                    "Contact Email": extra.get("bio_email", ""),
+                    "Phone / WhatsApp": extra.get("phone", ""),
                     "Niche Categories": ", ".join(extra.get("categories", [])),
                     "Commercial Notes": extra.get("commercial_notes", ""),
                     "Source Sheet": ", ".join(extra.get("source_sheets", [])),
