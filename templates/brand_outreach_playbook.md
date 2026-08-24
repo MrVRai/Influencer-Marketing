@@ -1,7 +1,10 @@
 # 🚀 Creator Orbit — Brand Outreach Playbook (Month 1)
+### *"Orbit Beyond Ordinary"*
 
 > **Agency Founders**: Vedant Rai & Manya Jain  
 > **Agency Primary Strategy (Month 1)**: **High-Volume Barter & Product Seeding Campaigns (200, 500, 1,000+ Creators)**  
+> **Creator Selection Core**: `Audience Match • Content Quality • Engagement • Budget Fit • Niche Relevance`  
+> **Proprietary Framework**: **ORBIT MATCH™** (Originality • Relevance • Brand Safety • Ideal Audience • True Engagement)  
 > **Logistics Model**: Creator Orbit provides **100% verified creator shipping addresses, phone numbers, and preferred sizes/variants** directly to the brand's warehouse/dispatch team. The brand ships hampers straight to creators, while Creator Orbit manages all creator coordination, tracking follow-ups, draft QC, and live content monitoring.
 
 ---
@@ -55,7 +58,8 @@ If you're looking to flood Instagram & YouTube with hundreds of authentic produc
 
 At Creator Orbit, we manage end-to-end **High-Volume Barter & Product Seeding Campaigns**:
 
-• **Scale Options**: 200, 500, or 1,000+ verified creators across Tier 1 & Tier 2 India
+• **Scale Options**: 200, 500, or 1,000+ creators across Tier 1 & Tier 2 India
+• **The ORBIT MATCH™ Standard**: Every creator is pre-vetted for 1.5%–2%+ true organic engagement and brand safety
 • **Deliverables per Creator**: 1 Dedicated Reel + 1 Story + 1 YouTube Shorts/Post
 • **Expected Reach**: 800,000 to 2,500,000+ organic views (avg. 4K–5K views/creator)
 • **Zero Logistics Headache**: We verify all creator shipping addresses, phone numbers, and size preferences and share a clean dispatch sheet with your warehouse. Your team simply couriers the hampers — our operations team handles 100% of creator follow-ups, draft reviews, and live post tracking.
@@ -65,7 +69,7 @@ Would you be open to reviewing our 1-page Barter Seeding Overview and creator de
 Best regards,
 
 Vedant Rai & Manya Jain
-Co-Founders | Creator Orbit
+Co-Founders | Creator Orbit — Orbit Beyond Ordinary
 Phone/WhatsApp: +91 [Your Phone]
 hello@creatororbit.in
 ```

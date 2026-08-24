@@ -268,18 +268,86 @@
       transition: background 0.2s;
     }
 
+    .criteria-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .criteria-pill {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #CBD5E1;
+    }
+
+    .orbit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px;
+      margin-bottom: 30px;
+    }
+
+    .orbit-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 14px;
+      text-align: center;
+      position: relative;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .orbit-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--primary);
+    }
+
+    .orbit-letter {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: #fff;
+      font-size: 18px;
+      font-weight: 800;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    }
+
+    .orbit-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #F8FAFC;
+      margin-bottom: 6px;
+    }
+
+    .orbit-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
     .cta-btn:hover {
       background: var(--primary-dark);
     }
 
     @media print {
       body { background: #fff; color: #000; padding: 0; }
-      .header, .stat-card, .pkg-card, .table-box, .wf-step, .footer-box {
+      .header, .stat-card, .pkg-card, .table-box, .wf-step, .footer-box, .orbit-card {
         border-color: #ddd;
         background: #fafafa !important;
         box-shadow: none !important;
       }
-      h1, .stat-num, td strong { color: #000 !important; -webkit-text-fill-color: initial !important; }
+      h1, .stat-num, td strong, .orbit-name { color: #000 !important; -webkit-text-fill-color: initial !important; }
       .pkg-price { color: #059669 !important; }
       .cta-btn { display: none; }
     }
@@ -291,12 +359,19 @@
 
   <!-- Header -->
   <div class="header">
-    <div class="logo-badge">🌌 Creator Orbit Media</div>
+    <div class="logo-badge">🌌 CREATOR ORBIT MEDIA</div>
     <h1>Performance Creator Marketing for D2C Brands</h1>
+    <p style="color: #A5B4FC; font-size: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px;">Orbit Beyond Ordinary</p>
     <p class="tagline">Turning high-converting Indian creators into your brand’s most profitable customer acquisition channel.</p>
+    <div class="criteria-bar">
+      <span class="criteria-pill">🎯 Audience Match</span>
+      <span class="criteria-pill">✨ Content Quality</span>
+      <span class="criteria-pill">📈 True Engagement</span>
+      <span class="criteria-pill">💰 Budget Fit</span>
+      <span class="criteria-pill">🔍 Niche Relevance</span>
+    </div>
   </div>
 
-  <!-- Key Metrics -->
   <!-- Key Metrics -->
   <div class="stats-grid">
     <div class="stat-card">
@@ -314,6 +389,39 @@
     <div class="stat-card">
       <div class="stat-num">1.5%–2%</div>
       <div class="stat-label">Verified Organic Engagement</div>
+    </div>
+  </div>
+
+  <!-- ORBIT MATCH Framework -->
+  <h2 class="section-title">🛡️ The ORBIT MATCH™ Framework</h2>
+  <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">
+    Every creator in our 4,300+ network is verified through our proprietary 5-pillar creator selection system:
+  </p>
+  <div class="orbit-grid">
+    <div class="orbit-card">
+      <div class="orbit-letter">O</div>
+      <div class="orbit-name">Original Quality</div>
+      <div class="orbit-desc">High aesthetic production, storytelling & retention hooks</div>
+    </div>
+    <div class="orbit-card">
+      <div class="orbit-letter">R</div>
+      <div class="orbit-name">Relevance</div>
+      <div class="orbit-desc">Tight category alignment with your product & buyer persona</div>
+    </div>
+    <div class="orbit-card">
+      <div class="orbit-letter">B</div>
+      <div class="orbit-name">Brand Safety</div>
+      <div class="orbit-desc">Zero copyright flags, verified reputation & professionalism</div>
+    </div>
+    <div class="orbit-card">
+      <div class="orbit-letter">I</div>
+      <div class="orbit-name">Ideal Audience</div>
+      <div class="orbit-desc">Pinpoint demographic match (age, gender, Tier 1/2 splits)</div>
+    </div>
+    <div class="orbit-card">
+      <div class="orbit-letter">T</div>
+      <div class="orbit-name">True Engagement</div>
+      <div class="orbit-desc">1.5%–2%+ verified organic reach with real comment conversations</div>
     </div>
   </div>
 

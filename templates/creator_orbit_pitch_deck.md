@@ -1,4 +1,5 @@
 # 🌌 CREATOR ORBIT — Agency Credentials & Pitch Deck
+### *"Orbit Beyond Ordinary"*
 
 > **Official Document**: Agency Overview, Campaign Packages & Performance Model  
 > **Prepared by**: Vedant Rai & Manya Jain (Co-Founders)  
@@ -9,19 +10,46 @@
 ## 🎯 1. Who We Are
 **Creator Orbit** is a performance-first influencer marketing and creator intelligence agency based in India. We help D2C, e-commerce, and high-growth consumer brands flood social feeds with high-converting creator content at scale.
 
-### Why Brands Work With Us:
+**Creator Orbit Selection Core:**  
+`Audience Match • Content Quality • Engagement • Budget Fit • Niche Relevance`
+
+### Why Brands Work With Creator Orbit:
 ```
 ┌─────────────────────────┬─────────────────────────┬─────────────────────────┐
-│   4,300+ DIRECT ROSTER   │   SEAMLESS LOGISTICS    │   END-TO-END EXECUTION  │
-│  Verified Indian creators│  Clean dispatch sheets  │  We handle shortlisting,│
-│   in Beauty, Fitness,   │  sent to your warehouse │  drafts, follow-ups,    │
-│   Fashion & Lifestyle   │  for direct product ship│  and live link tracking │
+│   4,300+ DIRECT ROSTER   │     ORBIT MATCH™        │   SEAMLESS LOGISTICS    │
+│  Verified Indian creators│  Signature 5-pillar     │  Clean dispatch sheets  │
+│   in Beauty, Fitness,   │  vetting framework for  │  sent to your warehouse │
+│   Fashion & Lifestyle   │  high-converting content│  for direct product ship│
 └─────────────────────────┴─────────────────────────┴─────────────────────────┘
 ```
 
 ---
 
-## 📊 2. Our Creator Network by Numbers
+## 🛡️ 2. The ORBIT MATCH™ Framework
+*Our proprietary 5-pillar creator selection system that guarantees zero fake followers, authentic engagement, and maximum brand ROI.*
+
+```
+ ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+ ┃  O — Original Content Quality                                             ┃
+ ┃      High production aesthetics, authentic storytelling, and organic hooks┃
+ ┃                                                                           ┃
+ ┃  R — Relevance to Brand                                                   ┃
+ ┃      Tight category alignment with your product USP and buyer persona     ┃
+ ┃                                                                           ┃
+ ┃  B — Brand Safety                                                         ┃
+ ┃      Zero copyright issues, verified reputation, and professional conduct ┃
+ ┃                                                                           ┃
+ ┃  I — Ideal Audience Match                                                 ┃
+ ┃      Pinpoint demographic alignment (age, gender, Tier 1/2 city splits)   ┃
+ ┃                                                                           ┃
+ ┃  T — True Engagement                                                      ┃
+ ┃      1.5%–2.0%+ verified organic reach with active comment conversations  ┃
+ ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+```
+
+---
+
+## 📊 3. Our Creator Network by Numbers
 
 | Metric | Details |
 |---|---|
