@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="100%" height="100%">
+  <defs>
+    <linearGradient id="portalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F46E5" />
+      <stop offset="100%" stop-color="#06B6D4" />
+    </linearGradient>
+    <linearGradient id="ringGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="100%" stop-color="#4F46E5" />
+    </linearGradient>
+  </defs>
+
+  <!-- Clean Pure White Background -->
+  <rect width="800" height="800" fill="#FFFFFF" />
+
+  <!-- Logo Mark Center -->
+  <g transform="translate(400, 340)">
+    <!-- Sweeping Orbit Ring (Front & Back Depth) -->
+    <path d="M -230,20 C -230,120 230,120 230,-20 C 230,-90 10,-140 -120,-110" fill="none" stroke="url(#ringGrad)" stroke-width="18" stroke-linecap="round" transform="rotate(-20)" />
+
+    <!-- Core Media Aperture Ring -->
+    <circle cx="0" cy="0" r="105" fill="#F8FAFC" stroke="#0F172A" stroke-width="22" />
+    <circle cx="0" cy="0" r="82" fill="none" stroke="url(#portalGrad)" stroke-width="12" />
+
+    <!-- Minimal Aperture Blades (4 clean geometric lines) -->
+    <line x1="-50" y1="-50" x2="-20" y2="-20" stroke="#0F172A" stroke-width="8" stroke-linecap="round" />
+    <line x1="50" y1="-50" x2="20" y2="-20" stroke="#0F172A" stroke-width="8" stroke-linecap="round" />
+    <line x1="50" y1="50" x2="20" y2="20" stroke="#0F172A" stroke-width="8" stroke-linecap="round" />
+    <line x1="-50" y1="50" x2="-20" y2="20" stroke="#0F172A" stroke-width="8" stroke-linecap="round" />
+
+    <!-- Solid Geometric Play Button in Center -->
+    <polygon points="-16,-32 -16,32 30,0" fill="#4F46E5" />
+
+    <!-- Orbit Satellite Nodes -->
+    <circle cx="190" cy="-65" r="16" fill="#06B6D4" />
+    <circle cx="-190" cy="65" r="12" fill="#EC4899" />
+  </g>
+
+  <!-- Modern Clean Lowercase Typography -->
+  <text x="400" y="630" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="54" font-weight="800" fill="#0F172A" text-anchor="middle" letter-spacing="1">
+    creator <tspan fill="#4F46E5">orbit</tspan>
+  </text>
+  
+  <text x="400" y="675" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" fill="#94A3B8" text-anchor="middle" letter-spacing="5">
+    INFLUENCER INTELLIGENCE &amp; CRM
+  </text>
+</svg>

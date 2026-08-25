@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="100%" height="100%">
+  <defs>
+    <linearGradient id="glowIndigo" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F46E5" />
+      <stop offset="50%" stop-color="#06B6D4" />
+      <stop offset="100%" stop-color="#EC4899" />
+    </linearGradient>
+    <linearGradient id="darkLoop" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="100%" stop-color="#334155" />
+    </linearGradient>
+  </defs>
+
+  <!-- Clean Pure White Background -->
+  <rect width="800" height="800" fill="#FFFFFF" />
+
+  <!-- Logo Mark Center -->
+  <g transform="translate(400, 340)">
+    <!-- Elegant Dual Orbit Path -->
+    <ellipse cx="0" cy="0" rx="200" ry="110" fill="none" stroke="url(#glowIndigo)" stroke-width="18" stroke-linecap="round" transform="rotate(-30)" />
+    
+    <!-- Secondary Intersecting Orbit -->
+    <ellipse cx="0" cy="0" rx="190" ry="80" fill="none" stroke="url(#darkLoop)" stroke-width="12" stroke-linecap="round" stroke-dasharray="280 40 80 40" transform="rotate(35)" />
+
+    <!-- Central Minimal Play Core Sphere -->
+    <circle cx="0" cy="0" r="85" fill="#0F172A" />
+    <circle cx="0" cy="0" r="70" fill="#4F46E5" />
+
+    <!-- Pure White Clean Play Triangle -->
+    <polygon points="-14,-28 -14,28 26,0" fill="#FFFFFF" />
+
+    <!-- Creator Sparkle Star -->
+    <g transform="translate(160, -90)">
+      <polygon points="0,-18 5,-5 18,0 5,5 0,18 -5,5 -18,0 -5,-5" fill="#06B6D4" />
+    </g>
+
+    <!-- Satellite Dot -->
+    <circle cx="-160" cy="90" r="12" fill="#EC4899" />
+  </g>
+
+  <!-- Clean Bold Typography -->
+  <text x="400" y="625" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="52" font-weight="900" fill="#0F172A" text-anchor="middle" letter-spacing="2">
+    CREATOR<tspan fill="#4F46E5">ORBIT</tspan>
+  </text>
+  
+  <text x="400" y="670" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="800" fill="#06B6D4" text-anchor="middle" letter-spacing="6">
+    • ORBIT BEYOND ORDINARY •
+  </text>
+</svg>

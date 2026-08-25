@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="100%" height="100%">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="indigoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F46E5" />
+      <stop offset="100%" stop-color="#06B6D4" />
+    </linearGradient>
+    <linearGradient id="orbitGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="50%" stop-color="#4F46E5" />
+      <stop offset="100%" stop-color="#06B6D4" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EC4899" />
+      <stop offset="100%" stop-color="#8B5CF6" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background: Pure Clean White -->
+  <rect width="800" height="800" fill="#FFFFFF" rx="0" />
+
+  <!-- Logo Mark Center Group -->
+  <g transform="translate(400, 340)">
+    <!-- Outer Orbit Path (Smooth Ellipse) -->
+    <ellipse cx="0" cy="0" rx="220" ry="85" fill="none" stroke="url(#orbitGrad)" stroke-width="16" stroke-linecap="round" transform="rotate(-26)" />
+
+    <!-- Satellite Nodes (Small orbital spheres) -->
+    <circle cx="160" cy="-90" r="14" fill="#06B6D4" />
+    <circle cx="-170" cy="80" r="10" fill="#4F46E5" />
+    <circle cx="210" cy="-30" r="8" fill="#EC4899" />
+
+    <!-- Central Core: Clean Interlocking 'CO' + Play Mark -->
+    <!-- 'C' Arc -->
+    <path d="M -40,-80 A 90 90 0 1 0 -40,80" fill="none" stroke="#0F172A" stroke-width="26" stroke-linecap="round" />
+    
+    <!-- 'O' Circle with Indigo Gradient -->
+    <circle cx="55" cy="0" r="75" fill="none" stroke="url(#indigoGrad)" stroke-width="24" />
+
+    <!-- Play Arrow inside 'O' -->
+    <polygon points="45,-30 45,30 85,0" fill="#0F172A" />
+  </g>
+
+  <!-- Typography -->
+  <text x="400" y="630" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="52" font-weight="900" fill="#0F172A" text-anchor="middle" letter-spacing="3">
+    CREATOR <tspan fill="#4F46E5">ORBIT</tspan>
+  </text>
+  
+  <text x="400" y="675" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="18" font-weight="700" fill="#64748B" text-anchor="middle" letter-spacing="6">
+    ORBIT BEYOND ORDINARY
+  </text>
+</svg>
