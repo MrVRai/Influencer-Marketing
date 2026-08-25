@@ -3,6 +3,7 @@
 
 > **Official Document**: Agency Overview, Campaign Packages & Performance Model  
 > **Prepared by**: Vedant Rai (New Delhi) & Manya Jain (Uttarakhand) — Co-Founders  
+> **Website**: [https://thecreatororbit.vercel.app/](https://thecreatororbit.vercel.app/)  
 > **Contact**: thecreatororbit.media@gmail.com | IG: [@thecreatororbit](https://instagram.com/thecreatororbit)
 
 ---
@@ -166,7 +167,7 @@ Let’s launch your 200–500 creator product seeding campaign today.
 
 * **Vedant Rai** | Co-Founder, Business & Operations
 * **Manya Jain** | Co-Founder, Creator Relations & Strategy
+* **Website**: [https://thecreatororbit.vercel.app/](https://thecreatororbit.vercel.app/)
 * **Email**: thecreatororbit.media@gmail.com
 * **Instagram**: [@thecreatororbit](https://instagram.com/thecreatororbit)
-* **WhatsApp**: +91-XXXXXXXXXX
-* **Location**: New Delhi / Mumbai (Pan-India Service)
+* **Location**: New Delhi (Vedant) & Uttarakhand (Manya) — Serving Brands Pan-India

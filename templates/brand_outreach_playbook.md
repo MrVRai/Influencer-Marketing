@@ -64,15 +64,18 @@ At Creator Orbit, we manage end-to-end **High-Volume Barter & Product Seeding Ca
 • **Expected Reach**: 800,000 to 2,500,000+ organic views (avg. 4K–5K views/creator)
 • **Zero Logistics Headache**: We verify all creator shipping addresses, phone numbers, and size preferences and share a clean dispatch sheet with your warehouse. Your team simply couriers the hampers — our operations team handles 100% of creator follow-ups, draft reviews, and live post tracking.
 
-Would you be open to reviewing our 1-page Barter Seeding Overview and creator demographics?
+You can check our agency overview and campaign tiers here: https://thecreatororbit.vercel.app/
+
+Would you be open to reviewing a custom 1-page creator roster tailored for [Brand Name]?
 
 Best regards,
 
 Vedant Rai & Manya Jain
-Co-Founders | Creator Orbit — Orbit Beyond Ordinary
-Phone/WhatsApp: +91 [Your Phone]
-thecreatororbit.media@gmail.com
-Instagram: @thecreatororbit
+Co-Founders | Creator Orbit
+🌐 https://thecreatororbit.vercel.app/
+📸 @thecreatororbit (https://instagram.com/thecreatororbit)
+✉️ thecreatororbit.media@gmail.com
+📍 New Delhi & Uttarakhand
 ```
 
 ---
@@ -94,12 +97,16 @@ At Creator Orbit:
 2. We provide verified shipping addresses for your team to courier samples.
 3. We manage brief guidelines, draft QC, and collect all raw video assets and ad whitelisting codes for your performance marketing team.
 
-Can I share our 1-page campaign deck and package economics with you?
+Check our package tiers & deliverables at: https://thecreatororbit.vercel.app/
+
+Can I share a 1-page creator roster and sample video hooks for [Brand Name]?
 
 Best,
 
-Vedant Rai
-Co-Founder | Creator Orbit
+Vedant Rai & Manya Jain
+Co-Founders | Creator Orbit
+🌐 https://thecreatororbit.vercel.app/
+✉️ thecreatororbit.media@gmail.com | 📸 @thecreatororbit
 ```
 
 ---
@@ -121,12 +128,16 @@ We can deploy a 100-creator blitz in [City] within 10 days:
 • ~400K–500K hyper-local targeted views
 • We handle all address verification and creator tracking
 
+Live agency credentials: https://thecreatororbit.vercel.app/
+
 Open to seeing a quick 5-minute media plan for this?
 
 Best,
 
 Manya Jain & Vedant Rai
-Creator Orbit
+Co-Founders | Creator Orbit
+🌐 https://thecreatororbit.vercel.app/
+✉️ thecreatororbit.media@gmail.com
 ```
 
 ---
@@ -134,7 +145,7 @@ Creator Orbit
 ## 3. LinkedIn Outreach
 
 ### Connection Request Note (Max 300 Characters):
-> *"Hi [First Name], loved [Brand Name]'s growth with [Product]. At Creator Orbit, we help D2C brands run 200–500 creator product seeding campaigns across India with zero coordination hassle. Would love to connect and share our 1-page barter deck!"*
+> *"Hi [First Name], loved [Brand Name]'s growth with [Product]! At Creator Orbit (thecreatororbit.vercel.app), we help D2C brands run 200–500 creator product seeding campaigns across India with zero operational hassle. Would love to connect and share a quick 1-page roster!"*
 
 ### Message After Connection Acceptance (Send within 2 hours):
 > *"Thanks for connecting, [First Name]!*  
@@ -146,26 +157,40 @@ Creator Orbit
 > *2. Your team dispatches the product hampers.*
 > *3. We handle all creator follow-ups, draft reviews, live link tracking, and performance reports.*
 > 
-> *Can I drop our 1-page Barter Campaign Overview here for you to check out?"*
+> *You can explore our campaign model & packages here: https://thecreatororbit.vercel.app/*
+> 
+> *Can I drop a custom 1-page creator roster here for [Brand Name] to check out?"*
 
 ---
 
-## 4. Instagram DM Scripts
+## 4. Instagram DM & WhatsApp Outreach Scripts
 
-*Send from your agency profile or founder personal profile directly to brand handles.*
+### Instagram DM Script:
+*Send from `@thecreatororbit` or founder personal profile directly to brand handles.*
 
 ```text
 Hey team [Brand Name]! 👋
 
 Big fan of what you're building with [Specific Product Name].
 
-We run Creator Orbit — we manage high-volume Product Seeding & Barter campaigns for Indian D2C brands (mobilizing 200 to 500+ verified creators across India).
+We run Creator Orbit (https://thecreatororbit.vercel.app/) — we manage high-volume Product Seeding & Barter campaigns for Indian D2C brands (mobilizing 200 to 500+ verified creators across India).
 
 Each creator delivers 1 Reel + 1 Story + 1 YouTube Shorts in exchange for product, generating 800K–2M+ organic views for your brand.
 
 We handle 100% of creator coordination and address collection — your team only ships the hampers.
 
 Who is the best person on your marketing/growth team to share our 1-page campaign deck with? 😊
+```
+
+### WhatsApp Introduction Script (For Warm / Direct Phone Outreach):
+```text
+Hi [First Name], Vedant & Manya here from Creator Orbit (https://thecreatororbit.vercel.app/)! 👋
+
+Came across [Brand Name]'s recent campaigns and loved your product positioning in [Niche].
+
+We specialize in running turnkey 200 to 500+ Creator Product Seeding & Barter campaigns across India. We provide phone-verified dispatch sheets directly to your warehouse and manage 100% of creator follow-ups, draft QC, and live link reporting.
+
+Would you be open to reviewing a quick 1-page creator shortlist tailored for [Brand Name]? 🚀
 ```
 
 ---
@@ -189,10 +214,15 @@ Bumping this to the top of your inbox in case it got buried.
 
 Just to clarify on the logistics side: our team handles 100% of creator vetting, address collection, and follow-ups. We provide a single clean Excel sheet to your warehouse team so dispatch is completely seamless.
 
-Would love to send over the 1-page package overview — takes 60 seconds to review.
+You can view our full package breakdown and agency credentials here: https://thecreatororbit.vercel.app/
+
+Would love to send over a 1-page creator roster tailored for [Brand Name] — takes 60 seconds to review.
 
 Best,
-Vedant
+
+Vedant Rai & Manya Jain
+Co-Founders | Creator Orbit
+🌐 https://thecreatororbit.vercel.app/
 ```
 
 ### Follow-Up 2 (Day 7 — Free Creative Concept)
@@ -207,10 +237,15 @@ Instead of generic unboxings, we can brief 200 creators on a "7-Day Honest Exper
 
 This generates massive authentic social proof across Instagram and YouTube simultaneously.
 
+Live overview: https://thecreatororbit.vercel.app/
+
 Worth a quick 10-minute chat this week?
 
 Best,
-Manya & Vedant
+
+Manya Jain & Vedant Rai
+Co-Founders | Creator Orbit
+🌐 https://thecreatororbit.vercel.app/
 ```
 
 ### Follow-Up 3 (Day 12 — The "Polite Breakup" Email)
@@ -221,12 +256,16 @@ Hi [First Name],
 
 I assume your marketing calendar is completely full for this month, so I won't keep following up.
 
-If you ever want to run a fast 200–500 creator product seeding campaign or need a ready roster of verified creators in India, feel free to reach out.
+If you ever want to run a fast 200–500 creator product seeding campaign or need a ready roster of verified creators in India, feel free to bookmark our site: https://thecreatororbit.vercel.app/
 
 Wishing [Brand Name] continued scale!
 
 Best,
-Vedant Rai | Creator Orbit
+
+Vedant Rai & Manya Jain
+Co-Founders | Creator Orbit
+🌐 https://thecreatororbit.vercel.app/
+✉️ thecreatororbit.media@gmail.com
 ```
 
 ---
