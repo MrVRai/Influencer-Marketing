@@ -3,7 +3,7 @@
 
 > **Official Document**: Agency Overview, Campaign Packages & Performance Model  
 > **Prepared by**: Vedant Rai & Manya Jain (Co-Founders)  
-> **Contact**: thecreatororbit.media@gmail.com | +91-XXXXXXXXXX  
+> **Contact**: thecreatororbit.media@gmail.com | IG: @thecreatororbit | +91-XXXXXXXXXX  
 
 ---
 
@@ -167,5 +167,6 @@ Let’s launch your 200–500 creator product seeding campaign today.
 * **Vedant Rai** | Co-Founder, Business & Operations
 * **Manya Jain** | Co-Founder, Creator Relations & Strategy
 * **Email**: thecreatororbit.media@gmail.com
+* **Instagram**: [@thecreatororbit](https://instagram.com/thecreatororbit)
 * **WhatsApp**: +91-XXXXXXXXXX
 * **Location**: New Delhi / Mumbai (Pan-India Service)
