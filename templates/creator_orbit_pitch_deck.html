@@ -33,25 +33,80 @@
 
     .header {
       text-align: center;
-      padding: 40px 20px;
-      background: linear-gradient(135deg, rgba(79, 70, 229, 0.2) 0%, rgba(236, 72, 153, 0.2) 100%);
-      border: 1px solid var(--border);
-      border-radius: 16px;
+      padding: 52px 40px 44px;
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.18) 0%, rgba(236, 72, 153, 0.12) 100%);
+      border: 1px solid rgba(79, 70, 229, 0.35);
+      border-radius: 20px;
       margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle decorative glow blob behind header */
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -60px; left: 50%; transform: translateX(-50%);
+      width: 360px; height: 240px;
+      background: radial-gradient(ellipse, rgba(79, 70, 229, 0.22) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Logo container — centered, circular, glowing */
+    .brand-logo-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .brand-logo-wrap img {
+      width: 108px;
+      height: 108px;
+      border-radius: 50%;
+      border: 3px solid rgba(79, 70, 229, 0.7);
+      box-shadow: 0 0 0 6px rgba(79, 70, 229, 0.12), 0 8px 32px rgba(79, 70, 229, 0.35);
+      display: block;
+    }
+
+    /* Brand Name — large, prominent, tight tracking */
+    .brand-name {
+      font-size: 42px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      background: linear-gradient(90deg, #FFFFFF 0%, #A5B4FC 50%, #06B6D4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+    }
+
+    /* Tagline below brand name */
+    .brand-tagline-sub {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #818CF8;
+      margin-bottom: 18px;
     }
 
     .logo-badge {
-      display: inline-block;
-      padding: 6px 16px;
-      background: rgba(79, 70, 229, 0.3);
-      border: 1px solid var(--primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 18px;
+      background: rgba(79, 70, 229, 0.2);
+      border: 1px solid rgba(79, 70, 229, 0.5);
       border-radius: 9999px;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 1px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
       color: #A5B4FC;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
 
     h1 {
@@ -357,13 +412,28 @@
 
 <div class="container">
 
-  <!-- Header -->
+  <!-- Header Hero -->
   <div class="header">
-    <img src="../branding/creator_orbit_official_logo.png" alt="Creator Orbit Logo" style="width: 100px; height: 100px; border-radius: 50%; border: 3px solid #4F46E5; box-shadow: 0 4px 20px rgba(79, 70, 229, 0.4); margin-bottom: 12px;">
-    <div class="logo-badge">🌌 CREATOR ORBIT MEDIA</div>
+
+    <!-- Logo -->
+    <div class="brand-logo-wrap">
+      <img src="../branding/creator_orbit_official_logo.png" alt="Creator Orbit Logo" />
+    </div>
+
+    <!-- Brand Name -->
+    <div class="brand-name">Creator Orbit</div>
+
+    <!-- Tagline -->
+    <div class="brand-tagline-sub">Orbit Beyond Ordinary</div>
+
+    <!-- Agency Category Badge -->
+    <div class="logo-badge">🌌 Influencer Marketing &amp; Creator Intelligence Agency</div>
+
+    <!-- Pitch Line -->
     <h1>Performance Creator Marketing for D2C Brands</h1>
-    <p style="color: #A5B4FC; font-size: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px;">Orbit Beyond Ordinary</p>
-    <p class="tagline">Turning high-converting Indian creators into your brand’s most profitable customer acquisition channel.</p>
+    <p class="tagline">Turning high-converting Indian creators into your brand's most profitable customer acquisition channel.</p>
+
+    <!-- ORBIT MATCH™ Selection Criteria Pills -->
     <div class="criteria-bar">
       <span class="criteria-pill">🎯 Audience Match</span>
       <span class="criteria-pill">✨ Content Quality</span>
@@ -372,6 +442,7 @@
       <span class="criteria-pill">🔍 Niche Relevance</span>
     </div>
   </div>
+
 
   <!-- Key Metrics -->
   <div class="stats-grid">
