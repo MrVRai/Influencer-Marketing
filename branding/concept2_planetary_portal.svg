@@ -1,12 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="100%" height="100%">
   <defs>
-    <linearGradient id="portalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="portalGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#4F46E5" />
       <stop offset="100%" stop-color="#06B6D4" />
     </linearGradient>
-    <linearGradient id="ringGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+    <linearGradient id="ringGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
       <stop offset="0%" stop-color="#0F172A" />
-      <stop offset="100%" stop-color="#4F46E5" />
+      <stop offset="50%" stop-color="#4F46E5" />
+      <stop offset="100%" stop-color="#06B6D4" />
+    </linearGradient>
+    <linearGradient id="instaGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F59E0B" />
+      <stop offset="50%" stop-color="#EC4899" />
+      <stop offset="100%" stop-color="#8B5CF6" />
     </linearGradient>
   </defs>
 
@@ -14,34 +20,56 @@
   <rect width="800" height="800" fill="#FFFFFF" />
 
   <!-- Logo Mark Center -->
-  <g transform="translate(400, 340)">
-    <!-- Sweeping Orbit Ring (Front & Back Depth) -->
-    <path d="M -230,20 C -230,120 230,120 230,-20 C 230,-90 10,-140 -120,-110" fill="none" stroke="url(#ringGrad)" stroke-width="18" stroke-linecap="round" transform="rotate(-20)" />
+  <g transform="translate(400, 330)">
+    <!-- Sweeping Orbit Ring with Depth -->
+    <ellipse cx="0" cy="0" rx="225" ry="95" fill="none" stroke="url(#ringGrad2)" stroke-width="16" stroke-linecap="round" transform="rotate(-20)" />
+
+    <!-- 1. Revolving Instagram Camera Badge -->
+    <g transform="translate(-160, -90)">
+      <rect x="-18" y="-18" width="36" height="36" rx="9" fill="url(#instaGrad2)" />
+      <rect x="-10" y="-10" width="20" height="20" rx="5" fill="none" stroke="#FFFFFF" stroke-width="2.2" />
+      <circle cx="0" cy="0" r="4.5" fill="none" stroke="#FFFFFF" stroke-width="2.2" />
+      <circle cx="5" cy="-5" r="1.2" fill="#FFFFFF" />
+    </g>
+
+    <!-- 2. Revolving YouTube Badge -->
+    <g transform="translate(160, -80)">
+      <rect x="-20" y="-14" width="40" height="28" rx="7" fill="#EF4444" />
+      <polygon points="-4,-7 -4,7 7,0" fill="#FFFFFF" />
+    </g>
+
+    <!-- 3. Revolving Video/Reels Badge -->
+    <g transform="translate(180, 70)">
+      <circle cx="0" cy="0" r="18" fill="#0F172A" />
+      <polygon points="-5,-8 -5,8 8,0" fill="#06B6D4" />
+    </g>
+
+    <!-- 4. Revolving Engagement Heart Badge -->
+    <g transform="translate(-175, 75)">
+      <circle cx="0" cy="0" r="16" fill="#4F46E5" />
+      <path d="M 0,5 C -6,0 -8,-3.5 -8,-7 C -8,-9.5 -6,-11 -3.5,-11 C -2,-11 -0.6,-10 0,-8.5 C 0.6,-10 2,-11 3.5,-11 C 6,-11 8,-9.5 8,-7 C 8,-3.5 6,0 0,5 Z" fill="#FFFFFF" transform="scale(0.85)" />
+    </g>
 
     <!-- Core Media Aperture Ring -->
     <circle cx="0" cy="0" r="105" fill="#F8FAFC" stroke="#0F172A" stroke-width="22" />
-    <circle cx="0" cy="0" r="82" fill="none" stroke="url(#portalGrad)" stroke-width="12" />
+    <circle cx="0" cy="0" r="82" fill="none" stroke="url(#portalGrad2)" stroke-width="12" />
 
-    <!-- Minimal Aperture Blades (4 clean geometric lines) -->
+    <!-- Minimal Aperture Lines -->
     <line x1="-50" y1="-50" x2="-20" y2="-20" stroke="#0F172A" stroke-width="8" stroke-linecap="round" />
     <line x1="50" y1="-50" x2="20" y2="-20" stroke="#0F172A" stroke-width="8" stroke-linecap="round" />
     <line x1="50" y1="50" x2="20" y2="20" stroke="#0F172A" stroke-width="8" stroke-linecap="round" />
     <line x1="-50" y1="50" x2="-20" y2="20" stroke="#0F172A" stroke-width="8" stroke-linecap="round" />
 
-    <!-- Solid Geometric Play Button in Center -->
+    <!-- Solid Play Triangle in Center -->
     <polygon points="-16,-32 -16,32 30,0" fill="#4F46E5" />
-
-    <!-- Orbit Satellite Nodes -->
-    <circle cx="190" cy="-65" r="16" fill="#06B6D4" />
-    <circle cx="-190" cy="65" r="12" fill="#EC4899" />
   </g>
 
   <!-- Modern Clean Lowercase Typography -->
-  <text x="400" y="630" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="54" font-weight="800" fill="#0F172A" text-anchor="middle" letter-spacing="1">
+  <text x="400" y="630" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="54" font-weight="800" fill="#0F172A" text-anchor="middle" letter-spacing="1">
     creator <tspan fill="#4F46E5">orbit</tspan>
   </text>
   
-  <text x="400" y="675" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" fill="#94A3B8" text-anchor="middle" letter-spacing="5">
+  <text x="400" y="675" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="17" font-weight="700" fill="#94A3B8" text-anchor="middle" letter-spacing="5">
     INFLUENCER INTELLIGENCE &amp; CRM
   </text>
 </svg>
