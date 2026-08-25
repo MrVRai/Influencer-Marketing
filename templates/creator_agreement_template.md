@@ -1,4 +1,4 @@
-﻿# CREATOR ORBIT — CREATOR COLLABORATION AGREEMENT (SOW)
+# CREATOR ORBIT — CREATOR COLLABORATION AGREEMENT (SOW)
 
 **Agreement Reference:** CO-CREATOR-{{AGREEMENT_ID}}  
 **Date:** {{DATE}}  
@@ -9,7 +9,7 @@
 
 1. **AGENCY:** **Creator Orbit** ("Agency")  
    * **Co-Founders:** Vedant Rai & Manya Jain  
-   * **Email:** partnerships@creatororbit.in  
+   * **Email:** thecreatororbit.media@gmail.com  
 
 2. **CREATOR / TALENT:** **{{CREATOR_FULL_NAME}}** ("Creator")  
    * **Handle / Channel:** @{{CREATOR_HANDLE}} ({{PLATFORM}})  

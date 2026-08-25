@@ -71,7 +71,7 @@ Best regards,
 Vedant Rai & Manya Jain
 Co-Founders | Creator Orbit — Orbit Beyond Ordinary
 Phone/WhatsApp: +91 [Your Phone]
-hello@creatororbit.in
+thecreatororbit.media@gmail.com
 ```
 
 ---

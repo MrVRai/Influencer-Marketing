@@ -1,4 +1,4 @@
-﻿# CREATOR ORBIT — CLIENT INFLUENCER MARKETING SERVICE AGREEMENT (SOW)
+# CREATOR ORBIT — CLIENT INFLUENCER MARKETING SERVICE AGREEMENT (SOW)
 
 **Document Reference:** CO-SOW-{{CAMPAIGN_ID}}  
 **Effective Date:** {{DATE}}  
@@ -9,7 +9,7 @@
 
 1. **AGENCY:** **Creator Orbit** ("Agency")  
    * **Represented By:** Vedant Rai & Manya Jain  
-   * **Contact Email:** partnerships@creatororbit.in  
+   * **Contact Email:** thecreatororbit.media@gmail.com  
    * **Address / PAN:** {{AGENCY_PAN_OR_ADDRESS}}  
 
 2. **CLIENT / BRAND:** **{{CLIENT_COMPANY_NAME}}** ("Client")  
