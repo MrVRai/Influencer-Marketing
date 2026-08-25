@@ -2,8 +2,8 @@
 ### *"Orbit Beyond Ordinary"*
 
 > **Official Document**: Agency Overview, Campaign Packages & Performance Model  
-> **Prepared by**: Vedant Rai & Manya Jain (Co-Founders)  
-> **Contact**: thecreatororbit.media@gmail.com | IG: @thecreatororbit | +91-XXXXXXXXXX  
+> **Prepared by**: Vedant Rai (New Delhi) & Manya Jain (Uttarakhand) — Co-Founders  
+> **Contact**: thecreatororbit.media@gmail.com | IG: [@thecreatororbit](https://instagram.com/thecreatororbit)
 
 ---
 
