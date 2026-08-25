@@ -1,6 +1,12 @@
-# Influencer Marketing Engine 🚀
+# 🌌 Creator Orbit — Official Agency Engine & Website
 
-A comprehensive, modular AI-powered operating system for running a high-scale Influencer Marketing Agency.
+> **Official Website**: [https://thecreatororbit.vercel.app/](https://thecreatororbit.vercel.app/)  
+> **Instagram**: [@thecreatororbit](https://instagram.com/thecreatororbit)  
+> **Email**: [thecreatororbit.media@gmail.com](mailto:thecreatororbit.media@gmail.com)  
+> **Tagline**: *"Orbit Beyond Ordinary"*  
+> **Co-Founders**: Vedant Rai (New Delhi) & Manya Jain (Uttarakhand)  
+
+A comprehensive, modular AI-powered operating system and client landing page for **Creator Orbit** — a performance-first influencer marketing and creator intelligence agency in India.
 
 ---
 
