@@ -3,22 +3,23 @@ from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 WIDTH = 1080
 HEIGHT = 1350
-BG_COLOR = (10, 14, 26)  # #0A0E1A
-PRIMARY = (99, 102, 241)  # #6366F1
-ACCENT = (236, 72, 153)  # #EC4899
-CYAN = (6, 182, 212)     # #06B6D4
-GREEN = (16, 185, 129)   # #10B981
-RED = (244, 63, 94)      # #F43F5E
-CARD_BG = (19, 27, 46)   # #131B2E
-BORDER = (35, 47, 72)    # #232F48
-TEXT_LIGHT = (248, 250, 252)
-TEXT_MUTED = (148, 163, 184)
-GOLD = (251, 191, 36)
 
-# Fonts
+# Refined Luxury Dark Mode Palette
+BG_MAIN = (8, 12, 22)         # #080C16
+CARD_BG = (15, 22, 38)        # #0F1626
+CARD_BORDER = (28, 41, 68)    # #1C2944
+PRIMARY = (99, 102, 241)      # #6366F1 Electric Indigo
+PRIMARY_LIGHT = (165, 180, 252) # #A5B4FC
+ACCENT = (236, 72, 153)       # #EC4899 Pink
+CYAN = (6, 182, 212)          # #06B6D4
+GREEN = (16, 185, 129)        # #10B981
+RED = (244, 63, 94)           # #F43F5E
+TEXT_MAIN = (255, 255, 255)
+TEXT_SUB = (203, 213, 225)    # #CBD5E1
+TEXT_MUTED = (148, 163, 184)  # #94A3B8
+
 FONT_BOLD = "C:/Windows/Fonts/segoeuib.ttf"
 FONT_REGULAR = "C:/Windows/Fonts/segoeui.ttf"
-FONT_SEMI = "C:/Windows/Fonts/segoeui.ttf"
 
 def get_font(path, size):
     try:
@@ -26,404 +27,377 @@ def get_font(path, size):
     except:
         return ImageFont.load_default()
 
-def draw_header_bar(draw, slide_num, total_slides=5):
-    # Top agency badge
-    draw.text((60, 60), "CREATOR ORBIT", font=get_font(FONT_BOLD, 22), fill=PRIMARY)
-    # Slide counter
-    counter_text = f"0{slide_num} / 0{total_slides}"
-    draw.text((WIDTH - 140, 60), counter_text, font=get_font(FONT_BOLD, 22), fill=TEXT_MUTED)
-
-def draw_footer_bar(draw, text="SWIPE ➔"):
-    # Bottom brand and swipe reminder
-    draw.text((60, HEIGHT - 80), "@thecreatororbit", font=get_font(FONT_REGULAR, 22), fill=TEXT_MUTED)
-    draw.text((WIDTH - 200, HEIGHT - 80), text, font=get_font(FONT_BOLD, 22), fill=PRIMARY)
-
-def draw_card(draw, x1, y1, x2, y2, bg=CARD_BG, border=BORDER, radius=20):
-    draw.rounded_rectangle([x1, y1, x2, y2], radius=radius, fill=bg, outline=border, width=2)
-
-def draw_badge(draw, text, x, y, bg=(99, 102, 241, 60), border=PRIMARY, text_color=TEXT_LIGHT, font_size=20):
-    font = get_font(FONT_BOLD, font_size)
-    bbox = font.getbbox(text)
-    w = bbox[2] - bbox[0] + 36
-    h = bbox[3] - bbox[1] + 20
-    draw.rounded_rectangle([x, y, x + w, y + h], radius=h//2, fill=(25, 34, 58), outline=border, width=2)
-    draw.text((x + 18, y + 10), text, font=font, fill=text_color)
-    return w, h
-
-def create_base_canvas():
-    img = Image.new("RGBA", (WIDTH, HEIGHT), BG_COLOR)
-    # Add subtle cosmic glow in corners
+def create_canvas():
+    img = Image.new("RGBA", (WIDTH, HEIGHT), BG_MAIN)
+    # Subtle top & bottom ambient light
     glow = Image.new("RGBA", (WIDTH, HEIGHT), (0, 0, 0, 0))
-    glow_draw = ImageDraw.Draw(glow)
-    glow_draw.ellipse([-100, -100, 500, 500], fill=(79, 70, 229, 35))
-    glow_draw.ellipse([WIDTH - 400, HEIGHT - 400, WIDTH + 100, HEIGHT + 100], fill=(236, 72, 153, 30))
-    glow = glow.filter(ImageFilter.GaussianBlur(80))
-    img = Image.alpha_composite(img, glow)
-    return img
+    gdraw = ImageDraw.Draw(glow)
+    gdraw.ellipse([WIDTH//2 - 350, -200, WIDTH//2 + 350, 300], fill=(79, 70, 229, 30))
+    gdraw.ellipse([WIDTH - 300, HEIGHT - 300, WIDTH + 200, HEIGHT + 200], fill=(6, 182, 212, 20))
+    glow = glow.filter(ImageFilter.GaussianBlur(100))
+    return Image.alpha_composite(img, glow)
 
-def render_slide_1(output_path, logo_path):
-    img = create_base_canvas()
+def draw_header(draw, slide_index, section_tag):
+    # Top Bar: Agency Tag & Section
+    draw.text((70, 65), "CREATOR ORBIT", font=get_font(FONT_BOLD, 19), fill=PRIMARY_LIGHT)
+    draw.text((250, 65), f"|  {section_tag}", font=get_font(FONT_BOLD, 17), fill=TEXT_MUTED)
+    
+    # Counter Badge
+    counter = f"0{slide_index} / 05"
+    draw.text((WIDTH - 150, 65), counter, font=get_font(FONT_BOLD, 18), fill=TEXT_MUTED)
+    
+    # Thin divider line
+    draw.line([(70, 105), (WIDTH - 70, 105)], fill=CARD_BORDER, width=1)
+
+def draw_footer(draw, cta_text="SWIPE ➔"):
+    # Thin divider line
+    draw.line([(70, HEIGHT - 105), (WIDTH - 70, HEIGHT - 105)], fill=CARD_BORDER, width=1)
+    
+    # Bottom Bar
+    draw.text((70, HEIGHT - 75), "@thecreatororbit", font=get_font(FONT_REGULAR, 20), fill=TEXT_MUTED)
+    draw.text((WIDTH - 200, HEIGHT - 75), cta_text, font=get_font(FONT_BOLD, 20), fill=PRIMARY_LIGHT)
+
+def render_slide_1(out_path, logo_path):
+    img = create_canvas()
     draw = ImageDraw.Draw(img)
+    draw_header(draw, 1, "OFFICIAL AGENCY LAUNCH")
+    draw_footer(draw, "SWIPE ➔")
     
-    # Header & Footer
-    draw_header_bar(draw, 1)
-    draw_footer_bar(draw, "SWIPE ➔")
-    
-    # Centered Logo
+    # Centered Logo with double glow ring
     if os.path.exists(logo_path):
-        logo = Image.open(logo_path).convert("RGBA")
-        logo = logo.resize((220, 220), Image.LANCZOS)
+        logo = Image.open(logo_path).convert("RGBA").resize((180, 180), Image.LANCZOS)
+        mask = Image.new("L", (180, 180), 0)
+        ImageDraw.Draw(mask).ellipse([0, 0, 180, 180], fill=255)
         
-        # Circle mask
-        mask = Image.new("L", (220, 220), 0)
-        mask_draw = ImageDraw.Draw(mask)
-        mask_draw.ellipse([0, 0, 220, 220], fill=255)
-        
-        logo_x = (WIDTH - 220) // 2
-        logo_y = 260
-        
-        # Glow ring behind logo
-        draw.ellipse([logo_x - 12, logo_y - 12, logo_x + 232, logo_y + 232], fill=(99, 102, 241, 40), outline=PRIMARY, width=4)
-        img.paste(logo, (logo_x, logo_y), mask)
+        lx = (WIDTH - 180) // 2
+        ly = 200
+        # Rings
+        draw.ellipse([lx - 12, ly - 12, lx + 192, ly + 192], outline=(99, 102, 241, 60), width=2)
+        draw.ellipse([lx - 6, ly - 6, lx + 186, ly + 186], outline=PRIMARY, width=3)
+        img.paste(logo, (lx, ly), mask)
     
-    # Category Pill
-    draw_badge(draw, "OFFICIAL AGENCY LAUNCH", (WIDTH - 340) // 2, 540, text_color=TEXT_LIGHT, font_size=20)
+    # Agency Name
+    font_name = get_font(FONT_BOLD, 24)
+    name_txt = "CREATOR ORBIT"
+    draw.text(((WIDTH - font_name.getbbox(name_txt)[2]) // 2, 420), name_txt, font=font_name, fill=PRIMARY_LIGHT)
+    
+    # Tagline
+    font_tag = get_font(FONT_BOLD, 15)
+    tag_txt = "ORBIT BEYOND ORDINARY"
+    draw.text(((WIDTH - font_tag.getbbox(tag_txt)[2]) // 2, 460), tag_txt, font=font_tag, fill=ACCENT)
     
     # Main Headline
-    font_h1 = get_font(FONT_BOLD, 54)
-    text_h1_1 = "ORBIT BEYOND"
-    text_h1_2 = "ORDINARY."
-    draw.text(((WIDTH - font_h1.getbbox(text_h1_1)[2]) // 2, 620), text_h1_1, font=font_h1, fill=TEXT_LIGHT)
-    draw.text(((WIDTH - font_h1.getbbox(text_h1_2)[2]) // 2, 690), text_h1_2, font=font_h1, fill=PRIMARY)
+    font_h1 = get_font(FONT_BOLD, 48)
+    line1 = "Performance Creator Marketing"
+    line2 = "for High-Growth Indian D2C Brands"
+    draw.text(((WIDTH - font_h1.getbbox(line1)[2]) // 2, 530), line1, font=font_h1, fill=TEXT_MAIN)
+    draw.text(((WIDTH - font_h1.getbbox(line2)[2]) // 2, 595), line2, font=font_h1, fill=TEXT_MAIN)
     
-    # Subhead
-    font_sub = get_font(FONT_REGULAR, 26)
-    sub_text1 = "Performance Creator Marketing"
-    sub_text2 = "for Fast-Growing Indian D2C Brands"
-    draw.text(((WIDTH - font_sub.getbbox(sub_text1)[2]) // 2, 800), sub_text1, font=font_sub, fill=TEXT_LIGHT)
-    draw.text(((WIDTH - font_sub.getbbox(sub_text2)[2]) // 2, 840), sub_text2, font=font_sub, fill=TEXT_MUTED)
+    # Subheading
+    font_sub = get_font(FONT_REGULAR, 21)
+    sub1 = "Founder-curated creator seeding & authentic UGC campaigns"
+    sub2 = "built specifically for high-growth Indian Beauty & Skincare brands."
+    draw.text(((WIDTH - font_sub.getbbox(sub1)[2]) // 2, 690), sub1, font=font_sub, fill=TEXT_SUB)
+    draw.text(((WIDTH - font_sub.getbbox(sub2)[2]) // 2, 725), sub2, font=font_sub, fill=TEXT_SUB)
     
-    # Pill Stats Banner
-    draw_card(draw, 60, 930, WIDTH - 60, 1070, bg=CARD_BG, border=BORDER, radius=20)
+    # 3 Stat Cards
+    cw = (WIDTH - 140 - 30) // 3
+    stats = [
+        ("100%", "FOUNDER-VETTED ROSTER", PRIMARY),
+        ("0%", "MIDDLEMEN MARKUP", GREEN),
+        ("~15 DAYS", "CAMPAIGN TURNAROUND", CYAN)
+    ]
     
-    # 3 Mini Stats inside Card
-    col_w = (WIDTH - 120) // 3
+    sy = 810
+    for i, (val, lbl, col) in enumerate(stats):
+        cx = 70 + i * (cw + 15)
+        draw.rounded_rectangle([cx, sy, cx + cw, sy + 180], radius=16, fill=CARD_BG, outline=CARD_BORDER, width=2)
+        
+        # Stat Val
+        font_v = get_font(FONT_BOLD, 36)
+        draw.text((cx + (cw - font_v.getbbox(val)[2]) // 2, sy + 38), val, font=font_v, fill=col)
+        
+        # Stat Lbl
+        font_l = get_font(FONT_BOLD, 13)
+        words = lbl.split()
+        if len(words) == 3:
+            l1 = words[0] + " " + words[1]
+            l2 = words[2]
+            draw.text((cx + (cw - font_l.getbbox(l1)[2]) // 2, sy + 95), l1, font=font_l, fill=TEXT_MUTED)
+            draw.text((cx + (cw - font_l.getbbox(l2)[2]) // 2, sy + 120), l2, font=font_l, fill=TEXT_MUTED)
+        else:
+            draw.text((cx + (cw - font_l.getbbox(lbl)[2]) // 2, sy + 105), lbl, font=font_l, fill=TEXT_MUTED)
+            
+    # Bottom Callout Banner
+    draw.rounded_rectangle([70, 1030, WIDTH - 70, 1120], radius=14, fill=(18, 25, 45), outline=PRIMARY, width=1)
+    call_txt = "🎁 Scalable Barter Seeding  •  ⚡ Performance UGC  •  💎 Paid Whitelisting"
+    font_c = get_font(FONT_BOLD, 17)
+    draw.text(((WIDTH - font_c.getbbox(call_txt)[2]) // 2, 1060), call_txt, font=font_c, fill=TEXT_SUB)
     
-    stat1_val, stat1_lbl = "4,300+", "CREATOR ROSTER"
-    stat2_val, stat2_lbl = "0%", "MIDDLEMEN MARKUP"
-    stat3_val, stat3_lbl = "~15 DAYS", "TURNAROUND"
-    
-    font_stat_val = get_font(FONT_BOLD, 32)
-    font_stat_lbl = get_font(FONT_BOLD, 14)
-    
-    # Col 1
-    x1 = 60 + col_w * 0 + col_w // 2
-    draw.text((x1 - font_stat_val.getbbox(stat1_val)[2] // 2, 960), stat1_val, font=font_stat_val, fill=PRIMARY)
-    draw.text((x1 - font_stat_lbl.getbbox(stat1_lbl)[2] // 2, 1010), stat1_lbl, font=font_stat_lbl, fill=TEXT_MUTED)
-    
-    # Col 2
-    x2 = 60 + col_w * 1 + col_w // 2
-    draw.text((x2 - font_stat_val.getbbox(stat2_val)[2] // 2, 960), stat2_val, font=font_stat_val, fill=GREEN)
-    draw.text((x2 - font_stat_lbl.getbbox(stat2_lbl)[2] // 2, 1010), stat2_lbl, font=font_stat_lbl, fill=TEXT_MUTED)
-    
-    # Col 3
-    x3 = 60 + col_w * 2 + col_w // 2
-    draw.text((x3 - font_stat_val.getbbox(stat3_val)[2] // 2, 960), stat3_val, font=font_stat_val, fill=CYAN)
-    draw.text((x3 - font_stat_lbl.getbbox(stat3_lbl)[2] // 2, 1010), stat3_lbl, font=font_stat_lbl, fill=TEXT_MUTED)
-    
-    # Swipe CTA at bottom
-    swipe_text = "Swipe to see how we're fixing creator marketing ➔"
-    font_swipe = get_font(FONT_BOLD, 22)
-    draw.text(((WIDTH - font_swipe.getbbox(swipe_text)[2]) // 2, 1140), swipe_text, font=font_swipe, fill=ACCENT)
-    
-    img.convert("RGB").save(output_path, "PNG", quality=95)
-    print(f"Saved: {output_path}")
+    img.convert("RGB").save(out_path, "PNG", quality=98)
+    print(f"Saved: {out_path}")
 
-def render_slide_2(output_path):
-    img = create_base_canvas()
+def render_slide_2(out_path):
+    img = create_canvas()
     draw = ImageDraw.Draw(img)
-    
-    draw_header_bar(draw, 2)
-    draw_footer_bar(draw, "THE SOLUTION ➔")
-    
-    # Tag
-    draw_badge(draw, "THE PROBLEM WITH THE INDUSTRY", 60, 130, border=RED, text_color=RED)
+    draw_header(draw, 2, "THE INDUSTRY BOTTLENECK")
+    draw_footer(draw, "OUR SOLUTION ➔")
     
     # Headline
-    font_h = get_font(FONT_BOLD, 46)
-    draw.text((60, 200), "Why Traditional Influencer", font=font_h, fill=TEXT_LIGHT)
-    draw.text((60, 260), "Marketing Is Broken.", font=font_h, fill=RED)
+    font_h = get_font(FONT_BOLD, 42)
+    draw.text((70, 145), "Why Traditional Influencer", font=font_h, fill=TEXT_MAIN)
+    draw.text((70, 200), "Marketing Burns D2C Budgets", font=font_h, fill=RED)
     
-    # 4 Pain Points
+    # 4 Structured Pain Point Rows
     pains = [
-        ("HIDDEN AGENCY MARKUPS", "Brands pay 3x–5x inflated creator fees while creators get pennies. Zero transparency on actual costs.", RED),
-        ("ENDLESS DM & SPREADSHEET CHAOS", "Spending 80+ hours hunting addresses, following up on drafts, and managing ghosted creators.", RED),
-        ("VANITY METRICS & BOT ENGAGEMENT", "Paying for high follower counts with near-zero verified organic reach or buyer intent.", RED),
-        ("OPERATIONAL & COURIER BOTTLENECK", "Managing manual dispatches, wrong sizes, lost tracking, and delayed reviews instead of growing.", RED)
+        ("01", "HIDDEN AGENCY MARKUPS", "Brands pay 3x–5x inflated creator fees with zero transparency on true creator commercials. Budgets get drained on agency retainers instead of reach."),
+        ("02", "ENDLESS DM & SPREADSHEET CHAOS", "Spending 80+ hours hunting addresses, tracking courier pincodes, and chasing ghosted creators for drafts."),
+        ("03", "VANITY REACH & BOT ENGAGEMENT", "Paying top-tier fees for big follower counts with near-zero authentic organic engagement or verified buyer intent."),
+        ("04", "LOGISTICS & DISPATCH FRICTION", "Wrong size variants, delayed couriers, and untracked parcels stalling crucial product launches and marketing calendars.")
     ]
     
-    start_y = 360
-    card_h = 160
-    gap = 20
+    sy = 290
+    card_h = 165
+    gap = 18
     
-    for i, (title, desc, color) in enumerate(pains):
-        y = start_y + i * (card_h + gap)
-        draw_card(draw, 60, y, WIDTH - 60, y + card_h, bg=CARD_BG, border=BORDER, radius=18)
+    for i, (num, title, desc) in enumerate(pains):
+        y = sy + i * (card_h + gap)
+        draw.rounded_rectangle([70, y, WIDTH - 70, y + card_h], radius=16, fill=CARD_BG, outline=CARD_BORDER, width=2)
         
-        # Icon / Cross
-        draw.text((90, y + 25), "✕", font=get_font(FONT_BOLD, 26), fill=color)
-        
-        # Title
-        draw.text((135, y + 25), title, font=get_font(FONT_BOLD, 22), fill=TEXT_LIGHT)
-        
-        # Desc (multiline wrapped)
-        font_d = get_font(FONT_REGULAR, 19)
-        # Simple wrap
-        words = desc.split()
-        lines = []
-        cur_line = ""
-        for w in words:
-            test = cur_line + " " + w if cur_line else w
-            if font_d.getbbox(test)[2] < (WIDTH - 240):
-                cur_line = test
-            else:
-                lines.append(cur_line)
-                cur_line = w
-        if cur_line:
-            lines.append(cur_line)
-            
-        for line_idx, line in enumerate(lines[:2]):
-            draw.text((135, y + 68 + line_idx * 30), line, font=font_d, fill=TEXT_MUTED)
-            
-    # Bottom callout
-    draw_card(draw, 60, 1100, WIDTH - 60, 1190, bg=(35, 20, 30), border=RED, radius=16)
-    quote = "\"Influencer marketing shouldn't feel like a full-time operational nightmare.\""
-    font_q = get_font(FONT_BOLD, 20)
-    draw.text(((WIDTH - font_q.getbbox(quote)[2]) // 2, 1132), quote, font=font_q, fill=TEXT_LIGHT)
-    
-    img.convert("RGB").save(output_path, "PNG", quality=95)
-    print(f"Saved: {output_path}")
-
-def render_slide_3(output_path):
-    img = create_base_canvas()
-    draw = ImageDraw.Draw(img)
-    
-    draw_header_bar(draw, 3)
-    draw_footer_bar(draw, "OUR PROGRAMS ➔")
-    
-    # Tag
-    draw_badge(draw, "THE CREATOR ORBIT ADVANTAGE", 60, 130, border=PRIMARY, text_color=PRIMARY)
-    
-    # Headline
-    font_h = get_font(FONT_BOLD, 46)
-    draw.text((60, 200), "A Performance-First", font=font_h, fill=TEXT_LIGHT)
-    draw.text((60, 260), "Creator Engine.", font=font_h, fill=PRIMARY)
-    
-    # 3 Main Pillars
-    pillars = [
-        ("4,300+ DIRECT CREATOR ROSTER", "Verified Indian creators in Beauty, Skincare, Fashion, Fitness & Lifestyle — no middlemen markups.", GREEN),
-        ("FRICTIONLESS DISPATCH LOGISTICS", "We collect 100% verified addresses, phone numbers & variants. Your warehouse simply ships; we handle all tracking & drafts.", CYAN),
-        ("THE ORBIT MATCH™ STANDARD", "5-pillar quality vetting framework guaranteeing 1.5%–2%+ organic reach, aesthetic hooks, and brand safety.", PRIMARY)
-    ]
-    
-    start_y = 360
-    card_h = 210
-    gap = 25
-    
-    for i, (title, desc, color) in enumerate(pillars):
-        y = start_y + i * (card_h + gap)
-        draw_card(draw, 60, y, WIDTH - 60, y + card_h, bg=CARD_BG, border=BORDER, radius=20)
-        
-        # Checkmark Icon
-        draw.rounded_rectangle([90, y + 25, 135, y + 70], radius=8, fill=color)
-        draw.text((102, y + 30), "✓", font=get_font(FONT_BOLD, 26), fill=(10, 14, 26))
+        # Red Tag
+        draw.rounded_rectangle([95, y + 25, 140, y + 65], radius=8, fill=(45, 20, 30), outline=RED, width=1)
+        draw.text((105, y + 32), num, font=get_font(FONT_BOLD, 17), fill=RED)
         
         # Title
-        draw.text((155, y + 32), title, font=get_font(FONT_BOLD, 23), fill=TEXT_LIGHT)
+        draw.text((155, y + 32), title, font=get_font(FONT_BOLD, 20), fill=TEXT_MAIN)
         
         # Desc
-        font_d = get_font(FONT_REGULAR, 20)
+        font_d = get_font(FONT_REGULAR, 18)
         words = desc.split()
         lines = []
-        cur_line = ""
+        cur = ""
         for w in words:
-            test = cur_line + " " + w if cur_line else w
-            if font_d.getbbox(test)[2] < (WIDTH - 240):
-                cur_line = test
+            t = cur + " " + w if cur else w
+            if font_d.getbbox(t)[2] < (WIDTH - 210):
+                cur = t
             else:
-                lines.append(cur_line)
-                cur_line = w
-        if cur_line:
-            lines.append(cur_line)
+                lines.append(cur)
+                cur = w
+        if cur: lines.append(cur)
+        
+        for li, line in enumerate(lines[:3]):
+            draw.text((95, y + 80 + li * 26), line, font=font_d, fill=TEXT_MUTED)
             
-        for line_idx, line in enumerate(lines[:3]):
-            draw.text((90, y + 95 + line_idx * 32), line, font=font_d, fill=TEXT_MUTED)
-            
-    # Framework highlight
-    draw_card(draw, 60, 1090, WIDTH - 60, 1190, bg=(20, 25, 50), border=PRIMARY, radius=16)
-    fw_title = "THE ORBIT MATCH™ CORE"
-    fw_items = "Originality • Relevance • Brand Safety • Ideal Audience • True Engagement"
-    font_fwt = get_font(FONT_BOLD, 16)
-    font_fwi = get_font(FONT_BOLD, 19)
-    draw.text(((WIDTH - font_fwt.getbbox(fw_title)[2]) // 2, 1110), fw_title, font=font_fwt, fill=PRIMARY)
-    draw.text(((WIDTH - font_fwi.getbbox(fw_items)[2]) // 2, 1140), fw_items, font=font_fwi, fill=TEXT_LIGHT)
+    # Bottom callout box
+    draw.rounded_rectangle([70, 1060, WIDTH - 70, 1140], radius=12, fill=(35, 18, 25), outline=RED, width=1)
+    callout = "\"Influencer marketing shouldn't feel like a full-time operational headache.\""
+    font_co = get_font(FONT_BOLD, 18)
+    draw.text(((WIDTH - font_co.getbbox(callout)[2]) // 2, 1088), callout, font=font_co, fill=TEXT_SUB)
     
-    img.convert("RGB").save(output_path, "PNG", quality=95)
-    print(f"Saved: {output_path}")
+    img.convert("RGB").save(out_path, "PNG", quality=98)
+    print(f"Saved: {out_path}")
 
-def render_slide_4(output_path):
-    img = create_base_canvas()
+def render_slide_3(out_path):
+    img = create_canvas()
     draw = ImageDraw.Draw(img)
-    
-    draw_header_bar(draw, 4)
-    draw_footer_bar(draw, "GET STARTED ➔")
-    
-    # Tag
-    draw_badge(draw, "HOW WE WORK WITH BRANDS", 60, 130, border=CYAN, text_color=CYAN)
+    draw_header(draw, 3, "THE CREATOR ORBIT ENGINE")
+    draw_footer(draw, "OUR PROGRAMS ➔")
     
     # Headline
-    font_h = get_font(FONT_BOLD, 46)
-    draw.text((60, 200), "Turnkey Campaign Models", font=font_h, fill=TEXT_LIGHT)
-    draw.text((60, 260), "Built For Real ROI.", font=font_h, fill=CYAN)
+    font_h = get_font(FONT_BOLD, 42)
+    draw.text((70, 145), "A Performance-First Infrastructure", font=font_h, fill=TEXT_MAIN)
+    draw.text((70, 200), "Built For Predictable Creator ROI", font=font_h, fill=PRIMARY_LIGHT)
+    
+    # 3 Solution Pillars
+    pillars = [
+        ("🎯", "CURATED BEAUTY & SKINCARE NETWORK", "Direct-access, handpicked creators across Indian Beauty, Skincare & Lifestyle with zero middlemen markup.", PRIMARY),
+        ("📦", "FRICTIONLESS DISPATCH LOGISTICS", "We provide 100% phone-verified addresses, names, and variants directly to your warehouse. Your team simply ships; we manage all follow-ups, QC & live link tracking.", CYAN),
+        ("🛡️", "THE ORBIT MATCH™ VETTING STANDARD", "Our proprietary 5-pillar quality framework guaranteeing 1.5%–2.0%+ verified organic reach, aesthetic hooks, and strict brand safety.", GREEN)
+    ]
+    
+    sy = 290
+    card_h = 220
+    gap = 22
+    
+    for i, (icon, title, desc, col) in enumerate(pillars):
+        y = sy + i * (card_h + gap)
+        draw.rounded_rectangle([70, y, WIDTH - 70, y + card_h], radius=18, fill=CARD_BG, outline=CARD_BORDER, width=2)
+        
+        # Icon Pill
+        draw.rounded_rectangle([95, y + 24, 145, y + 70], radius=10, fill=(25, 35, 60), outline=col, width=2)
+        draw.text((106, y + 30), icon, font=get_font(FONT_BOLD, 22), fill=col)
+        
+        # Title
+        draw.text((160, y + 34), title, font=get_font(FONT_BOLD, 21), fill=TEXT_MAIN)
+        
+        # Desc
+        font_d = get_font(FONT_REGULAR, 19)
+        words = desc.split()
+        lines = []
+        cur = ""
+        for w in words:
+            t = cur + " " + w if cur else w
+            if font_d.getbbox(t)[2] < (WIDTH - 210):
+                cur = t
+            else:
+                lines.append(cur)
+                cur = w
+        if cur: lines.append(cur)
+        
+        for li, line in enumerate(lines[:3]):
+            draw.text((95, y + 90 + li * 28), line, font=font_d, fill=TEXT_MUTED)
+            
+    # ORBIT MATCH Framework Pill
+    draw.rounded_rectangle([70, 1050, WIDTH - 70, 1140], radius=14, fill=(18, 26, 48), outline=PRIMARY, width=1)
+    fw_lbl = "THE ORBIT MATCH™ STANDARD"
+    fw_desc = "O — Originality  •  R — Relevance  •  B — Brand Safety  •  I — Ideal Audience  •  T — True Engagement"
+    font_fl = get_font(FONT_BOLD, 14)
+    font_fd = get_font(FONT_BOLD, 16)
+    draw.text(((WIDTH - font_fl.getbbox(fw_lbl)[2]) // 2, 1065), fw_lbl, font=font_fl, fill=PRIMARY_LIGHT)
+    draw.text(((WIDTH - font_fd.getbbox(fw_desc)[2]) // 2, 1098), fw_desc, font=font_fd, fill=TEXT_MAIN)
+    
+    img.convert("RGB").save(out_path, "PNG", quality=98)
+    print(f"Saved: {out_path}")
+
+def render_slide_4(out_path):
+    img = create_canvas()
+    draw = ImageDraw.Draw(img)
+    draw_header(draw, 4, "OUR CAMPAIGN PROGRAMS")
+    draw_footer(draw, "GET STARTED ➔")
+    
+    # Headline
+    font_h = get_font(FONT_BOLD, 42)
+    draw.text((70, 145), "Scalable Creator Programs", font=font_h, fill=TEXT_MAIN)
+    draw.text((70, 200), "Tailored For Your Growth Stage", font=font_h, fill=CYAN)
     
     # 3 Service Packages
-    services = [
-        ("HIGH-VOLUME BARTER & SEEDING", "200 to 1,000+ creators across India. Generates 800K–5M+ authentic organic views and floods feeds with user reviews.", GREEN, "MOST POPULAR"),
-        ("PERFORMANCE UGC CREATIVES", "High-retention hooks & unboxings crafted specifically for Meta & Instagram performance ad scaling.", PRIMARY, "FOR AD TEAMS"),
-        ("CURATED PAID & WHITELISTED", "Handpicked top-converting creators with Meta partnership ad codes & full digital usage rights.", ACCENT, "SCALE MODEL")
+    programs = [
+        ("01", "HIGH-VOLUME BARTER & SEEDING", "200, 500, or 1,000+ verified creators posting authentic reels & reviews. Generates 800K–5M+ organic views with zero creator fee markups.", GREEN, "MOST POPULAR"),
+        ("02", "PERFORMANCE UGC VIDEO CREATIVES", "High-retention video hooks, unboxings, and 7-day routine formats crafted specifically for your Meta & Instagram ad library.", PRIMARY, "FOR PERFORMANCE TEAMS"),
+        ("03", "CURATED PAID & WHITELISTED SCALE", "Handpicked high-converting creators with Meta partnership ad codes, dedicated deliverables, and guaranteed view reach.", ACCENT, "SCALE CAMPAIGNS")
     ]
     
-    start_y = 360
-    card_h = 210
-    gap = 25
+    sy = 290
+    card_h = 220
+    gap = 22
     
-    for i, (title, desc, color, tag) in enumerate(services):
-        y = start_y + i * (card_h + gap)
-        draw_card(draw, 60, y, WIDTH - 60, y + card_h, bg=CARD_BG, border=BORDER, radius=20)
-        
-        # Tag Badge
-        font_tb = get_font(FONT_BOLD, 13)
-        t_w = font_tb.getbbox(tag)[2] + 24
-        draw.rounded_rectangle([WIDTH - 90 - t_w, y + 22, WIDTH - 90, y + 54], radius=16, fill=color)
-        draw.text((WIDTH - 78 - t_w, y + 28), tag, font=font_tb, fill=(10, 14, 26))
+    for i, (num, title, desc, col, badge) in enumerate(programs):
+        y = sy + i * (card_h + gap)
+        draw.rounded_rectangle([70, y, WIDTH - 70, y + card_h], radius=18, fill=CARD_BG, outline=CARD_BORDER, width=2)
         
         # Number Badge
-        draw.rounded_rectangle([90, y + 25, 135, y + 70], radius=8, fill=(25, 35, 60), outline=color, width=2)
-        draw.text((104, y + 30), str(i + 1), font=get_font(FONT_BOLD, 24), fill=color)
+        draw.rounded_rectangle([95, y + 24, 145, y + 70], radius=10, fill=(25, 35, 60), outline=col, width=2)
+        draw.text((106, y + 30), num, font=get_font(FONT_BOLD, 22), fill=col)
         
         # Title
-        draw.text((155, y + 34), title, font=get_font(FONT_BOLD, 21), fill=TEXT_LIGHT)
+        draw.text((160, y + 34), title, font=get_font(FONT_BOLD, 20), fill=TEXT_MAIN)
+        
+        # Pill Tag on right
+        font_b = get_font(FONT_BOLD, 12)
+        bw = font_b.getbbox(badge)[2] + 20
+        draw.rounded_rectangle([WIDTH - 95 - bw, y + 28, WIDTH - 95, y + 58], radius=12, fill=col)
+        draw.text((WIDTH - 85 - bw, y + 35), badge, font=font_b, fill=(8, 12, 22))
         
         # Desc
-        font_d = get_font(FONT_REGULAR, 20)
+        font_d = get_font(FONT_REGULAR, 19)
         words = desc.split()
         lines = []
-        cur_line = ""
+        cur = ""
         for w in words:
-            test = cur_line + " " + w if cur_line else w
-            if font_d.getbbox(test)[2] < (WIDTH - 200):
-                cur_line = test
+            t = cur + " " + w if cur else w
+            if font_d.getbbox(t)[2] < (WIDTH - 210):
+                cur = t
             else:
-                lines.append(cur_line)
-                cur_line = w
-        if cur_line:
-            lines.append(cur_line)
+                lines.append(cur)
+                cur = w
+        if cur: lines.append(cur)
+        
+        for li, line in enumerate(lines[:3]):
+            draw.text((95, y + 90 + li * 28), line, font=font_d, fill=TEXT_MUTED)
             
-        for line_idx, line in enumerate(lines[:3]):
-            draw.text((90, y + 95 + line_idx * 32), line, font=font_d, fill=TEXT_MUTED)
-            
-    # Guarantee callout
-    draw_card(draw, 60, 1090, WIDTH - 60, 1190, bg=(15, 30, 40), border=GREEN, radius=16)
-    guar_txt = "⚡ ~15-DAY CAMPAIGN TURNAROUND GUARANTEE"
-    guar_sub = "From creator selection to first live deliverables."
-    font_gt = get_font(FONT_BOLD, 20)
-    font_gs = get_font(FONT_REGULAR, 17)
-    draw.text(((WIDTH - font_gt.getbbox(guar_txt)[2]) // 2, 1115), guar_txt, font=font_gt, fill=GREEN)
-    draw.text(((WIDTH - font_gs.getbbox(guar_sub)[2]) // 2, 1150), guar_sub, font=font_gs, fill=TEXT_LIGHT)
+    # Turnaround Guarantee Banner
+    draw.rounded_rectangle([70, 1050, WIDTH - 70, 1140], radius=14, fill=(12, 30, 35), outline=GREEN, width=1)
+    g_title = "⚡ ~15-DAY CAMPAIGN TURNAROUND GUARANTEE"
+    g_desc = "From creator selection to dispatch sheet delivery and first live posts."
+    font_gt = get_font(FONT_BOLD, 16)
+    font_gd = get_font(FONT_REGULAR, 16)
+    draw.text(((WIDTH - font_gt.getbbox(g_title)[2]) // 2, 1065), g_title, font=font_gt, fill=GREEN)
+    draw.text(((WIDTH - font_gd.getbbox(g_desc)[2]) // 2, 1098), g_desc, font=font_gd, fill=TEXT_MAIN)
     
-    img.convert("RGB").save(output_path, "PNG", quality=95)
-    print(f"Saved: {output_path}")
+    img.convert("RGB").save(out_path, "PNG", quality=98)
+    print(f"Saved: {out_path}")
 
-def render_slide_5(output_path, logo_path):
-    img = create_base_canvas()
+def render_slide_5(out_path, logo_path):
+    img = create_canvas()
     draw = ImageDraw.Draw(img)
-    
-    draw_header_bar(draw, 5)
-    draw_footer_bar(draw, "@thecreatororbit")
-    
-    # Tag
-    draw_badge(draw, "LET'S WORK TOGETHER", (WIDTH - 280) // 2, 130, border=ACCENT, text_color=ACCENT)
+    draw_header(draw, 5, "GET STARTED")
+    draw_footer(draw, "@thecreatororbit")
     
     # Headline
-    font_h = get_font(FONT_BOLD, 46)
-    title1 = "Ready to Launch Your"
-    title2 = "Next Creator Blitz?"
-    draw.text(((WIDTH - font_h.getbbox(title1)[2]) // 2, 200), title1, font=font_h, fill=TEXT_LIGHT)
-    draw.text(((WIDTH - font_h.getbbox(title2)[2]) // 2, 260), title2, font=font_h, fill=PRIMARY)
+    font_h = get_font(FONT_BOLD, 42)
+    draw.text((70, 145), "Ready to Launch Your Next", font=font_h, fill=TEXT_MAIN)
+    draw.text((70, 200), "High-ROI Creator Campaign?", font=font_h, fill=PRIMARY_LIGHT)
     
-    # Main CTA Box
-    draw_card(draw, 60, 360, WIDTH - 60, 780, bg=CARD_BG, border=PRIMARY, radius=24)
+    # Main CTA Action Box
+    draw.rounded_rectangle([70, 290, WIDTH - 70, 680], radius=22, fill=CARD_BG, outline=PRIMARY, width=2)
     
-    # Small centered logo
-    if os.path.exists(logo_path):
-        logo = Image.open(logo_path).convert("RGBA")
-        logo = logo.resize((100, 100), Image.LANCZOS)
-        mask = Image.new("L", (100, 100), 0)
-        mask_draw = ImageDraw.Draw(mask)
-        mask_draw.ellipse([0, 0, 100, 100], fill=255)
-        img.paste(logo, ((WIDTH - 100) // 2, 400), mask)
-        
-    call_title = "Get a Custom 1-Page Creator Roster"
-    call_sub = "Tailored specifically for your brand's niche & target audience."
+    # Subtitle
     font_ct = get_font(FONT_BOLD, 26)
-    font_cs = get_font(FONT_REGULAR, 20)
-    draw.text(((WIDTH - font_ct.getbbox(call_title)[2]) // 2, 530), call_title, font=font_ct, fill=TEXT_LIGHT)
-    draw.text(((WIDTH - font_cs.getbbox(call_sub)[2]) // 2, 575), call_sub, font=font_cs, fill=TEXT_MUTED)
+    draw.text((105, 335), "Get a Custom 1-Page Creator Roster", font=font_ct, fill=TEXT_MAIN)
+    font_cs = get_font(FONT_REGULAR, 18)
+    draw.text((105, 375), "Tailored specifically for your brand's category, target cities & budget.", font=font_cs, fill=TEXT_MUTED)
     
-    # Direct Action Pills
-    p1 = "💬 Drop us a DM with \"ROSTER\""
-    p2 = "🌐 Visit thecreatororbit.vercel.app"
-    p3 = "✉️ thecreatororbit.media@gmail.com"
-    font_p = get_font(FONT_BOLD, 21)
+    # 3 Direct Actions
+    actions = [
+        ("💬", "Direct DM", "Drop us a DM with \"ROSTER\" on Instagram @thecreatororbit"),
+        ("🌐", "Live Website", "Visit thecreatororbit.vercel.app for packages & economics"),
+        ("✉️", "Direct Email", "Reach us at thecreatororbit.media@gmail.com")
+    ]
     
-    draw.rounded_rectangle([100, 640, WIDTH - 100, 700], radius=14, fill=PRIMARY)
-    draw.text(((WIDTH - font_p.getbbox(p1)[2]) // 2, 655), p1, font=font_p, fill=TEXT_LIGHT)
+    for i, (icon, title, desc) in enumerate(actions):
+        ay = 425 + i * 75
+        draw.rounded_rectangle([105, ay, WIDTH - 105, ay + 62], radius=12, fill=(22, 31, 52), outline=CARD_BORDER, width=1)
+        draw.text((125, ay + 16), icon, font=get_font(FONT_BOLD, 20), fill=PRIMARY)
+        draw.text((165, ay + 13), title, font=get_font(FONT_BOLD, 17), fill=PRIMARY_LIGHT)
+        draw.text((165, ay + 35), desc, font=get_font(FONT_REGULAR, 15), fill=TEXT_SUB)
+        
+    # Founders Section Card
+    draw.rounded_rectangle([70, 715, WIDTH - 70, 990], radius=20, fill=CARD_BG, outline=CARD_BORDER, width=2)
     
-    draw.text(((WIDTH - font_p.getbbox(p2)[2]) // 2, 720), p2, font=font_p, fill=CYAN)
+    draw.text((105, 745), "MEET THE FOUNDERS", font=get_font(FONT_BOLD, 15), fill=PRIMARY_LIGHT)
     
-    # Founders Card
-    draw_card(draw, 60, 830, WIDTH - 60, 1050, bg=(16, 22, 38), border=BORDER, radius=20)
-    f_header = "MEET THE FOUNDERS"
-    draw.text((100, 860), f_header, font=get_font(FONT_BOLD, 15), fill=TEXT_MUTED)
+    font_fn = get_font(FONT_BOLD, 30)
+    draw.text((105, 780), "Vedant Rai & Manya Jain", font=font_fn, fill=TEXT_MAIN)
     
-    f_names = "Vedant Rai & Manya Jain"
-    f_roles = "Co-Founders | Creator Orbit"
-    f_loc = "📍 New Delhi & Uttarakhand • Serving Brands Pan-India"
+    font_fr = get_font(FONT_BOLD, 18)
+    draw.text((105, 830), "Co-Founders | Creator Orbit", font=font_fr, fill=CYAN)
     
-    draw.text((100, 895), f_names, font=get_font(FONT_BOLD, 30), fill=TEXT_LIGHT)
-    draw.text((100, 945), f_roles, font=get_font(FONT_BOLD, 20), fill=PRIMARY)
-    draw.text((100, 985), f_loc, font=get_font(FONT_REGULAR, 19), fill=TEXT_MUTED)
+    font_fl = get_font(FONT_REGULAR, 18)
+    draw.text((105, 870), "📍 New Delhi & Uttarakhand  •  Serving Fast-Growing D2C Brands Pan-India", font=font_fl, fill=TEXT_MUTED)
     
-    # Final Tagline
-    tagline = "🌌 ORBIT BEYOND ORDINARY"
-    font_tag = get_font(FONT_BOLD, 24)
-    draw.text(((WIDTH - font_tag.getbbox(tagline)[2]) // 2, 1120), tagline, font=font_tag, fill=ACCENT)
+    draw.text((105, 915), "Selection Core: Audience Match • Content Quality • Engagement • Budget Fit • Relevance", font=get_font(FONT_REGULAR, 15), fill=TEXT_SUB)
     
-    img.convert("RGB").save(output_path, "PNG", quality=95)
-    print(f"Saved: {output_path}")
+    # Tagline Banner
+    draw.rounded_rectangle([70, 1025, WIDTH - 70, 1115], radius=14, fill=(20, 26, 48), outline=PRIMARY, width=1)
+    tag_txt = "🌌 ORBIT BEYOND ORDINARY"
+    font_tb = get_font(FONT_BOLD, 22)
+    draw.text(((WIDTH - font_tb.getbbox(tag_txt)[2]) // 2, 1055), tag_txt, font=font_tb, fill=ACCENT)
+    
+    img.convert("RGB").save(out_path, "PNG", quality=98)
+    print(f"Saved: {out_path}")
 
 def main():
     logo_path = os.path.abspath("../branding/creator_orbit_official_logo.png")
     out_dir = os.path.abspath("../branding/launch_slides")
     os.makedirs(out_dir, exist_ok=True)
     
-    print(f"Generating Instagram Launch Carousel in {out_dir}...")
+    print(f"Generating Ultra-Realistic Agency Launch Carousel in {out_dir}...")
     render_slide_1(os.path.join(out_dir, "slide_1_cover.png"), logo_path)
     render_slide_2(os.path.join(out_dir, "slide_2_problem.png"))
     render_slide_3(os.path.join(out_dir, "slide_3_solution.png"))
     render_slide_4(os.path.join(out_dir, "slide_4_programs.png"))
     render_slide_5(os.path.join(out_dir, "slide_5_cta.png"), logo_path)
-    print("All 5 slides successfully generated!")
+    print("All 5 refined realistic slides successfully generated!")
 
 if __name__ == "__main__":
     main()

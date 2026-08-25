@@ -17,10 +17,10 @@
 ### Why Brands Work With Creator Orbit:
 ```
 ┌─────────────────────────┬─────────────────────────┬─────────────────────────┐
-│   4,300+ DIRECT ROSTER   │     ORBIT MATCH™        │   SEAMLESS LOGISTICS    │
-│  Verified Indian creators│  Signature 5-pillar     │  Clean dispatch sheets  │
-│   in Beauty, Fitness,   │  vetting framework for  │  sent to your warehouse │
-│   Fashion & Lifestyle   │  high-converting content│  for direct product ship│
+│  FOUNDER-VETTED ROSTER  │     ORBIT MATCH™        │   SEAMLESS LOGISTICS    │
+│  Handpicked creators in │  Signature 5-pillar     │  Clean dispatch sheets  │
+│  Indian Beauty, Skincare│  vetting framework for  │  sent to your warehouse │
+│  & Lifestyle            │  high-converting content│  for direct product ship│
 └─────────────────────────┴─────────────────────────┴─────────────────────────┘
 ```
 
@@ -54,9 +54,10 @@
 
 | Metric | Details |
 |---|---|
-| **Active Creators Managed** | **4,300+** Curated creators across India |
-| **Top Niches** | Skincare & Beauty (45%), Fitness & Wellness (25%), Fashion (20%), Food/Lifestyle (10%) |
+| **Roster Curation** | **100% Handpicked & Vetted** by Founders Vedant & Manya |
+| **Specialization Focus** | Skincare & Beauty (55%), Fitness & Wellness (25%), Fashion & Lifestyle (20%) |
 | **Geographic Coverage** | Delhi NCR, Mumbai, Bengaluru, Pune, Hyderabad, Kolkata, Jaipur, Chandigarh + Tier 2 hubs |
+| **Campaign Seeding Scale** | **50 to 500+ Creators** per brand campaign |
 | **Average Organic Views** | **4,000 – 15,000+ views** per creator reel |
 | **Average Engagement Rate** | **1.5% – 2.0%** (Real, verified organic engagement) |
 | **Turnaround Time** | **Around 15 Days** from product dispatch to content going live |
