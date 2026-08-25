@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creator Orbit — Performance Creator Marketing for D2C Brands</title>
+  
+  <!-- SEO & Social Sharing Meta Tags -->
+  <meta name="description" content="Creator Orbit connects D2C brands with 4,300+ verified Indian creators for high-ROI barter campaigns and performance creator marketing. Founded by Vedant Rai & Manya Jain.">
+  <meta name="keywords" content="Creator Orbit, Influencer Marketing, D2C Influencer Marketing, Barter Campaigns, Indian Creators, Performance Marketing, UGC, Creator Intelligence">
+  <meta name="author" content="Creator Orbit (Vedant Rai & Manya Jain)">
+
+  <!-- Open Graph / WhatsApp / Instagram / LinkedIn Previews -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mrvrai.github.io/Influencer-Marketing/">
+  <meta property="og:title" content="Creator Orbit — Performance Creator Marketing for D2C Brands">
+  <meta property="og:description" content="4,300+ direct creator roster, ORBIT MATCH™ vetting framework, and frictionless product seeding for fast-growing Indian D2C brands.">
+  <meta property="og:image" content="https://raw.githubusercontent.com/MrVRai/Influencer-Marketing/main/branding/creator_orbit_official_logo.png">
+
+  <!-- Twitter Card -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:title" content="Creator Orbit — Orbit Beyond Ordinary">
+  <meta property="twitter:description" content="Scale your D2C brand with 4,300+ verified Indian creators. Zero middlemen markup, ~15 day turnaround.">
+  <meta property="twitter:image" content="https://raw.githubusercontent.com/MrVRai/Influencer-Marketing/main/branding/creator_orbit_official_logo.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="branding/creator_orbit_avatar_400x400.png">
+  <link rel="apple-touch-icon" href="branding/creator_orbit_avatar_400x400.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4F46E5;
+      --primary-dark: #3730A3;
+      --accent: #EC4899;
+      --bg: #0F172A;
+      --card-bg: #1E293B;
+      --text: #F8FAFC;
+      --text-muted: #94A3B8;
+      --border: #334155;
+      --success: #10B981;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      padding: 52px 40px 44px;
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.18) 0%, rgba(236, 72, 153, 0.12) 100%);
+      border: 1px solid rgba(79, 70, 229, 0.35);
+      border-radius: 20px;
+      margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle decorative glow blob behind header */
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -60px; left: 50%; transform: translateX(-50%);
+      width: 360px; height: 240px;
+      background: radial-gradient(ellipse, rgba(79, 70, 229, 0.22) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Logo container — centered, circular, glowing */
+    .brand-logo-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .brand-logo-wrap img {
+      width: 108px;
+      height: 108px;
+      border-radius: 50%;
+      border: 3px solid rgba(79, 70, 229, 0.7);
+      box-shadow: 0 0 0 6px rgba(79, 70, 229, 0.12), 0 8px 32px rgba(79, 70, 229, 0.35);
+      display: block;
+    }
+
+    /* Brand Name — large, prominent, tight tracking */
+    .brand-name {
+      font-size: 42px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      background: linear-gradient(90deg, #FFFFFF 0%, #A5B4FC 50%, #06B6D4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+    }
+
+    /* Tagline below brand name */
+    .brand-tagline-sub {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #818CF8;
+      margin-bottom: 18px;
+    }
+
+    .logo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 18px;
+      background: rgba(79, 70, 229, 0.2);
+      border: 1px solid rgba(79, 70, 229, 0.5);
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #A5B4FC;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 10px;
+      background: linear-gradient(to right, #FFFFFF, #CBD5E1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .tagline {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 650px;
+      margin: 0 auto 20px auto;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 32px;
+      font-weight: 800;
+      color: #818CF8;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin: 35px 0 16px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .packages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .pkg-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .pkg-card.featured {
+      border-color: var(--primary);
+      box-shadow: 0 0 25px rgba(79, 70, 229, 0.25);
+    }
+
+    .pkg-badge {
+      position: absolute;
+      top: -12px;
+      right: 20px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+    }
+
+    .pkg-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .pkg-price {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--success);
+      margin-bottom: 16px;
+    }
+
+    .pkg-features {
+      list-style: none;
+      margin-bottom: 20px;
+    }
+
+    .pkg-features li {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .pkg-features li::before {
+      content: "✓";
+      color: var(--success);
+      font-weight: bold;
+    }
+
+    .table-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 30px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: rgba(15, 23, 42, 0.6);
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    td { color: var(--text-muted); }
+    td strong { color: var(--text); }
+
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .wf-step {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .wf-num {
+      width: 28px;
+      height: 28px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .wf-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .wf-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .footer-box {
+      text-align: center;
+      padding: 30px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      margin-top: 15px;
+      transition: background 0.2s;
+    }
+
+    .criteria-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .criteria-pill {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #CBD5E1;
+    }
+
+    .orbit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px;
+      margin-bottom: 30px;
+    }
+
+    .orbit-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 14px;
+      text-align: center;
+      position: relative;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .orbit-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--primary);
+    }
+
+    .orbit-letter {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: #fff;
+      font-size: 18px;
+      font-weight: 800;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    }
+
+    .orbit-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #F8FAFC;
+      margin-bottom: 6px;
+    }
+
+    .orbit-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .cta-btn:hover {
+      background: var(--primary-dark);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin: 18px 0 22px 0;
+    }
+
+    .btn-action-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #4F46E5 0%, #3730A3 100%);
+      color: #FFFFFF !important;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 12px 22px;
+      border-radius: 12px;
+      text-decoration: none;
+      box-shadow: 0 4px 16px rgba(79, 70, 229, 0.4);
+      transition: all 0.2s ease;
+      border: 1px solid rgba(165, 180, 252, 0.3);
+    }
+
+    .btn-action-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px rgba(79, 70, 229, 0.6);
+      background: linear-gradient(135deg, #4338CA 0%, #312E81 100%);
+    }
+
+    .btn-action-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: #F8FAFC !important;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 12px 20px;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-action-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: #A5B4FC;
+    }
+
+    @media print {
+      body { background: #fff; color: #000; padding: 0; }
+      .header, .stat-card, .pkg-card, .table-box, .wf-step, .footer-box, .orbit-card {
+        border-color: #ddd;
+        background: #fafafa !important;
+        box-shadow: none !important;
+      }
+      h1, .stat-num, td strong, .orbit-name { color: #000 !important; -webkit-text-fill-color: initial !important; }
+      .pkg-price { color: #059669 !important; }
+      .cta-btn, .hero-actions { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Header Hero -->
+  <div class="header">
+
+    <!-- Logo -->
+    <div class="brand-logo-wrap">
+      <img src="branding/creator_orbit_official_logo.png" alt="Creator Orbit Official Logo" />
+    </div>
+
+    <!-- Brand Name -->
+    <div class="brand-name">Creator Orbit</div>
+
+    <!-- Tagline -->
+    <div class="brand-tagline-sub">Orbit Beyond Ordinary</div>
+
+    <!-- Agency Category Badge -->
+    <div class="logo-badge">🌌 Influencer Marketing &amp; Creator Intelligence Agency</div>
+
+    <!-- Pitch Line -->
+    <h1>Performance Creator Marketing for D2C Brands</h1>
+    <p class="tagline">Turning high-converting Indian creators into your brand's most profitable customer acquisition channel.</p>
+
+    <!-- CTAs -->
+    <div class="hero-actions">
+      <a href="mailto:thecreatororbit.media@gmail.com?subject=Brand%20Campaign%20Inquiry%20-%20Creator%20Orbit" class="btn-action-primary">
+        ✉️ Request Creator Roster
+      </a>
+      <a href="https://instagram.com/thecreatororbit" target="_blank" rel="noopener noreferrer" class="btn-action-secondary">
+        📸 Follow @thecreatororbit
+      </a>
+    </div>
+
+    <!-- ORBIT MATCH™ Selection Criteria Pills -->
+    <div class="criteria-bar">
+      <span class="criteria-pill">🎯 Audience Match</span>
+      <span class="criteria-pill">✨ Content Quality</span>
+      <span class="criteria-pill">📈 True Engagement</span>
+      <span class="criteria-pill">💰 Budget Fit</span>
+      <span class="criteria-pill">🔍 Niche Relevance</span>
+    </div>
+  </div>
+
+
+  <!-- Key Metrics -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-num">4,300+</div>
+      <div class="stat-label">Direct Creator Network</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">0%</div>
+      <div class="stat-label">Middlemen Markup</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">~15 Days</div>
+      <div class="stat-label">Campaign Turnaround</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">1.5%–2%</div>
+      <div class="stat-label">Verified Organic Engagement</div>
+    </div>
+  </div>
+
+  <!-- ORBIT MATCH Framework -->
+  <h2 class="section-title">🛡️ The ORBIT MATCH™ Framework</h2>
+  <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">
+    Every creator in our 4,300+ network is verified through our proprietary 5-pillar creator selection system:
+  </p>
+  <div class="orbit-grid">
+    <div class="orbit-card">
+      <div class="orbit-letter">O</div>
+      <div class="orbit-name">Original Quality</div>
+      <div class="orbit-desc">High aesthetic production, storytelling & retention hooks</div>
+    </div>
+    <div class="orbit-card">
+      <div class="orbit-letter">R</div>
+      <div class="orbit-name">Relevance</div>
+      <div class="orbit-desc">Tight category alignment with your product & buyer persona</div>
+    </div>
+    <div class="orbit-card">
+      <div class="orbit-letter">B</div>
+      <div class="orbit-name">Brand Safety</div>
+      <div class="orbit-desc">Zero copyright flags, verified reputation & professionalism</div>
+    </div>
+    <div class="orbit-card">
+      <div class="orbit-letter">I</div>
+      <div class="orbit-name">Ideal Audience</div>
+      <div class="orbit-desc">Pinpoint demographic match (age, gender, Tier 1/2 splits)</div>
+    </div>
+    <div class="orbit-card">
+      <div class="orbit-letter">T</div>
+      <div class="orbit-name">True Engagement</div>
+      <div class="orbit-desc">1.5%–2%+ verified organic reach with real comment conversations</div>
+    </div>
+  </div>
+
+  <!-- Process -->
+  <h2 class="section-title">⚙️ How We Execute Your Campaign (Frictionless Logistics)</h2>
+  <div class="workflow-grid">
+    <div class="wf-step">
+      <div class="wf-num">1</div>
+      <div class="wf-title">Recruitment</div>
+      <div class="wf-desc">Creators shortlisted & phone/address verified</div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-num">2</div>
+      <div class="wf-title">Dispatch Sheet</div>
+      <div class="wf-desc">Standardized courier sheet sent to your warehouse</div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-num">3</div>
+      <div class="wf-title">Brand Ships Direct</div>
+      <div class="wf-desc">Your team ships hampers directly to creators</div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-num">4</div>
+      <div class="wf-title">Draft QC & Tracking</div>
+      <div class="wf-desc">100% creator follow-up & draft verification</div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-num">5</div>
+      <div class="wf-title">Live Link Report</div>
+      <div class="wf-desc">Comprehensive view & engagement analytics</div>
+    </div>
+  </div>
+
+  <!-- Barter Campaign Packages (HERO OFFERING) -->
+  <h2 class="section-title">🎁 Scalable Barter & Product Seeding Programs</h2>
+  <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">
+    Our most popular program for D2C brands looking to flood social feeds with authentic user reviews & UGC. All packages include <strong>end-to-end creator sourcing, address verification, deliverable coordination, content tracking, and performance reporting</strong>.
+  </p>
+  <div class="packages-grid">
+    <!-- 200 Creator Campaign -->
+    <div class="pkg-card">
+      <div>
+        <div class="pkg-title">200+ Creator Campaign</div>
+        <div class="pkg-price">₹2,75,000 – ₹3,00,000</div>
+        <ul class="pkg-features">
+          <li><strong>200+ Verified Creators</strong></li>
+          <li><strong>800K – 1M+ Total Views</strong> (4K–5K avg/creator)</li>
+          <li>1 Instagram Reel per creator</li>
+          <li>1 YouTube Shorts/Post (where applicable)</li>
+          <li>1 Static Instagram Story</li>
+          <li>Clean Dispatch Sheet for your warehouse</li>
+          <li>Live Content Link Monitoring & Reporting</li>
+        </ul>
+      </div>
+      <div style="font-size:12px; color:var(--text-muted);">Best for: Product launches & market testing</div>
+    </div>
+
+    <!-- 500 Creator Campaign -->
+    <div class="pkg-card featured">
+      <div class="pkg-badge" style="background: #10B981;">Most Popular</div>
+      <div>
+        <div class="pkg-title">500+ Creator Campaign</div>
+        <div class="pkg-price">₹3,50,000 – ₹4,00,000</div>
+        <ul class="pkg-features">
+          <li><strong>500+ Verified Creators</strong></li>
+          <li><strong>2M – 2.5M+ Total Views</strong> (4K–5K avg/creator)</li>
+          <li>1 Instagram Reel per creator</li>
+          <li>1 YouTube Shorts/Post (where applicable)</li>
+          <li>1 Static Instagram Story</li>
+          <li>High-Volume UGC Content Asset Library</li>
+          <li>Dedicated Campaign Operations Lead</li>
+        </ul>
+      </div>
+      <div style="font-size:12px; color:var(--text-muted);">Best for: Strong reach & audience penetration</div>
+    </div>
+
+    <!-- 1000 Creator Campaign -->
+    <div class="pkg-card">
+      <div>
+        <div class="pkg-title">1,000+ Creator Campaign</div>
+        <div class="pkg-price">₹9,00,000 – ₹10,00,000</div>
+        <ul class="pkg-features">
+          <li><strong>1,000+ Verified Creators</strong></li>
+          <li><strong>4M – 5M+ Total Views</strong> (4K–5K avg/creator)</li>
+          <li>1 Instagram Reel per creator</li>
+          <li>1 YouTube Shorts/Post (where applicable)</li>
+          <li>1 Static Instagram Story</li>
+          <li>Nationwide Product Seeding Blitz</li>
+          <li>Full View Analytics & Insights Report</li>
+        </ul>
+      </div>
+      <div style="font-size:12px; color:var(--text-muted);">Best for: Viral category dominance & brand blitz</div>
+    </div>
+  </div>
+
+  <!-- Paid Pricing Packages (Add-on / Scale) -->
+  <h2 class="section-title">💎 Curated Paid & Whitelisted Creator Packages</h2>
+  <div class="packages-grid">
+    <!-- Starter Pilot -->
+    <div class="pkg-card">
+      <div>
+        <div class="pkg-title">Starter Pilot (Paid)</div>
+        <div class="pkg-price">₹35,000 – ₹50,000</div>
+        <ul class="pkg-features">
+          <li><strong>5–7 Curated Creators</strong></li>
+          <li><strong>50K – 200K</strong> Est. Organic Views</li>
+          <li>Dedicated Reels + Story Links</li>
+          <li>Script Briefing & Tracking</li>
+          <li>Meta Partnership Ad Codes</li>
+        </ul>
+      </div>
+      <div style="font-size:12px; color:var(--text-muted);">Ideal for: Target ad whitelisting test</div>
+    </div>
+
+    <!-- Growth Scaler -->
+    <div class="pkg-card">
+      <div>
+        <div class="pkg-title">Growth Scaler (Paid)</div>
+        <div class="pkg-price">₹90,000 – ₹1,50,000</div>
+        <ul class="pkg-features">
+          <li><strong>12–15 Curated Creators</strong> (Micro + Macro Mix)</li>
+          <li><strong>200K+</strong> Est. Organic Views</li>
+          <li>15 Dedicated Reels + 30 Stories</li>
+          <li>Full Whitelisting & Ad Code Rights</li>
+          <li>Detailed Performance Analytics Report</li>
+        </ul>
+      </div>
+      <div style="font-size:12px; color:var(--text-muted);">Ideal for: Performance ad scaling</div>
+    </div>
+
+    <!-- Viral Blitz -->
+    <div class="pkg-card">
+      <div>
+        <div class="pkg-title">Viral Blitz (Paid)</div>
+        <div class="pkg-price">₹10,00,000+</div>
+        <ul class="pkg-features">
+          <li><strong>25–30+ Creators across India</strong></li>
+          <li><strong>1M+</strong> Guaranteed Reach</li>
+          <li>Multi-platform (Instagram + YouTube)</li>
+          <li>Multi-angle hooks & A/B testing</li>
+          <li>Dedicated Account Manager</li>
+        </ul>
+      </div>
+      <div style="font-size:12px; color:var(--text-muted);">Ideal for: Category dominance & sales blitz</div>
+    </div>
+  </div>
+
+  <!-- Economics Comparison -->
+  <h2 class="section-title">📊 Model Comparison: Traditional Agency vs. Creator Orbit</h2>
+  <div class="table-box">
+    <table>
+      <thead>
+        <tr>
+          <th>Campaign Factor</th>
+          <th>Traditional Agency Model</th>
+          <th>Creator Orbit Model</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Creator Commercials</strong></td>
+          <td>Agency markups may apply</td>
+          <td><strong style="color:var(--success);">Transparent creator pricing</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Agency Fees</strong></td>
+          <td>Monthly retainers may be required</td>
+          <td><strong style="color:var(--success);">Flexible pay-per-campaign model</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Ad Whitelisting Rights</strong></td>
+          <td>May involve additional fees</td>
+          <td><strong style="color:var(--success);">Rights and costs defined upfront</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Campaign Cost Efficiency</strong></td>
+          <td>Varies by campaign</td>
+          <td><strong style="color:var(--success);">Optimized for efficient creator spending</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Footer / Contact -->
+  <div class="footer-box">
+    <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 8px;">Ready to Launch Your Next High-ROI Campaign?</h3>
+    <p style="color: var(--text-muted); font-size: 14px; max-width: 550px; margin: 0 auto 18px auto;">
+      Let our team build a custom 1-page creator roster tailored specifically for your brand niche, goals, and budget.
+    </p>
+
+    <div class="hero-actions">
+      <a href="mailto:thecreatororbit.media@gmail.com?subject=Brand%20Campaign%20Inquiry%20-%20Creator%20Orbit" class="btn-action-primary">
+        ✉️ thecreatororbit.media@gmail.com
+      </a>
+      <a href="https://instagram.com/thecreatororbit" target="_blank" rel="noopener noreferrer" class="btn-action-secondary">
+        📸 @thecreatororbit
+      </a>
+    </div>
+
+    <div style="margin-top: 15px; font-size: 13px; color: var(--text-muted);">
+      <strong>Vedant Rai & Manya Jain</strong> | Co-Founders, Creator Orbit<br>
+      New Delhi & Uttarakhand, India &bull; <em>Orbit Beyond Ordinary</em>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
