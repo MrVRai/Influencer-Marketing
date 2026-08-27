@@ -90,32 +90,32 @@ We offer scalable influencer marketing campaigns tailored to different brand req
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║  1. 200+ CREATOR CAMPAIGN (Starter Barter)                                   ║
+║  1. STARTER SEEDING PILOT (200+ Creators)                                    ║
 ║  • Campaign Size: 200+ Creators                                              ║
 ║  • Deliverables per Creator: 1 IG Reel + 1 Story + 1 YT Shorts (where app.)  ║
 ║  • Average Expected Views: 4K–5K per creator (800K – 1,000,000+ Total Views) ║
 ║  • Deliverable Management: Full address sheet + tracking + draft QC          ║
-║  • Estimated Campaign Budget: ₹2,75,000 – ₹3,00,000 (All-inclusive)          ║
+║  • Pricing Scope: Custom Pilot Proposal based on SKU & category              ║
 ║  • Best for: Product launches & testing creator marketing at scale           ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║  2. 500+ CREATOR CAMPAIGN (Growth Seeding — Most Popular)                    ║
+║  2. GROWTH SEEDING BLITZ (500+ Creators — Most Popular)                      ║
 ║  • Campaign Size: 500+ Creators                                              ║
 ║  • Deliverables per Creator: 1 IG Reel + 1 Story + 1 YT Shorts (where app.)  ║
 ║  • Average Expected Views: 4K–5K per creator (2,000,000 – 2,500,000+ Views)  ║
 ║  • Deliverable Management: Dedicated operations lead + live dashboard        ║
-║  • Estimated Campaign Budget: ₹3,50,000 – ₹4,00,000 (All-inclusive)          ║
+║  • Pricing Scope: Custom Growth Proposal based on SKU & category             ║
 ║  • Best for: Strong reach, massive UGC content volume & market penetration   ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║  3. 1,000+ CREATOR CAMPAIGN (Viral Category Blitz)                           ║
+║  3. VIRAL CATEGORY DOMINANCE (1,000+ Creators)                               ║
 ║  • Campaign Size: 1,000+ Creators                                            ║
 ║  • Deliverables per Creator: 1 IG Reel + 1 Story + 1 YT Shorts (where app.)  ║
 ║  • Average Expected Views: 4K–5K per creator (4,000,000 – 5,000,000+ Views)  ║
 ║  • Deliverable Management: Nationwide dispatch sheet + comprehensive report  ║
-║  • Estimated Campaign Budget: ₹9,00,000 – ₹10,00,000 (All-inclusive)         ║
+║  • Pricing Scope: Tailored Scale Proposal based on deliverables & duration   ║
 ║  • Best for: Large-scale brand awareness, category dominance & viral blitz   ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
@@ -129,7 +129,7 @@ We offer scalable influencer marketing campaigns tailored to different brand req
 > * Performance reporting and campaign insights
 > * Dedicated campaign management team
 
-*(Campaign budgets may vary depending on creator category, product value, campaign requirements, timelines, and additional deliverables).*
+*(Campaign proposals are custom-built depending on creator category, product value, campaign requirements, timelines, and additional deliverables).*
 
 ---
 
@@ -137,9 +137,9 @@ We offer scalable influencer marketing campaigns tailored to different brand req
 
 For brands looking for curated creators with guaranteed ad boosting & whitelisting rights:
 
-* **Starter Pilot (Paid)**: 5–7 Curated Creators | **50K – 200K Views** | **₹35,000 – ₹50,000**
-* **Growth Scaler (Paid)**: 12–15 Curated Creators (**Micro + Macro Mix**) | **200K+ Views** | **₹90,000 – ₹1,50,000**
-* **Viral Blitz (Paid)**: 25–30+ Creators across India | **1M+ Guaranteed Views** | **₹10,00,000+**
+* **Starter Paid Pilot**: 5–7 Curated Creators | **50K – 200K Views** | **Flexible Pilot Scope**
+* **Growth UGC Scaler**: 12–15 Curated Creators (**Micro + Macro Mix**) | **200K+ Views** | **Custom Retainer Scope**
+* **Enterprise Campaign**: 25–30+ Creators across India | **1M+ Guaranteed Views** | **Tailored Enterprise Proposal**
 
 ---
 
