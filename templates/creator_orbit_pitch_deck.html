@@ -8,7 +8,10 @@
     :root {
       --primary: #4F46E5;
       --primary-dark: #3730A3;
+      --primary-light: #818CF8;
       --accent: #EC4899;
+      --cyan: #06B6D4;
+      --cyan-light: #67E8F9;
       --bg: #0F172A;
       --card-bg: #1E293B;
       --text: #F8FAFC;
@@ -29,6 +32,74 @@
     .container {
       max-width: 900px;
       margin: 0 auto;
+    }
+
+    /* High-Conversion Package Action Buttons */
+    .btn-pkg {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease-in-out;
+      cursor: pointer;
+    }
+
+    .btn-pkg-primary {
+      background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
+      color: #FFFFFF !important;
+      border: 1px solid #818CF8;
+      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
+    }
+
+    .btn-pkg-primary:hover {
+      background: linear-gradient(135deg, #4F46E5 0%, #4338CA 100%);
+      box-shadow: 0 6px 20px rgba(79, 70, 229, 0.6);
+      transform: translateY(-1px);
+      color: #FFFFFF !important;
+    }
+
+    .btn-pkg-secondary {
+      background: rgba(99, 102, 241, 0.15);
+      color: #C7D2FE !important;
+      border: 1.5px solid #818CF8;
+    }
+
+    .btn-pkg-secondary:hover {
+      background: #6366F1;
+      color: #FFFFFF !important;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn-pkg-cyan {
+      background: rgba(6, 182, 212, 0.15);
+      color: #A5F3FC !important;
+      border: 1.5px solid #06B6D4;
+    }
+
+    .btn-pkg-cyan:hover {
+      background: #06B6D4;
+      color: #080C16 !important;
+      font-weight: 800;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(6, 182, 212, 0.4);
+    }
+
+    .btn-pkg-accent {
+      background: rgba(236, 72, 153, 0.15);
+      color: #FBCFE8 !important;
+      border: 1.5px solid #EC4899;
+    }
+
+    .btn-pkg-accent:hover {
+      background: #EC4899;
+      color: #FFFFFF !important;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(236, 72, 153, 0.4);
     }
 
     .header {
@@ -537,7 +608,7 @@
     <div class="pkg-card">
       <div>
         <div class="pkg-title">Starter Seeding Pilot</div>
-        <div class="pkg-price" style="font-size: 22px; color: var(--primary);">Custom Pilot Scope</div>
+        <div class="pkg-price" style="font-size: 24px; font-weight: 800; color: #818CF8;">Custom Pilot Scope</div>
         <ul class="pkg-features">
           <li><strong>200+ Verified Creators</strong></li>
           <li><strong>800K – 1M+ Total Views</strong> (4K–5K avg/creator)</li>
@@ -549,7 +620,7 @@
         </ul>
       </div>
       <div style="margin-top: 15px;">
-        <a href="mailto:thecreatororbit.media@gmail.com?subject=Creator%20Orbit%20-%20Starter%20Seeding%20Pilot%20Quote%20Request" class="btn btn-secondary" style="width:100%; text-align:center; padding:10px 14px; font-size:13px;">Request Pilot Roster ➔</a>
+        <a href="mailto:thecreatororbit.media@gmail.com?subject=Creator%20Orbit%20-%20Starter%20Seeding%20Pilot%20Quote%20Request" class="btn-pkg btn-pkg-secondary">Request Pilot Roster ➔</a>
       </div>
     </div>
 
@@ -558,7 +629,7 @@
       <div class="pkg-badge" style="background: #10B981;">Most Popular</div>
       <div>
         <div class="pkg-title">Growth Seeding Blitz</div>
-        <div class="pkg-price" style="font-size: 22px; color: #10B981;">Custom Growth Scope</div>
+        <div class="pkg-price" style="font-size: 24px; font-weight: 800; color: #10B981;">Custom Growth Scope</div>
         <ul class="pkg-features">
           <li><strong>500+ Verified Creators</strong></li>
           <li><strong>2M – 2.5M+ Total Views</strong> (4K–5K avg/creator)</li>
@@ -570,7 +641,7 @@
         </ul>
       </div>
       <div style="margin-top: 15px;">
-        <a href="mailto:thecreatororbit.media@gmail.com?subject=Creator%20Orbit%20-%20Growth%20Seeding%20Blitz%20Quote%20Request" class="btn btn-primary" style="width:100%; text-align:center; padding:10px 14px; font-size:13px;">Build Custom Roster ➔</a>
+        <a href="mailto:thecreatororbit.media@gmail.com?subject=Creator%20Orbit%20-%20Growth%20Seeding%20Blitz%20Quote%20Request" class="btn-pkg btn-pkg-primary">Build Custom Roster ➔</a>
       </div>
     </div>
 
@@ -578,7 +649,7 @@
     <div class="pkg-card">
       <div>
         <div class="pkg-title">Viral Category Dominance</div>
-        <div class="pkg-price" style="font-size: 22px; color: var(--cyan);">Tailored Scale Proposal</div>
+        <div class="pkg-price" style="font-size: 24px; font-weight: 800; color: #06B6D4;">Tailored Scale Proposal</div>
         <ul class="pkg-features">
           <li><strong>1,000+ Verified Creators</strong></li>
           <li><strong>4M – 5M+ Total Views</strong> (4K–5K avg/creator)</li>
@@ -590,7 +661,7 @@
         </ul>
       </div>
       <div style="margin-top: 15px;">
-        <a href="mailto:thecreatororbit.media@gmail.com?subject=Creator%20Orbit%20-%201000%2B%20Creator%20Campaign%20Request" class="btn btn-secondary" style="width:100%; text-align:center; padding:10px 14px; font-size:13px;">Request Scale Proposal ➔</a>
+        <a href="mailto:thecreatororbit.media@gmail.com?subject=Creator%20Orbit%20-%201000%2B%20Creator%20Campaign%20Request" class="btn-pkg btn-pkg-cyan">Request Scale Proposal ➔</a>
       </div>
     </div>
   </div>
@@ -602,7 +673,7 @@
     <div class="pkg-card">
       <div>
         <div class="pkg-title">Starter Paid Pilot</div>
-        <div class="pkg-price" style="font-size: 22px; color: var(--primary);">Flexible Pilot</div>
+        <div class="pkg-price" style="font-size: 24px; font-weight: 800; color: #818CF8;">Flexible Pilot Scope</div>
         <ul class="pkg-features">
           <li><strong>5–7 Curated Creators</strong></li>
           <li><strong>50K – 200K</strong> Est. Organic Views</li>
@@ -612,7 +683,7 @@
         </ul>
       </div>
       <div style="margin-top: 15px;">
-        <a href="mailto:thecreatororbit.media@gmail.com?subject=Creator%20Orbit%20-%20Starter%20Paid%20Pilot%20Request" class="btn btn-secondary" style="width:100%; text-align:center; padding:10px 14px; font-size:13px;">Get Pilot Quote ➔</a>
+        <a href="mailto:thecreatororbit.media@gmail.com?subject=Creator%20Orbit%20-%20Starter%20Paid%20Pilot%20Request" class="btn-pkg btn-pkg-secondary">Get Pilot Quote ➔</a>
       </div>
     </div>
 
@@ -621,7 +692,7 @@
       <div class="pkg-badge" style="background: var(--primary);">Performance Scale</div>
       <div>
         <div class="pkg-title">Growth UGC Scaler</div>
-        <div class="pkg-price" style="font-size: 22px; color: var(--primary);">Custom Retainer</div>
+        <div class="pkg-price" style="font-size: 24px; font-weight: 800; color: #818CF8;">Custom Retainer Scope</div>
         <ul class="pkg-features">
           <li><strong>12–15 Curated Creators</strong> (Micro + Macro Mix)</li>
           <li><strong>200K+</strong> Est. Organic Views</li>
@@ -631,7 +702,7 @@
         </ul>
       </div>
       <div style="margin-top: 15px;">
-        <a href="mailto:thecreatororbit.media@gmail.com?subject=Creator%20Orbit%20-%20Growth%20Scaler%20Request" class="btn btn-primary" style="width:100%; text-align:center; padding:10px 14px; font-size:13px;">Get Growth Proposal ➔</a>
+        <a href="mailto:thecreatororbit.media@gmail.com?subject=Creator%20Orbit%20-%20Growth%20Scaler%20Request" class="btn-pkg btn-pkg-primary">Get Growth Proposal ➔</a>
       </div>
     </div>
 
@@ -639,7 +710,7 @@
     <div class="pkg-card">
       <div>
         <div class="pkg-title">Enterprise Campaign</div>
-        <div class="pkg-price" style="font-size: 22px; color: var(--accent);">Enterprise Strategy</div>
+        <div class="pkg-price" style="font-size: 24px; font-weight: 800; color: #EC4899;">Enterprise Strategy</div>
         <ul class="pkg-features">
           <li><strong>25–30+ Creators across India</strong></li>
           <li><strong>1M+</strong> Guaranteed Reach</li>
@@ -649,7 +720,7 @@
         </ul>
       </div>
       <div style="margin-top: 15px;">
-        <a href="mailto:thecreatororbit.media@gmail.com?subject=Creator%20Orbit%20-%20Enterprise%20Strategy%20Request" class="btn btn-secondary" style="width:100%; text-align:center; padding:10px 14px; font-size:13px;">Book Strategy Call ➔</a>
+        <a href="mailto:thecreatororbit.media@gmail.com?subject=Creator%20Orbit%20-%20Enterprise%20Strategy%20Request" class="btn-pkg btn-pkg-accent">Book Strategy Call ➔</a>
       </div>
     </div>
   </div>
