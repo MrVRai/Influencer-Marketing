@@ -361,16 +361,16 @@ def render_slide_5(out_path, logo_path):
         draw.text((165, ay + 13), title, font=get_font(FONT_BOLD, 17), fill=PRIMARY_LIGHT)
         draw.text((165, ay + 35), desc, font=get_font(FONT_REGULAR, 15), fill=TEXT_SUB)
         
-    # Founders Section Card
+    # Agency Credentials Section Card
     draw.rounded_rectangle([70, 715, WIDTH - 70, 990], radius=20, fill=CARD_BG, outline=CARD_BORDER, width=2)
     
-    draw.text((105, 745), "MEET THE FOUNDERS", font=get_font(FONT_BOLD, 15), fill=PRIMARY_LIGHT)
+    draw.text((105, 745), "ABOUT THE AGENCY", font=get_font(FONT_BOLD, 15), fill=PRIMARY_LIGHT)
     
     font_fn = get_font(FONT_BOLD, 30)
-    draw.text((105, 780), "Vedant Rai & Manya Jain", font=font_fn, fill=TEXT_MAIN)
+    draw.text((105, 780), "Founder-Led Creator Engine", font=font_fn, fill=TEXT_MAIN)
     
     font_fr = get_font(FONT_BOLD, 18)
-    draw.text((105, 830), "Co-Founders | Creator Orbit", font=font_fr, fill=CYAN)
+    draw.text((105, 830), "Creator Orbit Media | Pan-India Operations", font=font_fr, fill=CYAN)
     
     font_fl = get_font(FONT_REGULAR, 18)
     draw.text((105, 870), "📍 New Delhi & Uttarakhand  •  Serving Fast-Growing D2C Brands Pan-India", font=font_fl, fill=TEXT_MUTED)

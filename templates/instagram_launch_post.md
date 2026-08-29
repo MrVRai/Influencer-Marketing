@@ -48,11 +48,11 @@
 
 ---
 
-### 🖼️ Slide 5: The Call to Action (Founders & Website)
+### 🖼️ Slide 5: The Call to Action (Credentials & Website)
 * **Headline**: `Ready to Launch Your Next High-ROI Creator Campaign?`
 * **Body Text**:
   * **Get a Custom 1-Page Creator Roster** tailored specifically for your brand category.
-  * Founded by **Vedant Rai** & **Manya Jain** *(New Delhi & Uttarakhand)*
+  * **Founder-Led Creator Engine** *(New Delhi & Uttarakhand)*
   * Serving fast-growing D2C brands Pan-India.
 * **CTAs**:
   * 💬 `Drop us a DM with "ROSTER" on @thecreatororbit`
@@ -82,8 +82,8 @@ We built @thecreatororbit as a founder-led, high-performance creator engine to f
 
 Whether you're looking to flood social feeds with 200+ authentic skincare reviews or scale your Meta ad library with high-converting UGC — we manage the entire campaign end-to-end.
 
-Founded by Vedant Rai & Manya Jain 🚀
-Proudly rooted in New Delhi & Uttarakhand, serving D2C brands Pan-India.
+🚀 Built for D2C Founders & Growth Marketers
+📍 Operations in New Delhi & Uttarakhand, serving brands Pan-India.
 
 🔗 Visit our newly launched website (link in bio): thecreatororbit.vercel.app
 ✉️ Reach us at: thecreatororbit.media@gmail.com
