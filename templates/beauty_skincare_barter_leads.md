@@ -58,12 +58,12 @@ Would you be open to reviewing a 1-page beauty creator shortlist tailored for [B
 
 Best regards,
 
-Vedant Rai & Manya Jain
-Co-Founders | Creator Orbit
+Team Creator Orbit
+Creator Orbit Media
 🌐 https://thecreatororbit.vercel.app/
 📸 @thecreatororbit (https://instagram.com/thecreatororbit)
 ✉️ thecreatororbit.media@gmail.com
-📍 New Delhi & Uttarakhand
+📍 New Delhi & Uttarakhand, India
 `
 
 ---
@@ -89,7 +89,7 @@ Who on your influencer marketing / brand team can we send our 1-page beauty deck
 ### 💬 WhatsApp Introduction (For Beauty Brand Founders / Leads)
 
 `	ext
-Hi [First Name], Vedant & Manya here from Creator Orbit (https://thecreatororbit.vercel.app/)! 👋
+Hi [First Name], Team Creator Orbit here (https://thecreatororbit.vercel.app/)! 👋
 
 Came across [Brand Name]'s recent drops and loved your positioning in [Skincare / Makeup].
 

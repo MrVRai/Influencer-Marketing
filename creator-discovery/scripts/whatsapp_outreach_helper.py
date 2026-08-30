@@ -26,16 +26,16 @@ DB_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data/creat
 CSV_OUT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../branding/whatsapp_creators_export.csv"))
 HTML_OUT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../branding/whatsapp_outreach_launcher.html"))
 
-DEFAULT_WA_MESSAGE = """Hey {name}! Manya here 👋✨
+DEFAULT_WA_MESSAGE = """Hey {name}! Team Creator Orbit here 👋✨
 
 Hope you're doing great!
 
-I’m curating a fresh creator roster for upcoming Beauty & Skincare PR hampers and barter brand campaigns at *Creator Orbit* 🎁
+We’re curating a fresh creator roster for upcoming Beauty & Skincare PR hampers and barter brand campaigns at *Creator Orbit* 🎁
 
-Make sure to follow our new page so I can shortlist you for upcoming brand drops:
+Make sure to follow our Instagram page so we can shortlist you for upcoming brand drops:
 👉 https://instagram.com/thecreatororbit
 
-Drop a quick "Done" here after following so I can add you to my priority list! 💙"""
+Drop a quick "Done" here after following so we can add you to our priority list! 💙"""
 
 def clean_phone_number(raw_phone):
     if not raw_phone or pd.isna(raw_phone):
@@ -197,7 +197,7 @@ def generate_outputs():
 <div class="container">
   <header>
     <h1>💬 WhatsApp Creator Outreach Launcher</h1>
-    <p class="sub">1-Click personalized WhatsApp messages for Manya's creator network.</p>
+    <p class="sub">1-Click personalized WhatsApp messages for the Creator Orbit network.</p>
   </header>
 
   <div class="stats-bar">

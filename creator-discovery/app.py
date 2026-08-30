@@ -2,7 +2,6 @@
 Creator Orbit — Influencer Intelligence & CRM Platform
 ======================================================
 Performance-driven creator partnerships for high-growth brands.
-Co-Founders: Vedant Rai & Manya Jain
 """
 
 import streamlit as st
@@ -68,8 +67,8 @@ exporter = st.session_state.exporter
 # ─────────────────────────── Sidebar ────────────────────────────────
 with st.sidebar:
     st.markdown("## 🚀 **Creator Orbit**")
-    st.caption("Performance Influencer Marketing Agency")
-    st.caption("Co-Founders: **Vedant Rai** & **Manya Jain**")
+    st.caption("Performance Creator Marketing Agency")
+    st.caption("Founder-Led Intelligence Platform")
 
     st.divider()
 
