@@ -1,13 +1,15 @@
 """
-Automated WhatsApp Outreach for Microsoft Edge
-Drives Microsoft Edge automatically to send personalized WhatsApp outreach to creators.
+Automated WhatsApp Outreach for Microsoft Edge with Smart Batch Scheduler
+Drives Microsoft Edge automatically to send personalized WhatsApp outreach in safe scheduled batches.
 
 Features:
 - Launches Microsoft Edge with persistent user profile (you only scan QR code once)
 - Reads creators from branding/whatsapp_creators_export.csv
 - Automated navigation, pre-filled text verification, and safe send
-- Anti-ban protection: Randomized human-like delays (15 to 25 seconds)
-- Resume capability: Keeps local sent log (data/whatsapp_sent_history.json)
+- Anti-ban protection: Randomized delays (15 to 25s) between messages
+- Smart Batching: Sends a batch (e.g. 40-50), closes browser, waits a safe cooldown (e.g. 2-3 hours), then automatically sends the next batch!
+- Live countdown timer during cooldown
+- Resume capability: Tracks all sent creators in data/whatsapp_sent_history.json
 """
 
 import os
@@ -18,6 +20,7 @@ import random
 import urllib.parse
 import argparse
 import pandas as pd
+from datetime import datetime, timedelta
 
 if sys.stdout.encoding != 'utf-8':
     try:
@@ -52,10 +55,10 @@ def save_sent_history(history):
     with open(HISTORY_PATH, "w", encoding="utf-8") as f:
         json.dump(history, f, indent=2, ensure_ascii=False)
 
-def run_edge_whatsapp_bot(limit=30, delay_range=(15, 25)):
+def run_single_batch(batch_size=50, delay_range=(15, 25)):
     if not os.path.exists(CSV_PATH):
         print(f"❌ Error: CSV file not found at {CSV_PATH}")
-        return
+        return 0, 0
 
     df = pd.read_csv(CSV_PATH)
     sent_history = load_sent_history()
@@ -68,17 +71,17 @@ def run_edge_whatsapp_bot(limit=30, delay_range=(15, 25)):
             pending.append(row)
             
     print(f"\n=======================================================")
-    print(f"🚀 Creator Orbit WhatsApp Outreach for Microsoft Edge")
+    print(f"🚀 Creator Orbit WhatsApp Outreach — Starting Batch")
     print(f"=======================================================")
-    print(f"Total creators in list: {len(df)}")
-    print(f"Already messaged: {len(sent_history)}")
-    print(f"Pending to reach: {len(pending)}")
-    print(f"Batch limit for this run: {min(limit, len(pending))}")
+    print(f"Total creators in list : {len(df)}")
+    print(f"Already messaged       : {len(sent_history)}")
+    print(f"Remaining to reach     : {len(pending)}")
+    print(f"Batch target size      : {min(batch_size, len(pending))}")
     print(f"=======================================================\n")
 
     if not pending:
         print("🎉 All creators in the list have already been messaged!")
-        return
+        return 0, 0
 
     # Setup Edge Options
     os.makedirs(EDGE_PROFILE_DIR, exist_ok=True)
@@ -92,28 +95,27 @@ def run_edge_whatsapp_bot(limit=30, delay_range=(15, 25)):
         service = Service(EdgeChromiumDriverManager().install())
         driver = webdriver.Edge(service=service, options=options)
     except Exception as e:
-        print(f"⚠️ Falling back to system default Edge driver: {e}")
+        print(f"⚠️ Falling back to default Edge driver: {e}")
         driver = webdriver.Edge(options=options)
 
     # Initial WhatsApp Web load
-    print("\nNavigating to WhatsApp Web (https://web.whatsapp.com)...")
+    print("Connecting to WhatsApp Web (https://web.whatsapp.com)...")
     driver.get("https://web.whatsapp.com")
     
-    print("\n👉 IF THIS IS YOUR FIRST RUN: Please scan the WhatsApp Web QR code on your screen now.")
-    print("⏳ Waiting for WhatsApp Web to load your chats...")
+    print("\n👉 If not logged in, please scan the QR code on your screen.")
+    print("⏳ Waiting for WhatsApp Web to load...")
     
     try:
-        # Wait until chat list or search bar is present
         WebDriverWait(driver, 120).until(
             EC.presence_of_element_located((By.XPATH, '//div[@contenteditable="true"] | //div[@role="textbox"] | //header'))
         )
-        print("✅ WhatsApp Web is active and ready!\n")
+        print("✅ WhatsApp Web active and ready!\n")
     except Exception:
         print("❌ Login timed out or page took too long to load.")
         driver.quit()
-        return
+        return 0, len(pending)
 
-    batch = pending[:limit]
+    batch = pending[:batch_size]
     success_count = 0
 
     for idx, creator in enumerate(batch, 1):
@@ -121,18 +123,16 @@ def run_edge_whatsapp_bot(limit=30, delay_range=(15, 25)):
         phone = str(creator['phone'])
         msg = str(creator['Custom_Message'])
         
-        print(f"\n[{idx}/{len(batch)}] Messaging: {name} (+{phone})...")
+        print(f"[{idx}/{len(batch)}] Messaging: {name} (+{phone})...")
         
         encoded_msg = urllib.parse.quote(msg)
         send_url = f"https://web.whatsapp.com/send?phone={phone}&text={encoded_msg}"
         driver.get(send_url)
         
         try:
-            # Wait for message input or send button (up to 25s)
             time.sleep(4)
             send_btn = None
             
-            # Try finding the Send button (paper airplane icon or send button span)
             try:
                 send_btn = WebDriverWait(driver, 20).until(
                     EC.element_to_be_clickable((By.XPATH, '//button[@data-tab="11"] | //span[@data-icon="send"]/parent::button | //button[contains(@aria-label, "Send")]'))
@@ -144,7 +144,6 @@ def run_edge_whatsapp_bot(limit=30, delay_range=(15, 25)):
                 time.sleep(1)
                 send_btn.click()
             else:
-                # Alternative: find input box and send Enter key
                 input_box = WebDriverWait(driver, 15).until(
                     EC.presence_of_element_located((By.XPATH, '//div[@contenteditable="true"][@data-tab="10"] | //footer//div[@contenteditable="true"]'))
                 )
@@ -154,7 +153,6 @@ def run_edge_whatsapp_bot(limit=30, delay_range=(15, 25)):
             time.sleep(2)
             print(f"   ✅ Successfully sent message to {name}!")
             
-            # Record in history
             sent_history[phone] = {
                 "name": name,
                 "sent_at": time.strftime("%Y-%m-%d %H:%M:%S")
@@ -164,12 +162,11 @@ def run_edge_whatsapp_bot(limit=30, delay_range=(15, 25)):
             
             if idx < len(batch):
                 delay = random.uniform(delay_range[0], delay_range[1])
-                print(f"   ⏳ Waiting {delay:.1f}s before next creator (keeping account 100% safe)...")
+                print(f"   ⏳ Waiting {delay:.1f}s before next creator...")
                 time.sleep(delay)
                 
         except Exception as e:
-            print(f"   ⚠️ Could not send to {name} (+{phone}): Invalid number or UI timeout. Skipping.")
-            # Still mark to prevent looping forever
+            print(f"   ⚠️ Could not send to {name} (+{phone}): Skipping.")
             sent_history[phone] = {
                 "name": name,
                 "error": str(e),
@@ -178,16 +175,65 @@ def run_edge_whatsapp_bot(limit=30, delay_range=(15, 25)):
             save_sent_history(sent_history)
 
     print(f"\n=======================================================")
-    print(f"🎉 Batch complete! Successfully messaged {success_count}/{len(batch)} creators.")
+    print(f"✅ Batch Finished! Sent {success_count}/{len(batch)} messages.")
     print(f"=======================================================\n")
     
     time.sleep(3)
     driver.quit()
+    
+    remaining = len(pending) - len(batch)
+    return success_count, max(0, remaining)
+
+def countdown_timer(hours):
+    total_seconds = int(hours * 3600)
+    end_time = datetime.now() + timedelta(seconds=total_seconds)
+    print(f"\n💤 Safe cooldown period started.")
+    print(f"⏰ Next batch will launch at: {end_time.strftime('%I:%M:%S %p')}")
+    
+    while total_seconds > 0:
+        mins, secs = divmod(total_seconds, 60)
+        hrs, mins = divmod(mins, 60)
+        timer_str = f"⏳ Cooldown countdown: {hrs:02d}h {mins:02d}m {secs:02d}s remaining..."
+        sys.stdout.write(f"\r{timer_str}")
+        sys.stdout.flush()
+        time.sleep(1)
+        total_seconds -= 1
+        
+    print("\n\n🔔 Cooldown complete! Starting next batch now...\n")
+
+def main():
+    parser = argparse.ArgumentParser(description="Automated WhatsApp Outreach with Safe Interval Scheduler")
+    parser.add_argument("--batch-size", "--limit", type=int, default=45, help="Number of creators per batch (default: 45)")
+    parser.add_argument("--interval-hours", type=float, default=2.5, help="Hours to wait between batches (default: 2.5 hours)")
+    parser.add_argument("--single-run", action="store_true", help="Run only one single batch and exit")
+    args = parser.parse_args()
+
+    print("\n" + "="*70)
+    print("🤖 CREATOR ORBIT — AUTOMATED WHATSAPP BATCH SCHEDULER")
+    print(f"📦 Batch Size       : {args.batch_size} creators per run")
+    print(f"⏱️ Interval Gap     : {args.interval_hours} hours between batches")
+    print(f"🔁 Mode             : {'Single Batch' if args.single_run else 'Continuous Auto-Scheduler'}")
+    print("="*70)
+
+    batch_num = 1
+    while True:
+        print(f"\n▶️ Starting Batch #{batch_num}...")
+        sent, remaining = run_single_batch(batch_size=args.batch_size)
+        
+        if remaining == 0:
+            print("\n🎉 ALL CREATORS IN YOUR LIST HAVE BEEN REACHED! Complete campaign finished.")
+            break
+            
+        if args.single_run:
+            print(f"\nSingle run complete. {remaining} creators remaining for future runs.")
+            break
+
+        batch_num += 1
+        countdown_timer(args.interval_hours)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Automated WhatsApp Outreach for Microsoft Edge")
-    parser.add_argument("--limit", type=int, default=30, help="Number of creators to message in this session (default: 30)")
-    args = parser.parse_args()
-    
-    run_edge_whatsapp_bot(limit=args.limit)
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("\n\n🛑 Bot stopped safely by user. All progress is saved!")
 
