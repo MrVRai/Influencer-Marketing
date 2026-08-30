@@ -167,12 +167,22 @@ def process_excel_file(file_path, output_excel=None):
         output_excel = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../data/cleaned_creators.xlsx"))
         
     os.makedirs(os.path.dirname(output_excel), exist_ok=True)
-    with pd.ExcelWriter(output_excel, engine='openpyxl') as writer:
-        pd.DataFrame(valid_rows).to_excel(writer, sheet_name="Valid_Creators", index=False)
-        if invalid_rows:
-            pd.DataFrame(invalid_rows).to_excel(writer, sheet_name="Invalid_Rows", index=False)
-            
-    print(f"✅ Cleaned Excel saved at: {output_excel}")
+    try:
+        with pd.ExcelWriter(output_excel, engine='openpyxl') as writer:
+            pd.DataFrame(valid_rows).to_excel(writer, sheet_name="Valid_Creators", index=False)
+            if invalid_rows:
+                pd.DataFrame(invalid_rows).to_excel(writer, sheet_name="Invalid_Rows", index=False)
+        print(f"✅ Cleaned Excel saved at: {output_excel}")
+    except PermissionError:
+        alt_excel = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../data/cleaned_creators_new.xlsx"))
+        try:
+            with pd.ExcelWriter(alt_excel, engine='openpyxl') as writer:
+                pd.DataFrame(valid_rows).to_excel(writer, sheet_name="Valid_Creators", index=False)
+                if invalid_rows:
+                    pd.DataFrame(invalid_rows).to_excel(writer, sheet_name="Invalid_Rows", index=False)
+            print(f"⚠️ 'data/cleaned_creators.xlsx' was open in Excel. Saved clean copy to: {alt_excel}")
+        except Exception as e:
+            print(f"⚠️ Could not write Excel file: {e}")
 
     # 2. Update WhatsApp Bulk CSV
     csv_out = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../branding/whatsapp_creators_export.csv"))
