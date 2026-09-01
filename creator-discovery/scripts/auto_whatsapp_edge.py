@@ -86,9 +86,16 @@ def run_single_batch(batch_size=50, delay_range=(15, 25)):
     # Setup Edge Options
     os.makedirs(EDGE_PROFILE_DIR, exist_ok=True)
     options = Options()
-    options.add_argument(f"user-data-dir={EDGE_PROFILE_DIR}")
+    options.add_argument(f"--user-data-dir={EDGE_PROFILE_DIR}")
+    options.add_argument("--remote-debugging-port=9222")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--remote-allow-origins=*")
     options.add_argument("--disable-notifications")
     options.add_argument("--start-maximized")
+    options.add_experimental_option("excludeSwitches", ["enable-automation", "enable-logging"])
+    options.add_experimental_option("useAutomationExtension", False)
 
     print("Opening Microsoft Edge browser...")
     try:
