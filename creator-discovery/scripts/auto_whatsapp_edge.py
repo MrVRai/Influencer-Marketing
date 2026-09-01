@@ -273,13 +273,15 @@ def run_single_batch(batch_size=25, delay_range=(15, 25)):
     print(f"✅ Batch Finished! Sent {success_count}/{len(batch)} messages.")
     print(f"=======================================================\n")
 
-    # ── Step 6: Save session, close Edge ──────────────────────────────────────
-    save_session(EDGE_TEMP_DIR)
-    time.sleep(3)
+    # ── Step 6: Close Edge fully, then save session ────────────────────────────
     try:
         driver.quit()
     except Exception:
         pass
+    time.sleep(3)                       # brief wait for quit signal
+    kill_stale_edge_processes()         # force-kill any remaining Edge children
+    time.sleep(2)                       # let OS release all file locks
+    save_session(EDGE_TEMP_DIR)         # now safe to copy files
 
     remaining = len(pending) - len(batch)
     return success_count, max(0, remaining)
